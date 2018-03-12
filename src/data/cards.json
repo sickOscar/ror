@@ -1,0 +1,131 @@
+[
+    {
+        "id": "1",
+        "name": "Oscar",
+        "type": "senator"
+    },
+    {
+        "id": "2",
+        "name": "Livio",
+        "type": "senator"
+    },
+    {
+        "id": "3",
+        "name": "Alessio",
+        "type": "senator"
+    },
+    {
+        "id": "4",
+        "name": "Gianluca",
+        "type": "senator"
+    },
+    {
+        "id": "5",
+        "name": "Giulio",
+        "type": "senator"
+    },
+    {
+        "id": "6",
+        "name": "Pericoli",
+        "type": "senator"
+    },
+    {
+        "id": "7",
+        "name": "Shoto",
+        "type": "senator"
+    },
+    {
+        "id": "8",
+        "name": "Barozzi",
+        "type": "senator"
+    },
+    {
+        "id": "9",
+        "name": "Alvise",
+        "type": "senator"
+    },
+    {
+        "id": "10",
+        "name": "Scaputi",
+        "type": "senator"
+    },
+    {
+        "id": "11",
+        "name": "Massimo",
+        "type": "senator"
+    },
+    {
+        "id": "12",
+        "name": "Piaia",
+        "type": "senator"
+    },
+    {
+        "id": "13",
+        "name": "Giopego",
+        "type": "senator"
+    },
+    {
+        "id": "14",
+        "name": "De Zordi",
+        "type": "senator"
+    },
+    {
+        "id": "15",
+        "name": "Privato",
+        "type": "senator"
+    },
+    {
+        "id": "16",
+        "name": "Manuel",
+        "type": "senator"
+    },
+    {
+        "id": "17",
+        "name": "Militello",
+        "type": "senator"
+    },
+    {
+        "id": "18",
+        "name": "Chioggia",
+        "type": "senator"
+    },
+    {
+        "id": "19",
+        "name": "Fulvio",
+        "type": "senator"
+    },
+
+
+    {
+        "id": "1A",
+        "name": "Stateman Oscar",
+        "type": "stateman"
+    },
+    {
+        "id": "6A",
+        "name": "Stateman Pericoli",
+        "type": "stateman"
+    },
+    {
+        "id": "4A",
+        "name": "Stateman Gianluca",
+        "type": "stateman"
+    },
+    {
+        "id": "2A",
+        "name": "Stateman Livio",
+        "type": "stateman"
+    },
+
+
+    {
+        "id": "20",
+        "name": "Tribune",
+        "type": "intrigue"
+    },
+    {
+        "id": "21",
+        "name": "Tribune",
+        "type": "intrigue"
+    }
+]
