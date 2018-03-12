@@ -29,7 +29,32 @@ const Ror = Game({
 
   setup: () => ({
 
-    mortalityChit: null,
+    republic: {
+	treasury: 0,
+    	unrest: 0,
+    	landBills: [],
+    	laws: [],
+    	legions: 4,
+    	fleets: 0,
+    	veterans: 0,
+    	activeWars: [],
+    	unprosecutedWars: [],
+    	inactiveWars: [],
+    	imminentWars: [],
+    },
+
+    forum: {
+	events: [],
+	provinces: [],
+	senators: [],
+	concessions: []
+    },
+
+    curia: {
+	senators: [],
+	concessions: [],
+	leaders: []
+    },
 
     forumDeck: deck,
 
