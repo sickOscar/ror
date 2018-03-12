@@ -9,8 +9,10 @@ export default class MortalityBoard extends React.Component {
     }
 
     drawMortalityChit() {
-        console.log(this.props);
         this.props.moves.drawMortalityChit();
+	setTimeout(() => {
+	    this.props.events.endPhase();	
+	}, 3000);
     }
 
     render() {

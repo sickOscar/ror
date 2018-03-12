@@ -95,6 +95,9 @@ const Ror = Game({
   moves: {
 
     drawMortalityChit(G, ctx) {
+
+      const toDie = Random.Die(36);
+
       return {...G, mortalityChit: Random.Die(36)}
     },
 
@@ -112,7 +115,6 @@ const Ror = Game({
       { 
         name: 'mortality',
         allowedMoves: ['drawMortalityChit'],
-        endPhaseIf: G => G.mortalityChit
       },
       {
         name: 'revenue',
