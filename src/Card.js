@@ -8,19 +8,26 @@ export const Card = (props) => {
         mainClass += ' faction-leader';
     }
 
+    const spoils = props.spoils.includes('ROME_CONSUL')
+        ? <small>HRAO</small>
+        : ''
+
     return (
     <div className={mainClass}>
         <div className="row">
-            <div className="col-sm-1">
+            <div className="col-sm-2">
                 <small>[{props.id}]</small>
             </div>
-            <div className="col-sm-10">
+            <div className="col-sm-8">
                 <p className="text-center card-value">
                     {!props.isFactionLeader  
                         ? <b>{props.name}</b>
                         : <i><b>{props.name}</b></i>
                     }
                 </p>
+            </div>
+            <div className="col-sm-2">
+                {spoils}
             </div>
         </div>    
         <div className="row">

@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.css'
@@ -11,6 +12,7 @@ import { DeckModel } from './Deck';
 
 import  MortalityBoard from './MortalityBoard.js'
 import  RevenueBoard from './RevenueBoard.js'
+import ForumBoard from './ForumBoard';
 import PlayerBoard from './PlayerBoard';
 import { Neutrals } from './Neutrals.js';
 import { CardModel } from './Card';
@@ -19,11 +21,17 @@ import RevenueBot from './RevenueBot';
 
 const deck = new DeckModel();
 
-const player1InitialCards = PlayerModel.getRandomSenators(deck);
-const player2InitialCards = PlayerModel.getRandomSenators(deck);
-const player3InitialCards = PlayerModel.getRandomSenators(deck);
-const player4InitialCards = PlayerModel.getRandomSenators(deck);
-const player5InitialCards = PlayerModel.getRandomSenators(deck);
+const initialHands = [
+  PlayerModel.getRandomSenators(deck),
+  PlayerModel.getRandomSenators(deck),
+  PlayerModel.getRandomSenators(deck),
+  PlayerModel.getRandomSenators(deck),
+  PlayerModel.getRandomSenators(deck)
+]
+
+const randomHRAOIndex = Math.round(Random.Number(14));
+_.flattenDeep(initialHands)[randomHRAOIndex].spoils.push('ROME_CONSUL');
+
 
 const Ror = Game({
 
@@ -64,31 +72,31 @@ const Ror = Game({
     players: {
       '0': {
         name: "Player",
-        tableCards:player1InitialCards,
+        tableCards: initialHands[0],
         hand: [],
         talents: 0,
       },
       '1': {
         name: "Neutral 1",
-        tableCards: player2InitialCards,
+        tableCards: initialHands[1],
         hand: [],
         talents: 0
       },
       '2': {
         name: "Neutral 2",
-        tableCards: player3InitialCards,
+        tableCards: initialHands[2],
         hand: [],
         talents: 0
       },
       '3': {
         name: "Neutral 3",
-        tableCards: player4InitialCards,
+        tableCards: initialHands[3],
         hand: [],
         talents: 0
       },
       '4': {
         name: "Neutral 4",
-        tableCards: player5InitialCards,
+        tableCards: initialHands[4],
         hand: [],
         talents: 0
       }
@@ -196,7 +204,14 @@ const Ror = Game({
       },
       {
         name: 'forum',
-        allowedMoves: ['drawForumCard']
+        allowedMoves: ['drawForumCard'],
+        onPhaseBegin: (G, ctx) => {
+
+          const game = {...G};
+          game.republic.events = [];
+
+          return game;
+        }
       }
     ]
   }
@@ -223,6 +238,10 @@ const Board = (props) => (
           {props.ctx.phase === 'revenue' && props.ctx.currentPlayer !== '0' 
             && <RevenueBot {...props}></RevenueBot>
           }
+
+
+          {props.ctx.phase === 'forum'
+            && <ForumBoard {...props}></ForumBoard>}
 
         </div>
 

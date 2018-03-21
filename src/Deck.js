@@ -26,6 +26,7 @@ export class DeckModel {
             card.loyalty = 2 + Math.floor(Random.Number() * 7);
             card.talents = 0;
             card.knights = 0;
+            card.spoils = [];
         }
 
         return card;
