@@ -11,7 +11,7 @@ export default {
             }
         ];
 
-        for(let i = 0; i < G.players.length; i++) {
+        for(let i = 0; i < Object.keys(G.players).length; i++) {
             for(let j = 0; j < G.players[i].tableCards.length; j++) {
 
                 let spoils = G.players[i].tableCards[j].spoils;

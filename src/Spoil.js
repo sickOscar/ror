@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const Spoils = {
     ROME_CONSUL: {
         id: 'ROME_CONSUL',

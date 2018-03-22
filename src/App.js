@@ -16,8 +16,10 @@ import ForumBoard from './ForumBoard';
 import PlayerBoard from './PlayerBoard';
 import { Neutrals } from './Neutrals.js';
 import { CardModel } from './Card';
+import { EventModel, EventDeck} from './Event';
 
 import RevenueBot from './RevenueBot';
+import ForumBot from './ForumBot';
 import Util from './Util';
 
 const forumState = require('./data/forum.json');
@@ -35,13 +37,14 @@ const initialHands = [
 const randomHRAOIndex = Math.round(Random.Number(14));
 _.flattenDeep(initialHands)[randomHRAOIndex].addSpoil('ROME_CONSUL');
 
-
-
 const Ror = Game({
 
   name: 'RoR',
 
   setup: () => ({
+
+    mortalityChitsToDraw: 1,
+    mortalityChits: [],
 
     republic: {
       treasury: 100,
@@ -72,33 +75,34 @@ const Ror = Game({
     },
 
     forumDeck: deck,
+    
 
     players: {
-      '0': {
+      0: {
         name: "Player",
         tableCards: initialHands[0],
         hand: [],
         talents: 0,
       },
-      '1': {
+      1: {
         name: "Neutral 1",
         tableCards: initialHands[1],
         hand: [],
         talents: 0
       },
-      '2': {
+      2: {
         name: "Neutral 2",
         tableCards: initialHands[2],
         hand: [],
         talents: 0
       },
-      '3': {
+      3: {
         name: "Neutral 3",
         tableCards: initialHands[3],
         hand: [],
         talents: 0
       },
-      '4': {
+      4: {
         name: "Neutral 4",
         tableCards: initialHands[4],
         hand: [],
@@ -111,14 +115,15 @@ const Ror = Game({
   moves: {
 
     drawMortalityChit(G, ctx) {
-      const toDie = Random.Die(36);
-      return {...G, mortalityChit: toDie}
+      let senatorsToKill = [];
+      for(let i = 0; i < G.mortalityChitsToDraw; i++) {
+        senatorsToKill.push(Random.Die(36));
+      }
+      console.log('senatorsToKill', senatorsToKill)
+      return {...G, mortalityChits: senatorsToKill}
     },
 
     killSenator(G, ctx, id) {
-      if (!id) {
-        id = G.mortalityChit;
-      }
       const game = {...G};
 
       for (let playerIndex in game.players) {
@@ -177,8 +182,18 @@ const Ror = Game({
 
     goToGameState(G, ctx, phase, gameState) {
       return {...gameState};
-    }
+    },
 
+    drawEvent(G, ctx, id) {
+      let game = {...G};
+
+      const drawnEvent = EventDeck.find(event => event.id === id);
+      
+      game.forum.events.push(drawnEvent);
+      game = drawnEvent.apply(game, ctx);
+      
+      return game;
+    }
 
   },
 
@@ -186,6 +201,9 @@ const Ror = Game({
     phases: [
       { 
         name: 'mortality',
+        onPhaseEnd: (G, ctx) => {
+          return {...G, mortalityChits: []}
+        }
         // allowedMoves: ['drawMortalityChit', 'killSenator'],
       },
       {
@@ -221,6 +239,7 @@ const Ror = Game({
         turnOrder: {
           first: (G) => {
             const HRAOOrder = Util.findHRAOOrder(G);
+            console.log(HRAOOrder);
             console.log('FIRST PLAYER:', HRAOOrder[0].index)
             return HRAOOrder[0].index
           }
@@ -233,10 +252,6 @@ const Ror = Game({
 })
 
 class Board extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   goToGameState(phase, state) {
 
@@ -261,16 +276,19 @@ class Board extends React.Component {
                 && <MortalityBoard {...this.props}></MortalityBoard>
               }
 
-              {this.props.ctx.phase === 'revenue' && this.props.ctx.currentPlayer === '0' 
+              {this.props.ctx.phase === 'revenue' && parseInt(this.props.ctx.currentPlayer, 10) === 0 
                 && <RevenueBoard {...this.props}></RevenueBoard>
               }
-              {this.props.ctx.phase === 'revenue' && this.props.ctx.currentPlayer !== '0' 
+              {this.props.ctx.phase === 'revenue' && parseInt(this.props.ctx.currentPlayer, 10) !== 0 
                 && <RevenueBot {...this.props}></RevenueBot>
               }
 
 
-              {this.props.ctx.phase === 'forum'
+              {this.props.ctx.phase === 'forum' && parseInt(this.props.ctx.currentPlayer, 10) === 0 
                 && <ForumBoard {...this.props}></ForumBoard>}
+
+              {this.props.ctx.phase === 'forum' && parseInt(this.props.ctx.currentPlayer, 10) !== 0 
+                && <ForumBot {...this.props}></ForumBot>}
 
             </div>
             <div className="col-sm-4">

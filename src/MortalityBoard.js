@@ -15,9 +15,7 @@ export default class MortalityBoard extends React.Component {
 
     drawMortalityChit() {
         this.props.moves.drawMortalityChit();
-
-        this.props.moves.killSenator();
-
+        this.props.G.mortalityChits.map(this.props.moves.killSenator);
         this.setState({
             done: true
         })
@@ -28,7 +26,7 @@ export default class MortalityBoard extends React.Component {
     }
 
     render() {
-        var mortalityChit = <p>Draw: {this.props.G.mortalityChit}</p>
+        var mortalityChit = <p>Draw: {this.props.G.mortalityChits.join(', ')}</p>
         var button = this.state.done ? 
             <button onClick={() => this.endPhase()}>End Mortality Phase</button> : 
             <button onClick={this.drawMortalityChit}>Draw mortality Chit</button>
