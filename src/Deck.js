@@ -1,5 +1,6 @@
 import React from 'react';
 import { Random } from 'boardgame.io/core';
+import { CardModel } from './Card';
 
 export class Deck extends React.Component {
     render() {
@@ -39,7 +40,7 @@ export class DeckModel {
         const index =  Math.round(Random.Number() * (cardsOfType.length - 1));
         const card = this.cards.slice(index, index + 1)[0];
         this.cards.splice(index, 1);
-        return card;
+        return new CardModel(card);
     }
 
 }

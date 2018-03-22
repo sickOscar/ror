@@ -1,0 +1,358 @@
+{
+    "republic": {
+      "treasury": 200,
+      "unrest": 0,
+      "landBills": [],
+      "laws": [],
+      "legions": 4,
+      "fleets": 0,
+      "veterans": 0,
+      "events": [],
+      "activeWars": [],
+      "unprosecutedWars": [],
+      "inactiveWars": [],
+      "imminentWars": []
+    },
+    "forum": {
+      "events": [],
+      "provinces": [],
+      "senators": [],
+      "concessions": []
+    },
+    "curia": {
+      "senators": [],
+      "concessions": [],
+      "leaders": []
+    },
+    "forumDeck": {
+      "cards": [
+        {
+          "id": "2",
+          "name": "Livio",
+          "type": "senator",
+          "oratory": 4,
+          "influence": 7,
+          "popularity": 0,
+          "military": 6,
+          "loyalty": 6,
+          "talents": 0,
+          "knights": 0,
+          "spoils": []
+        },
+        {
+          "id": "10",
+          "name": "Scaputi",
+          "type": "senator",
+          "oratory": 7,
+          "influence": 3,
+          "popularity": 0,
+          "military": 6,
+          "loyalty": 7,
+          "talents": 0,
+          "knights": 0,
+          "spoils": []
+        },
+        {
+          "id": "12",
+          "name": "Piaia",
+          "type": "senator",
+          "oratory": 3,
+          "influence": 4,
+          "popularity": 0,
+          "military": 3,
+          "loyalty": 7,
+          "talents": 0,
+          "knights": 0,
+          "spoils": []
+        },
+        {
+          "id": "15",
+          "name": "Privato",
+          "type": "senator",
+          "oratory": 2,
+          "influence": 3,
+          "popularity": 0,
+          "military": 2,
+          "loyalty": 5,
+          "talents": 0,
+          "knights": 0,
+          "spoils": []
+        },
+        {
+          "id": "1A",
+          "name": "Stateman Oscar",
+          "type": "stateman"
+        },
+        {
+          "id": "6A",
+          "name": "Stateman Pericoli",
+          "type": "stateman"
+        },
+        {
+          "id": "4A",
+          "name": "Stateman Gianluca",
+          "type": "stateman"
+        },
+        {
+          "id": "2A",
+          "name": "Stateman Livio",
+          "type": "stateman"
+        },
+        {
+          "id": "20",
+          "name": "Tribune",
+          "type": "intrigue"
+        },
+        {
+          "id": "21",
+          "name": "Tribune",
+          "type": "intrigue"
+        }
+      ]
+    },
+    "players": {
+      "0": {
+        "name": "Player",
+        "tableCards": [
+          {
+            "id": "8",
+            "name": "Barozzi",
+            "type": "senator",
+            "oratory": 3,
+            "influence": 6,
+            "popularity": 0,
+            "military": 5,
+            "loyalty": 4,
+            "talents": 1,
+            "knights": 0,
+            "spoils": []
+          },
+          {
+            "id": "14",
+            "name": "De Zordi",
+            "type": "senator",
+            "oratory": 4,
+            "influence": 9,
+            "popularity": 0,
+            "military": 6,
+            "loyalty": 3,
+            "talents": 3,
+            "knights": 0,
+            "spoils": [
+              {
+                "id": "ROME_CONSUL",
+                "label": "ROME CONSUL",
+                "influence": 5,
+                "rank": 2
+              }
+            ],
+            "isFactionLeader": true
+          },
+          {
+            "id": "18",
+            "name": "Chioggia",
+            "type": "senator",
+            "oratory": 7,
+            "influence": 4,
+            "popularity": 0,
+            "military": 2,
+            "loyalty": 6,
+            "talents": 1,
+            "knights": 0,
+            "spoils": []
+          }
+        ],
+        "hand": [],
+        "talents": 0
+      },
+      "1": {
+        "name": "Neutral 1",
+        "tableCards": [
+          {
+            "id": "1",
+            "name": "Oscar",
+            "type": "senator",
+            "oratory": 5,
+            "influence": 6,
+            "popularity": 0,
+            "military": 2,
+            "loyalty": 6,
+            "talents": 1,
+            "knights": 0,
+            "spoils": []
+          },
+          {
+            "id": "13",
+            "name": "Giopego",
+            "type": "senator",
+            "oratory": 3,
+            "influence": 6,
+            "popularity": 0,
+            "military": 4,
+            "loyalty": 2,
+            "talents": 3,
+            "knights": 0,
+            "spoils": [],
+            "isFactionLeader": true
+          },
+          {
+            "id": "5",
+            "name": "Giulio",
+            "type": "senator",
+            "oratory": 7,
+            "influence": 2,
+            "popularity": 0,
+            "military": 5,
+            "loyalty": 2,
+            "talents": 1,
+            "knights": 0,
+            "spoils": []
+          }
+        ],
+        "hand": [],
+        "talents": 0
+      },
+      "2": {
+        "name": "Neutral 2",
+        "tableCards": [
+          {
+            "id": "3",
+            "name": "Alessio",
+            "type": "senator",
+            "oratory": 2,
+            "influence": 3,
+            "popularity": 0,
+            "military": 4,
+            "loyalty": 8,
+            "talents": 1,
+            "knights": 0,
+            "spoils": []
+          },
+          {
+            "id": "7",
+            "name": "Shoto",
+            "type": "senator",
+            "oratory": 2,
+            "influence": 7,
+            "popularity": 0,
+            "military": 7,
+            "loyalty": 3,
+            "talents": 3,
+            "knights": 0,
+            "spoils": [],
+            "isFactionLeader": true
+          },
+          {
+            "id": "6",
+            "name": "Pericoli",
+            "type": "senator",
+            "oratory": 6,
+            "influence": 2,
+            "popularity": 0,
+            "military": 4,
+            "loyalty": 7,
+            "talents": 1,
+            "knights": 0,
+            "spoils": []
+          }
+        ],
+        "hand": [],
+        "talents": 0
+      },
+      "3": {
+        "name": "Neutral 3",
+        "tableCards": [
+          {
+            "id": "11",
+            "name": "Massimo",
+            "type": "senator",
+            "oratory": 4,
+            "influence": 4,
+            "popularity": 0,
+            "military": 6,
+            "loyalty": 7,
+            "talents": 1,
+            "knights": 0,
+            "spoils": []
+          },
+          {
+            "id": "17",
+            "name": "Militello",
+            "type": "senator",
+            "oratory": 7,
+            "influence": 2,
+            "popularity": 0,
+            "military": 6,
+            "loyalty": 6,
+            "talents": 1,
+            "knights": 0,
+            "spoils": []
+          },
+          {
+            "id": "19",
+            "name": "Fulvio",
+            "type": "senator",
+            "oratory": 3,
+            "influence": 2,
+            "popularity": 0,
+            "military": 5,
+            "loyalty": 7,
+            "talents": 3,
+            "knights": 0,
+            "spoils": [],
+            "isFactionLeader": true
+          }
+        ],
+        "hand": [],
+        "talents": 0
+      },
+      "4": {
+        "name": "Neutral 4",
+        "tableCards": [
+          {
+            "id": "16",
+            "name": "Manuel",
+            "type": "senator",
+            "oratory": 3,
+            "influence": 6,
+            "popularity": 0,
+            "military": 6,
+            "loyalty": 7,
+            "talents": 1,
+            "knights": 0,
+            "spoils": []
+          },
+          {
+            "id": "9",
+            "name": "Alvise",
+            "type": "senator",
+            "oratory": 6,
+            "influence": 4,
+            "popularity": 0,
+            "military": 7,
+            "loyalty": 6,
+            "talents": 3,
+            "knights": 0,
+            "spoils": [],
+            "isFactionLeader": true
+          },
+          {
+            "id": "4",
+            "name": "Gianluca",
+            "type": "senator",
+            "oratory": 7,
+            "influence": 5,
+            "popularity": 0,
+            "military": 2,
+            "loyalty": 7,
+            "talents": 1,
+            "knights": 0,
+            "spoils": []
+          }
+        ],
+        "hand": [],
+        "talents": 0
+      }
+    },
+    "mortalityChit": 12
+  }

@@ -1,5 +1,6 @@
 import React from 'react';
 import './Card.css';
+import { Spoils } from './Spoil';
 
 export const Card = (props) => {
 
@@ -8,8 +9,12 @@ export const Card = (props) => {
         mainClass += ' faction-leader';
     }
 
-    const spoils = props.spoils.includes('ROME_CONSUL')
-        ? <small>HRAO</small>
+    const ROME_CONSUL = props.spoils.map(s => s.id).includes('ROME_CONSUL')
+        ? <small>ROME_CONSUL</small>
+        : ''
+
+    const FIELD_CONSUL = props.spoils.map(s => s.id).includes('FIELD_CONSUL')
+        ? <small>FIELD_CONSUL</small>
         : ''
 
     return (
@@ -18,7 +23,7 @@ export const Card = (props) => {
             <div className="col-sm-2">
                 <small>[{props.id}]</small>
             </div>
-            <div className="col-sm-8">
+            <div className="col-sm-7">
                 <p className="text-center card-value">
                     {!props.isFactionLeader  
                         ? <b>{props.name}</b>
@@ -26,8 +31,9 @@ export const Card = (props) => {
                     }
                 </p>
             </div>
-            <div className="col-sm-2">
-                {spoils}
+            <div className="col-sm-3">
+                {ROME_CONSUL}
+                {FIELD_CONSUL}
             </div>
         </div>    
         <div className="row">
@@ -48,7 +54,7 @@ export const Card = (props) => {
         </div>
         <div className="row">
             <div className="col-sm-3">
-                <small>Poluparity</small>
+                <small>Popularity</small>
                 <p className="card-value">{props.popularity}</p>
             </div>
             <div className="col-sm-6 text-center">
@@ -79,6 +85,12 @@ export class CardModel {
             sumTalents += this.knights ? this.knights : 0;
             this.talents += sumTalents;
         }
+    }
+
+    addSpoil(label) {
+        const spoil = Spoils[label];
+        this.influence += spoil.influence;
+        this.spoils.push(spoil);
     }
 
 }

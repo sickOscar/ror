@@ -1,13 +1,42 @@
 export default {
 
-    findHRAO: (G) => {
+
+    findHRAOOrder: (G) => {
+        const order = [
+            {
+                id: 'ROME_CONSUL',
+            },
+            {
+                id: 'FIELD_CONSUL'
+            }
+        ];
+
         for(let i = 0; i < G.players.length; i++) {
-            for(let j = 0; G.players[i].tableCards.length; j++) {
-                if (G.players[i].tableCards[j].spoils.includes('ROME_CONSUL')) {
-                    return G.players[i].tableCards[j];
+            for(let j = 0; j < G.players[i].tableCards.length; j++) {
+
+                let spoils = G.players[i].tableCards[j].spoils;
+
+                if (spoils && spoils.map(s => s.id).includes('ROME_CONSUL')) {
+                    let rank = order.find(r => r.id === 'ROME_CONSUL')
+                    rank.player = G.players[i];
+                    rank.index = i;
+                    rank.card = G.players[i].tableCards[j];
                 }
+
+                if (spoils && spoils.map(s => s.id).includes('FIELD_CONSUL')) {
+                    let rank = order.find(r => r.id === 'FIELD_CONSUL')
+                    rank.player = G.players[i];
+                    rank.index = i;
+                    rank.card = G.players[i].tableCards[j];
+                }
+
             }
         }
-    }
+
+        return order;
+
+    },
+
+
 
 }

@@ -18,6 +18,9 @@ import { Neutrals } from './Neutrals.js';
 import { CardModel } from './Card';
 
 import RevenueBot from './RevenueBot';
+import Util from './Util';
+
+const forumState = require('./data/forum.json');
 
 const deck = new DeckModel();
 
@@ -30,7 +33,8 @@ const initialHands = [
 ]
 
 const randomHRAOIndex = Math.round(Random.Number(14));
-_.flattenDeep(initialHands)[randomHRAOIndex].spoils.push('ROME_CONSUL');
+_.flattenDeep(initialHands)[randomHRAOIndex].addSpoil('ROME_CONSUL');
+
 
 
 const Ror = Game({
@@ -169,6 +173,10 @@ const Ror = Game({
       const forumDeck = G.forumDeck.slice();
       forumDeck.pop();
       return {...G, forumDeck}
+    },
+
+    goToGameState(G, ctx, phase, gameState) {
+      return {...gameState};
     }
 
 
@@ -178,11 +186,11 @@ const Ror = Game({
     phases: [
       { 
         name: 'mortality',
-        allowedMoves: ['drawMortalityChit', 'killSenator'],
+        // allowedMoves: ['drawMortalityChit', 'killSenator'],
       },
       {
         name: 'revenue',
-        allowedMoves: ['distributeTalents', 'doStateContribution'],
+        // allowedMoves: ['distributeTalents', 'doStateContribution'],
         onPhaseBegin: (G, ctx) => {
 
           const game = Object.assign({}, G);
@@ -204,13 +212,18 @@ const Ror = Game({
       },
       {
         name: 'forum',
-        allowedMoves: ['drawForumCard'],
+        // allowedMoves: ['drawForumCard'],
         onPhaseBegin: (G, ctx) => {
-
           const game = {...G};
           game.republic.events = [];
-
           return game;
+        },
+        turnOrder: {
+          first: (G) => {
+            const HRAOOrder = Util.findHRAOOrder(G);
+            console.log('FIRST PLAYER:', HRAOOrder[0].index)
+            return HRAOOrder[0].index
+          }
         }
       }
     ]
@@ -219,42 +232,64 @@ const Ror = Game({
 
 })
 
-const Board = (props) => (
+class Board extends React.Component {
 
-  <div className="container-fluid">
-    <div className="row">
-        <div className="col-sm-12">
-          <div>
-            <p>Player: {props.ctx.currentPlayer} | phase: {props.ctx.phase} | treasury: {props.G.republic.treasury}</p>
+  constructor(props) {
+    super(props);
+  }
+
+  goToGameState(phase, state) {
+
+    if (phase === 'forum') {
+      this.props.events.endPhase();
+      this.props.events.endPhase();
+    }
+    
+    this.props.moves.goToGameState(phase, state);
+  }
+
+  render() {
+    return (
+    <div className="container-fluid">
+        <div className="row">
+            <div className="col-sm-6">
+              <div>
+                <p>Player: {this.props.ctx.currentPlayer} | phase: {this.props.ctx.phase} | treasury: {this.props.G.republic.treasury}</p>
+              </div>
+
+              {this.props.ctx.phase === 'mortality' 
+                && <MortalityBoard {...this.props}></MortalityBoard>
+              }
+
+              {this.props.ctx.phase === 'revenue' && this.props.ctx.currentPlayer === '0' 
+                && <RevenueBoard {...this.props}></RevenueBoard>
+              }
+              {this.props.ctx.phase === 'revenue' && this.props.ctx.currentPlayer !== '0' 
+                && <RevenueBot {...this.props}></RevenueBot>
+              }
+
+
+              {this.props.ctx.phase === 'forum'
+                && <ForumBoard {...this.props}></ForumBoard>}
+
+            </div>
+            <div className="col-sm-4">
+              <button onClick={() => this.goToGameState('forum', forumState)}>GO TO FORUM</button>
+            </div>
+
+            <div className="col-sm-12">
+              <PlayerBoard {...this.props}></PlayerBoard>
+            </div>
+
+            <div className="col-sm-12">
+              <Neutrals {...this.props}></Neutrals>
+            </div>
           </div>
-
-          {props.ctx.phase === 'mortality' 
-            && <MortalityBoard {...props}></MortalityBoard>
-          }
-
-          {props.ctx.phase === 'revenue' && props.ctx.currentPlayer === '0' 
-            && <RevenueBoard {...props}></RevenueBoard>
-          }
-          {props.ctx.phase === 'revenue' && props.ctx.currentPlayer !== '0' 
-            && <RevenueBot {...props}></RevenueBot>
-          }
-
-
-          {props.ctx.phase === 'forum'
-            && <ForumBoard {...props}></ForumBoard>}
-
-        </div>
-
-        <div className="col-sm-12">
-          <PlayerBoard {...props}></PlayerBoard>
-        </div>
-
-        <div className="col-sm-12">
-          <Neutrals {...props}></Neutrals>
-        </div>
       </div>
-  </div>
-)
+    )
+  }
+  
+        }
 
 const App = Client({
   game: Ror,
@@ -262,7 +297,8 @@ const App = Client({
   numPlayers: 5,
   playerView: PlayerView.STRIP_SECRETS,
   playerID: '0',
-  debug: false
+  debug: false,
+  enhancer: window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 });
 
 export default App;
