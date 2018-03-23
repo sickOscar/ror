@@ -32,11 +32,14 @@ const PopulationTable = [
     },
     {
         val: 10,
+        label: "+1 to Unrest Level",
         apply: (G, ctx) => {
-            console.log('coion');
+            const game = {...G};
+            game.republic.unrest += 1;
+            return {...game}
         },
         destroy: (G, ctx) => {
-            console.log('brao mona')
+            return {...G}
         }
     },
     {
@@ -46,7 +49,14 @@ const PopulationTable = [
         val: 12
     },
     {
-        val: 13
+        val: 13,
+        label: "No Change",
+        apply: (G, ctx) => {
+            return {...G}
+        },
+        destroy: (G,ctx) => {
+            return {...G}
+        }
     },
     {
         val: 14

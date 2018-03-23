@@ -62,6 +62,7 @@ const Ror = Game({
       unprosecutedWars: [],
       inactiveWars: [],
       imminentWars: [],
+      stateOfRepublicSpeechExit: null
     },
 
     forum: {
@@ -279,7 +280,7 @@ const Ror = Game({
     },
 
     doStateOfRepublicSpeech(G, ctx) {
-      const game = {...G};
+      let game = {...G};
       const HRAOObject = Util.findHRAOOrder(G)[0];
       console.log(HRAOObject);
 
@@ -287,8 +288,9 @@ const Ror = Game({
       const totalRoll = rolls.reduce((sum, r) => sum + r, 0);
 
       const totalResult = totalRoll + HRAOObject.card.popularity - game.republic.unrest;
-      console.log(PopulationTable[totalResult]);
 
+      game = PopulationTable[totalResult].apply(game, ctx);
+      game.republic.stateOfRepublicSpeechExit = PopulationTable[totalResult];
 
       return game;
     }
@@ -364,12 +366,19 @@ const Ror = Game({
 
           return game;
         },
-        // turnOrder: {
-        //   first: (G) => {
-        //     return 0;
-        //   },
-        //   next: (G, ctx) => (ctx.currentPlayer + 1) % ctx.numPlayers
-        // }
+        onPhaseEnd: (G, ctx) => {
+          const game = {...G};
+          game.republic.stateOfRepublicSpeechExit = null;
+          return game;
+        }
+      },
+      {
+        name: 'senate',
+        onPhaseBegin: (G, ctx) => {
+          const game = {...G};
+
+          return game;
+        }
       }
     ]
   }
