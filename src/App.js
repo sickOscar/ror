@@ -122,7 +122,6 @@ const Ror = Game({
       for(let i = 0; i < G.mortalityChitsToDraw; i++) {
         senatorsToKill.push(Random.Die(36));
       }
-      console.log('senatorsToKill', senatorsToKill)
       return {...G, mortalityChits: senatorsToKill}
     },
 
