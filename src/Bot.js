@@ -5,6 +5,8 @@ export default class Bot {
         switch(phase) {
             case 'revenue':
                 return Bot._getRevenuePlayedState(G, ctx);
+            case 'forum':
+                return Bot._getForumPlayedState(G, ctx);
             default:
                 return {...G}
         }
@@ -14,7 +16,18 @@ export default class Bot {
 
         const game = {...G}
 
-        var player = game.players[ctx.currentPlayer];
+        var player = game.players[parseInt(ctx.currentPlayer, 10)];
+        console.log('playing', player);
+
+        return game;
+    }
+
+
+    static _getForumPlayedState(G, ctx) {
+
+        const game = {...G}
+        
+        var player = game.players[parseInt(ctx.currentPlayer, 10)];
         console.log('playing', player);
 
         return game;

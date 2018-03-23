@@ -42,7 +42,7 @@ export default {
 
         let persuasable = [];
         for(let i = 0; i < Object.keys(G.players).length; i++) {
-            if(i == ctx.currentPlayer) {
+            if(i === parseInt(ctx.currentPlayer, 10)) {
                 continue;
             }
             for(let j = 0; j < G.players[i].tableCards.length; j++) {

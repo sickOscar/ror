@@ -112,11 +112,12 @@
       }
     ]
   },
-  "eventDeck": [
-    {
-      "id": 8,
-      "name": "Epidemic"
-    }
+  "playersOrder": [
+    0,
+    1,
+    2,
+    3,
+    4
   ],
   "players": {
     "0": {

@@ -12,11 +12,13 @@ import { DeckModel } from './Deck';
 
 import  MortalityBoard from './MortalityBoard.js'
 import  RevenueBoard from './RevenueBoard.js'
+import PopulationBoard from './PopulationBoard';
 import ForumBoard from './ForumBoard';
 import PlayerBoard from './PlayerBoard';
 import { Neutrals } from './Neutrals.js';
 import { CardModel } from './Card';
-import { EventModel, EventDeck} from './Event';
+import { EventDeck} from './Event';
+import GamesTable from './GamesTable';
 
 import RevenueBot from './RevenueBot';
 import ForumBot from './ForumBot';
@@ -76,6 +78,7 @@ const Ror = Game({
 
     forumDeck: deck,
     
+    playersOrder: [0, 1, 2, 3, 4],
 
     players: {
       0: {
@@ -184,6 +187,7 @@ const Ror = Game({
           break;
         case 'concession':
           game.forum.concessions.push(card);
+          break;
         default:
           break;
       }
@@ -217,7 +221,7 @@ const Ror = Game({
       }
 
       let base = parseInt(persuasor.oratory, 10) + parseInt(persuasor.influence, 10) - loyaltyModifier;
-      base += parseInt(offer);
+      base += parseInt(offer, 10);
       const roll = Random.Die(6, 2);
       const rollTotal = roll.reduce((sum ,n) => sum +n , 0)
 
@@ -259,8 +263,18 @@ const Ror = Game({
       return game;
     },
     
-    doSponsorGames(G, ctx) {
+    doSponsorGames(G, ctx, gameType, sponsor) {
       const game = {...G};
+
+      const sponsoredGame = GamesTable.find(g => g.id === gameType);
+      const senator = game.players[ctx.currentPlayer].tableCards.find(c => c.id === sponsor.id)
+      
+      if (senator.talents >= sponsoredGame.cost) {
+        senator.talents -= sponsoredGame.cost;
+        senator.popularity += sponsoredGame.popularity;
+        game.republic.unrest += sponsoredGame.unrest;
+      } 
+
       return game;
     }
 
@@ -303,16 +317,44 @@ const Ror = Game({
         onPhaseBegin: (G, ctx) => {
           const game = {...G};
           game.republic.events = [];
+
+          // set player order
+          const HRAOOrder = Util.findHRAOOrder(G);
+          const firstPlayer = HRAOOrder[0].index;
+          const playersOrder = [];
+          
+          let j = 0
+          while (j < Object.keys(game.players).length) {
+            playersOrder.push(firstPlayer + j % Object.keys(game.players).length);
+            j++;
+          }
+          game.playersOrder = playersOrder;
+
           return game;
         },
         turnOrder: {
           first: (G) => {
             const HRAOOrder = Util.findHRAOOrder(G);
-            console.log(HRAOOrder);
-            console.log('FIRST PLAYER:', HRAOOrder[0].index)
-            return HRAOOrder[0].index
-          }
+            return HRAOOrder[0].index;
+          },
+          next: (G, ctx) => (ctx.currentPlayer + 1) % ctx.numPlayers
         }
+      },
+      {
+        name: 'population',
+        onPhaseBegin: (G, ctx) => {
+          const game = {...G};
+
+          game.playersOrder = [0,1,2,3,4];
+
+          return game;
+        },
+        // turnOrder: {
+        //   first: (G) => {
+        //     return 0;
+        //   },
+        //   next: (G, ctx) => (ctx.currentPlayer + 1) % ctx.numPlayers
+        // }
       }
     ]
   }
@@ -338,12 +380,13 @@ class Board extends React.Component {
         <div className="row">
             <div className="col-sm-6">
               <div>
-                <p>Player: {this.props.ctx.currentPlayer} | phase: {this.props.ctx.phase} | treasury: {this.props.G.republic.treasury}</p>
+                <p>Player: {this.props.ctx.currentPlayer} | phase: {this.props.ctx.phase} | treasury: {this.props.G.republic.treasury} | unrest: {this.props.G.republic.unrest}</p>
               </div>
 
               {this.props.ctx.phase === 'mortality' 
                 && <MortalityBoard {...this.props}></MortalityBoard>
               }
+
 
               {this.props.ctx.phase === 'revenue' && parseInt(this.props.ctx.currentPlayer, 10) === 0 
                 && <RevenueBoard {...this.props}></RevenueBoard>
@@ -358,6 +401,10 @@ class Board extends React.Component {
 
               {this.props.ctx.phase === 'forum' && parseInt(this.props.ctx.currentPlayer, 10) !== 0 
                 && <ForumBot {...this.props}></ForumBot>}
+
+
+              {this.props.ctx.phase === 'population' 
+                && <PopulationBoard {...this.props}></PopulationBoard>}
 
             </div>
             <div className="col-sm-4">

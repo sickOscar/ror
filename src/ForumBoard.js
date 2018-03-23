@@ -1,6 +1,6 @@
 import React from 'react';
 import { Random } from 'boardgame.io/core';
-import { EventCard, EventModel } from './Event'
+import { EventCard} from './Event'
 import { SmallCard} from './SmallCard';
 import Util from './Util';
 import GamesTable from './GamesTable';
@@ -9,7 +9,7 @@ export default class ForumBoard extends React.Component {
 
     constructor(props) {
         super(props);
-        // console.log(props.G );
+        console.log(props.G)
 
         this.state = {
             rolledInitiative: null,
@@ -23,7 +23,7 @@ export default class ForumBoard extends React.Component {
             attractKnightDone: false,
 
             startedSponsorGame: false,
-            sponsorGamesDone: false
+            sponsorGamesDone: false,
         }
 
         this.rollInitiative = this.rollInitiative.bind(this);
@@ -32,6 +32,7 @@ export default class ForumBoard extends React.Component {
         this.doPersuasionAttempt = this.doPersuasionAttempt.bind(this);
         this.doAttractKnight = this.doAttractKnight.bind(this);
         this.doSponsorGames = this.doSponsorGames.bind(this);
+        this.endTurn = this.endTurn.bind(this);
     }
 
     rollInitiative() {
@@ -97,7 +98,16 @@ export default class ForumBoard extends React.Component {
         this.props.moves.doSponsorGames(gameType, sponsor);
     }
 
+    endTurn() {
+        this.props.events.endTurn();
+    }
+
+    endPhase() {
+        this.props.events.endPhase();
+    }
+
     render() {
+
         return (
             <div className="row">
                 <div className="col-sm-6">
@@ -144,6 +154,8 @@ export default class ForumBoard extends React.Component {
                     {(this.state.startedSponsorGames && !this.state.sponsorGamesDone) && 
                         <SponsorGamesBoard {...this.props} doSponsorGames={this.doSponsorGames}></SponsorGamesBoard>
                     }
+
+                    <button onClick={() => this.endTurn()}>End Turn</button>
 
                 </div>
                 <div className="col-sm-6">
@@ -295,7 +307,7 @@ class AttractKnightBoard extends React.Component {
                         <option key={senator.id} value={senator.id}>{senator.name}</option>
                     ))}
                 </select>  
-                <input type="number" min="0" max={this.state.attractor ? this.state.attractor.talents : 0} onChange={(e) => this.setKnightAttractOffer(parseInt(e.target.value))}/>
+                <input type="number" min="0" max={this.state.attractor ? this.state.attractor.talents : 0} onChange={(e) => this.setKnightAttractOffer(parseInt(e.target.value, 10))}/>
                 <button onClick={() => this.props.doAttractKnight(this.state.attractor, parseInt(this.state.offer, 10))}>Do attract</button>
             </div>
         )
