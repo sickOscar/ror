@@ -19,6 +19,7 @@ import { Neutrals } from './Neutrals.js';
 import { CardModel } from './Card';
 import { EventDeck} from './Event';
 import GamesTable from './GamesTable';
+import PopulationTable from './PopulationTable';
 
 import RevenueBot from './RevenueBot';
 import ForumBot from './ForumBot';
@@ -273,6 +274,21 @@ const Ror = Game({
         senator.popularity += sponsoredGame.popularity;
         game.republic.unrest += sponsoredGame.unrest;
       } 
+
+      return game;
+    },
+
+    doStateOfRepublicSpeech(G, ctx) {
+      const game = {...G};
+      const HRAOObject = Util.findHRAOOrder(G)[0];
+      console.log(HRAOObject);
+
+      const rolls = Random.Die(6, 3);
+      const totalRoll = rolls.reduce((sum, r) => sum + r, 0);
+
+      const totalResult = totalRoll + HRAOObject.card.popularity - game.republic.unrest;
+      console.log(PopulationTable[totalResult]);
+
 
       return game;
     }

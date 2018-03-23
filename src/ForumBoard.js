@@ -9,7 +9,7 @@ export default class ForumBoard extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(props.G)
+        // console.log(props.G)
 
         this.state = {
             rolledInitiative: null,
