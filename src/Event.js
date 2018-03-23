@@ -14,7 +14,7 @@ export class EventModel {
         eventDeck.push(new EventModel({
                 id: 8,
                 name: "Epidemic",
-                description: "Epidemic Desctiption",
+                description: "Draw six Mortality Chits",
                 apply: (G, ctx) => {
                     return {...G, 
                         mortalityChitsToDraw: 6

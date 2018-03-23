@@ -38,5 +38,29 @@ export default {
     },
 
 
+    getPersuasableSenators: (G, ctx) => {
+
+        let persuasable = [];
+        for(let i = 0; i < Object.keys(G.players).length; i++) {
+            if(i == ctx.currentPlayer) {
+                continue;
+            }
+            for(let j = 0; j < G.players[i].tableCards.length; j++) {
+                if (G.players[i].tableCards[j].isFactionLeader) {
+                    continue;
+                }
+                persuasable.push({
+                    senator: G.players[i].tableCards[j],
+                    player: G.players[i],
+                    index: i
+                })
+            }
+        }
+
+        persuasable = persuasable.concat(G.forum.senators.map(senator => ({senator})));
+        return persuasable;
+
+    }
+
 
 }

@@ -34,12 +34,26 @@ export class DeckModel {
 
     }
 
+    static drawRandomCard(deck) {
+        let card, index;
+        index = Math.round(Random.Number() * (deck.cards.length - 1));
+        console.log(deck)
+        card = deck.cards.slice(index, index + 1)[0];
+        deck.cards.splice(index, 1);
+        return new CardModel(card);
+    }
 
     drawRandom(type) {
-        const cardsOfType = this.cards.filter(c => c.type === type);
-        const index =  Math.round(Random.Number() * (cardsOfType.length - 1));
-        const card = this.cards.slice(index, index + 1)[0];
+        let card, index;
+        if (type) {
+            const cardsOfType = this.cards.filter(c => c.type === type);
+            index = Math.round(Random.Number() * (cardsOfType.length - 1));
+        } else {
+            index = Math.round(Random.Number() * (this.cards.length - 1));
+        }
+        card = this.cards.slice(index, index + 1)[0];
         this.cards.splice(index, 1);
+
         return new CardModel(card);
     }
 

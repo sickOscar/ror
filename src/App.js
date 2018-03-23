@@ -174,10 +174,21 @@ const Ror = Game({
 
     },
 
-    drawForumCard(G, ctx, id) {
-      const forumDeck = G.forumDeck.slice();
-      forumDeck.pop();
-      return {...G, forumDeck}
+    drawForumCard(G, ctx) {
+      const game = {...G};
+      const card = DeckModel.drawRandomCard(game.forumDeck);
+
+      switch(card.type) {
+        case 'senator':
+          game.forum.senators.push(card);
+          break;
+        case 'concession':
+          game.forum.concessions.push(card);
+        default:
+          break;
+      }
+
+      return {...game}
     },
 
     goToGameState(G, ctx, phase, gameState) {
@@ -192,6 +203,64 @@ const Ror = Game({
       game.forum.events.push(drawnEvent);
       game = drawnEvent.apply(game, ctx);
       
+      return game;
+    },
+
+    doPersuasionAttempt(G, ctx, persuasor, senatorObject, offer) {
+
+      const game = {...G};
+
+      let loyaltyModifier = parseInt(senatorObject.senator.loyalty, 10);
+      loyaltyModifier += senatorObject.senator.talents;
+      if (senatorObject.player) {
+        loyaltyModifier += 7;
+      }
+
+      let base = parseInt(persuasor.oratory, 10) + parseInt(persuasor.influence, 10) - loyaltyModifier;
+      base += parseInt(offer);
+      const roll = Random.Die(6, 2);
+      const rollTotal = roll.reduce((sum ,n) => sum +n , 0)
+
+      if (rollTotal <= base) {
+        let cards, targetIndex;
+        if (senatorObject.player) {
+          cards = game.players[senatorObject.index].tableCards
+          targetIndex = cards.findIndex(card => card.id === senatorObject.senator.id);
+        } else {
+          cards = game.forum.senators;
+          targetIndex = cards.findIndex(card => card.id === senatorObject.senator.id);
+        }
+        cards.splice(targetIndex, 1);
+        
+        const senatorCard = new CardModel(senatorObject.senator);
+        senatorCard.talents += offer;
+        game.players[ctx.currentPlayer].tableCards.push(senatorCard);
+
+      } else if (rollTotal >= 10 || rollTotal > base) {
+        const persuaded = game.players[senatorObject.index].tableCards.find(card => card.id === senatorObject.senator.id);
+        persuaded.talents += offer;
+      }
+
+      return {...game}
+    },
+
+    doAttractKnight(G, ctx, attractor, offer) {
+      const game = {...G};
+
+      game.players[ctx.currentPlayer].tableCards.find(c => c.id === attractor.id).talents -= offer;
+
+      const base = offer + Random.Die(6);
+      if (base >= 6) {
+        game.players[ctx.currentPlayer].tableCards.find(c => c.id === attractor.id).knights += 1;
+      } else {
+        console.log('fail')
+      }
+
+      return game;
+    },
+    
+    doSponsorGames(G, ctx) {
+      const game = {...G};
       return game;
     }
 
