@@ -14,6 +14,7 @@ import  MortalityBoard from './MortalityBoard.js'
 import  RevenueBoard from './RevenueBoard.js'
 import PopulationBoard from './PopulationBoard';
 import ForumBoard from './ForumBoard';
+import SenateBoard from './SenateBoard';
 import PlayerBoard from './PlayerBoard';
 import { Neutrals } from './Neutrals.js';
 import { CardModel } from './Card';
@@ -26,6 +27,7 @@ import ForumBot from './ForumBot';
 import Util from './Util';
 
 const forumState = require('./data/forum.json');
+const senateState = require('./data/senate.json');
 
 const deck = new DeckModel();
 
@@ -43,7 +45,16 @@ _.flattenDeep(initialHands)[randomHRAOIndex].addSpoil('ROME_CONSUL');
 const Ror = Game({
 
   name: 'RoR',
-
+  /***
+   *       _____          _                   
+   *      / ____|        | |                  
+   *     | (___     ___  | |_   _   _   _ __  
+   *      \___ \   / _ \ | __| | | | | | '_ \ 
+   *      ____) | |  __/ | |_  | |_| | | |_) |
+   *     |_____/   \___|  \__|  \__,_| | .__/ 
+   *                                   | |    
+   *                                   |_|    
+   */
   setup: () => ({
 
     mortalityChitsToDraw: 1,
@@ -117,6 +128,16 @@ const Ror = Game({
 
   }),
 
+  /***
+   *      __  __                              
+   *     |  \/  |                             
+   *     | \  / |   ___   __   __   ___   ___ 
+   *     | |\/| |  / _ \  \ \ / /  / _ \ / __|
+   *     | |  | | | (_) |  \ V /  |  __/ \__ \
+   *     |_|  |_|  \___/    \_/    \___| |___/
+   *                                          
+   *                                          
+   */
   moves: {
 
     drawMortalityChit(G, ctx) {
@@ -289,9 +310,67 @@ const Ror = Game({
 
       const totalResult = totalRoll + HRAOObject.card.popularity - game.republic.unrest;
 
+      console.log(totalResult);
       game = PopulationTable[totalResult].apply(game, ctx);
       game.republic.stateOfRepublicSpeechExit = PopulationTable[totalResult];
 
+      return game;
+    },
+
+    buildRulingCoalition(G, ctx) {
+      let game = {...G};
+
+      const totalVotes = PlayerModel.getTotalVotes(G, ctx)
+
+      const majority = Math.ceil(totalVotes / 2);
+
+      for (let i = 0; i < Object.keys(G.players).length; i++) {
+        const compareSubject = new PlayerModel(G.players[i])
+        G.players[i].votes = compareSubject.countVotes();
+        G.players[i].dominance = Object.values(G.players).reduce((dominance, player, index) => {
+          
+          if (index === i) {
+            return dominance;
+          }
+
+          const comparingTo = new PlayerModel(player);
+          const comparingToVotes = comparingTo.countVotes();
+          
+          if (comparingToVotes > compareSubject.countVotes()) {
+            return dominance + 1;
+          } 
+          if (comparingToVotes === compareSubject.countVotes()) {
+            if (comparingTo.countTreasury() > compareSubject.countTreasury()) {
+              return dominance + 1;
+            } 
+            if (comparingTo.countTreasury() === compareSubject.countTreasury()) {
+              if (comparingTo.countPopularity() > compareSubject.countPopularity()) {
+                return dominance + 1;
+              }
+              if (comparingTo.countPopularity() === compareSubject.countPopularity()) {
+                if (comparingTo.countInfluence() > compareSubject.countInfluence()) {
+                  return dominance + 1;
+                } 
+              }
+            }
+          }
+
+          return dominance;
+        }, 1);
+      }
+
+      game.republic.rulingCoalition = Util.getRulingCoalition(G, majority);
+
+      return game;
+    },
+
+    doMilitaryPlan: (G, ctx) => {
+      let game = {...G};
+      return game;
+    },
+
+    doSpoilsDistribution: (G, ctx) => {
+      let game = {...G}
       return game;
     }
 
@@ -299,6 +378,16 @@ const Ror = Game({
 
   flow: {
     phases: [
+      /***
+     *      __  __                  _             _   _   _           
+     *     |  \/  |                | |           | | (_) | |          
+     *     | \  / |   ___    _ __  | |_    __ _  | |  _  | |_   _   _ 
+     *     | |\/| |  / _ \  | '__| | __|  / _` | | | | | | __| | | | |
+     *     | |  | | | (_) | | |    | |_  | (_| | | | | | | |_  | |_| |
+     *     |_|  |_|  \___/  |_|     \__|  \__,_| |_| |_|  \__|  \__, |
+     *                                                           __/ |
+     *                                                          |___/ 
+     */
       { 
         name: 'mortality',
         onPhaseEnd: (G, ctx) => {
@@ -306,6 +395,16 @@ const Ror = Game({
         }
         // allowedMoves: ['drawMortalityChit', 'killSenator'],
       },
+      /***
+     *      _____                                               
+     *     |  __ \                                              
+     *     | |__) |   ___  __   __   ___   _ __    _   _    ___ 
+     *     |  _  /   / _ \ \ \ / /  / _ \ | '_ \  | | | |  / _ \
+     *     | | \ \  |  __/  \ V /  |  __/ | | | | | |_| | |  __/
+     *     |_|  \_\  \___|   \_/    \___| |_| |_|  \__,_|  \___|
+     *                                                          
+     *                                                          
+     */
       {
         name: 'revenue',
         // allowedMoves: ['distributeTalents', 'doStateContribution'],
@@ -328,6 +427,16 @@ const Ror = Game({
           return game;
         }
       },
+      /***
+       *      ______                                    
+       *     |  ____|                                   
+       *     | |__      ___    _ __   _   _   _ __ ___  
+       *     |  __|    / _ \  | '__| | | | | | '_ ` _ \ 
+       *     | |      | (_) | | |    | |_| | | | | | | |
+       *     |_|       \___/  |_|     \__,_| |_| |_| |_|
+       *                                                
+       *                                                
+       */
       {
         name: 'forum',
         // allowedMoves: ['drawForumCard'],
@@ -357,6 +466,16 @@ const Ror = Game({
           next: (G, ctx) => (ctx.currentPlayer + 1) % ctx.numPlayers
         }
       },
+      /***
+       *      _____                            _           _     _                 
+       *     |  __ \                          | |         | |   (_)                
+       *     | |__) |   ___    _ __    _   _  | |   __ _  | |_   _    ___    _ __  
+       *     |  ___/   / _ \  | '_ \  | | | | | |  / _` | | __| | |  / _ \  | '_ \ 
+       *     | |      | (_) | | |_) | | |_| | | | | (_| | | |_  | | | (_) | | | | |
+       *     |_|       \___/  | .__/   \__,_| |_|  \__,_|  \__| |_|  \___/  |_| |_|
+       *                      | |                                                  
+       *                      |_|                                                  
+       */
       {
         name: 'population',
         onPhaseBegin: (G, ctx) => {
@@ -372,12 +491,59 @@ const Ror = Game({
           return game;
         }
       },
+      /***
+       *       _____                          _          
+       *      / ____|                        | |         
+       *     | (___     ___   _ __     __ _  | |_    ___ 
+       *      \___ \   / _ \ | '_ \   / _` | | __|  / _ \
+       *      ____) | |  __/ | | | | | (_| | | |_  |  __/
+       *     |_____/   \___| |_| |_|  \__,_|  \__|  \___|
+       *                                                 
+       *                                                 
+       */
       {
         name: 'senate',
         onPhaseBegin: (G, ctx) => {
+          console.log(G);
           const game = {...G};
 
           return game;
+        }
+      },
+      /***
+       *       _____                       _               _   
+       *      / ____|                     | |             | |  
+       *     | |        ___    _ __ ___   | |__     __ _  | |_ 
+       *     | |       / _ \  | '_ ` _ \  | '_ \   / _` | | __|
+       *     | |____  | (_) | | | | | | | | |_) | | (_| | | |_ 
+       *      \_____|  \___/  |_| |_| |_| |_.__/   \__,_|  \__|
+       *                                                       
+       *                                                       
+       */
+      {
+        name: 'combat',
+        onPhaseBegin: (G, ctx) => {
+          console.log(G);
+          const game = {...G};
+          return game;
+        }
+      },
+      /***
+       *      _____                           _           _     _                 
+       *     |  __ \                         | |         | |   (_)                
+       *     | |__) |   ___  __   __   ___   | |  _   _  | |_   _    ___    _ __  
+       *     |  _  /   / _ \ \ \ / /  / _ \  | | | | | | | __| | |  / _ \  | '_ \ 
+       *     | | \ \  |  __/  \ V /  | (_) | | | | |_| | | |_  | | | (_) | | | | |
+       *     |_|  \_\  \___|   \_/    \___/  |_|  \__,_|  \__| |_|  \___/  |_| |_|
+       *                                                                          
+       *                                                                          
+       */
+      {
+        name: 'revolution',
+        onPhaseBegin: (G, ctx) => {
+          console.log(G);
+          const game = {...G};
+          return game
         }
       }
     ]
@@ -391,6 +557,13 @@ class Board extends React.Component {
   goToGameState(phase, state) {
 
     if (phase === 'forum') {
+      this.props.events.endPhase();
+      this.props.events.endPhase();
+    }
+
+    if (phase === 'senate') {
+      this.props.events.endPhase();
+      this.props.events.endPhase();
       this.props.events.endPhase();
       this.props.events.endPhase();
     }
@@ -430,9 +603,13 @@ class Board extends React.Component {
               {this.props.ctx.phase === 'population' 
                 && <PopulationBoard {...this.props}></PopulationBoard>}
 
+              {this.props.ctx.phase === 'senate' 
+                && <SenateBoard {...this.props}></SenateBoard>}
+
             </div>
             <div className="col-sm-4">
               <button onClick={() => this.goToGameState('forum', forumState)}>GO TO FORUM</button>
+              <button onClick={() => this.goToGameState('senate', senateState)}>GO TO SENATE</button>
             </div>
 
             <div className="col-sm-12">
@@ -447,7 +624,7 @@ class Board extends React.Component {
     )
   }
   
-        }
+}
 
 const App = Client({
   game: Ror,
