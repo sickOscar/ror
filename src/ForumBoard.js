@@ -155,7 +155,10 @@ export default class ForumBoard extends React.Component {
                         <SponsorGamesBoard {...this.props} doSponsorGames={this.doSponsorGames}></SponsorGamesBoard>
                     }
 
-                    <button onClick={() => this.endTurn()}>End Turn</button>
+                    {this.state.rolledInitiative && (this.state.rolledEventTable || this.state.drawnForumCard) &&
+                        <button onClick={() => this.endTurn()}>End Turn</button>
+                    }
+                    
 
                 </div>
                 <div className="col-sm-6">

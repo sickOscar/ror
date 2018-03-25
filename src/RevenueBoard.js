@@ -115,8 +115,8 @@ export default class RevenueBoard extends React.Component {
                 <div>
                     <p>Family talents: {this.state.familyTalents}</p>
                     {Object.values(this.state.senators).map(senator => (
-                        <div key={senator.id}>
-                            <p>{senator.name}</p>
+                        <div className="input-group" key={senator.id}>
+                            <label>{senator.name}</label>
                             <input type="number" onChange={(event) => this.changeSenatorTalents(senator.id, event)} step="1" min="0" value={senator.talents} ></input>
                         </div>
                     ))}
