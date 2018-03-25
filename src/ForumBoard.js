@@ -249,18 +249,20 @@ class PersuasionAttemptBoard extends React.Component {
     render() {
         return (
             <div>
+                {/*PERSUASOR SELECT*/}
                 <select onChange={(e => this.selectPersuasor(e))}>
                     <option value="">None</option>
                     {this.state.mySenators.map(senator => (
                         <option key={senator.id} value={senator.id}>{senator.name}</option>
                     ))}
                 </select>  
+                {/*TARGET SELECT*/}
                 <select onChange={(e) => this.selectSenator(e)}>
                     <option value="">None</option>
-                    {this.state.persuasableSenators.map(senatorObject => {
-                        const content = senatorObject.senator.name + ' - ' +  (senatorObject.index ? 'Player ' + senatorObject.index : 'Forum')
+                    {this.state.persuasableSenators.map(senatorTarget => {
+                        const content = senatorTarget.senator.name + ' - ' +  (senatorTarget.index ? 'Player ' + senatorTarget.index : 'Forum')
                         return (
-                            <option key={senatorObject.senator.id} value={senatorObject.senator.id}>
+                            <option key={senatorTarget.senator.id} value={senatorTarget.senator.id}>
                                 {content}
                             </option>
                         )   
