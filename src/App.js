@@ -73,8 +73,11 @@ const Ror = Game({
       unprosecutedWars: [],
       inactiveWars: [],
       imminentWars: [],
-      stateOfRepublicSpeechExit: null
+      stateOfRepublicSpeechExit: null,
     },
+
+    legionCost: 10,
+    fleetCost: 10,
 
     forum: {
       events: [],
@@ -366,6 +369,16 @@ const Ror = Game({
 
     doMilitaryPlan: (G, ctx) => {
       let game = {...G};
+
+      const isCrisis = Util.isCrisis(G);
+      console.log('isCrisis', isCrisis);
+
+      const maxLegionsMaintainable = G.republic.treasury / G.legionCost;
+      const maxFleetMaintainable = G.republic.treasury / G.fleetCost;
+
+      
+
+
       return game;
     },
 

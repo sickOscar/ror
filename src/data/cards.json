@@ -127,5 +127,17 @@
         "id": "21",
         "name": "Tribune",
         "type": "intrigue"
+    },
+
+    {
+        "id": "22",
+        "name": "Cilician Pirates",
+        "type": "war",
+        "landStrength": 3,
+        "navalSupport": 2,
+        "navalStrength": 8,
+        "disaster": 18,
+        "stalemate": 15,
+        "talents": 10
     }
 ]

@@ -122,4 +122,13 @@ export default class Utils {
         return [];
     }
 
+    static isCrisis(G) {
+        const bigWar = G.republic.activeWars.reduce((isBigWar, war) => {
+            return bigWar || war.stregth > 15
+        }, false);
+        // TODO control if at least 1 senator is rebel
+        const rebel = false;
+        return G.republic.activeWars.length >= 3 || bigWar || rebel; 
+    }
+
 }
