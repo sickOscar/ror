@@ -13,22 +13,17 @@ export default class Bot {
     }
 
     static _getRevenuePlayedState(G, ctx) {
-
         const game = {...G}
-
-        var player = game.players[parseInt(ctx.currentPlayer, 10)];
-        console.log('playing', player);
-
+        // var player = game.players[parseInt(ctx.currentPlayer, 10)];
+        // console.log('playing', player);
         return game;
     }
 
 
     static _getForumPlayedState(G, ctx) {
-
         const game = {...G}
-        
-        var player = game.players[parseInt(ctx.currentPlayer, 10)];
-        console.log('playing', player);
+        // var player = game.players[parseInt(ctx.currentPlayer, 10)];
+        // console.log('playing', player);
 
         return game;
     }

@@ -25,7 +25,16 @@ const PopulationTable = [
         val: 7
     },
     {
-        val: 8
+        val: 8,
+        label: "+3 to Unrest Level",
+        apply: (G, ctx) => {
+            const game = {...G};
+            game.republic.unrest += 3;
+            return {...game}
+        },
+        destroy: (G, ctx) => {
+            return {...G}
+        }
     },
     {
         val: 9
