@@ -427,7 +427,27 @@ const Ror = Game({
                     game.republic.treasury -= toReachMinimumLegionsCost + toReachMinimumFleetCost;
                 }
 
-            }
+      } else {
+
+        if (game.republic.activeWars.length > 1 && Util.hasAdequateForce(G).length > 1) {
+          // plan 1
+          const toFight = Util.hasAdequateForce(G);
+        } else if (Util.anyDangerousWar(G) && Util.hasAdequateForce(G).length > 0) {
+          // paln 2
+          // intersect di Utils.anyDangerousWar(G) e Util.hasAdequateForce(G)
+          // prendo il primo elemento
+        } else if (game.republic.activeWars.length > 0 && Util.hasAdequateForce(G).length === 1) {
+          // plan3
+          // controllare che Util.hasAdequateForce(G)[0] sia inclusa in game.republic.activeWars
+        } else if (game.republic.inactiveWars.length > 0 && Util.hasAdequateForce(G).length === 1) {
+          // plan4
+          // controllare che Util.hasAdequateForce(G)[0] sia inclusa in game.republic.inactiveWars
+        }
+
+
+
+      }
+      
 
 
             return game;
@@ -635,15 +655,14 @@ class Board extends React.Component {
         this.props.moves.goToGameState(phase, state);
     }
 
-    render() {
-        return (
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-sm-6">
-                        <div>
-                            <p>Player: {this.props.ctx.currentPlayer} | phase: {this.props.ctx.phase} | treasury: {this.props.G.republic.treasury} |
-                                unrest: {this.props.G.republic.unrest}</p>
-                        </div>
+  render() {
+    return (
+    <div className="container-fluid">
+        <div className="row">
+            <div className="col-sm-6">
+              <div>
+                <p>Player: {this.props.ctx.currentPlayer} | phase: {this.props.ctx.phase} | treasury: {this.props.G.republic.treasury} | unrest: {this.props.G.republic.unrest} | legions: {this.props.G.republic.legions} | fleets: {this.props.G.republic.fleets}</p>
+              </div>
 
                         {this.props.ctx.phase === 'mortality'
                         && <MortalityBoard {...this.props}></MortalityBoard>
