@@ -4,23 +4,23 @@ import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.css'
 
-import { Client } from 'boardgame.io/react';
-import { Game, PlayerView } from 'boardgame.io/core';
-import { Random } from 'boardgame.io/core';
-import { PlayerModel} from './Player.js'
-import { DeckModel } from './Deck';
+import {Client} from 'boardgame.io/react';
+import {Game, PlayerView} from 'boardgame.io/core';
+import {Random} from 'boardgame.io/core';
+import {PlayerModel} from './Player.js'
+import {DeckModel} from './Deck';
 
-import  MortalityBoard from './MortalityBoard.js'
-import  RevenueBoard from './RevenueBoard.js'
+import MortalityBoard from './MortalityBoard.js'
+import RevenueBoard from './RevenueBoard.js'
 import PopulationBoard from './PopulationBoard';
 import ForumBoard from './ForumBoard';
 import SenateBoard from './SenateBoard';
 import CombatBoard from './CombatBoard';
 import RevolutionBoard from './RevolutionBoard';
 import PlayerBoard from './PlayerBoard';
-import { Neutrals } from './Neutrals.js';
-import { CardModel } from './Card';
-import { EventDeck} from './Event';
+import {Neutrals} from './Neutrals.js';
+import {CardModel} from './Card';
+import {EventDeck} from './Event';
 import GamesTable from './GamesTable';
 import PopulationTable from './PopulationTable';
 
@@ -63,24 +63,24 @@ const Ror = Game({
         mortalityChits: [],
 
         republic: {
-          treasury: 100,
-          unrest: 0,
-          landBills: [],
-          laws: [],
-          legions: 4,
-          fleets: 0,
-          veterans: 0,
-          events: [],
-          activeWars: [],
-          unprosecutedWars: [],
-          inactiveWars: [],
-          imminentWars: [],
-          stateOfRepublicSpeechExit: null,
+            treasury: 100,
+            unrest: 0,
+            landBills: [],
+            laws: [],
+            legions: 4,
+            fleets: 0,
+            veterans: 0,
+            events: [],
+            activeWars: [],
+            unprosecutedWars: [],
+            inactiveWars: [],
+            imminentWars: [],
+            stateOfRepublicSpeechExit: null,
         },
 
-    legionCost: 10,
-    fleetCost: 10,
-    militaryPlan: null,
+        legionCost: 10,
+        fleetCost: 10,
+        militaryPlan: null,
 
         forum: {
             events: [],
@@ -397,41 +397,40 @@ const Ror = Game({
             return game;
         },
 
-    doMilitaryPlan: (G, ctx) => {
-      let game = {...G};
+        doMilitaryPlan: (G, ctx) => {
+            let game = {...G};
 
-      const isCrisis = Util.isCrisis(game);
-      console.log('isCrisis', isCrisis);
+            const isCrisis = Util.isCrisis(game);
+            console.log('isCrisis', isCrisis);
 
-      const maxLegionsMaintainable = game.republic.treasury / game.legionCost;
-      const maxFleetMaintainable = game.republic.treasury / game.fleetCost;
+            const maxLegionsMaintainable = game.republic.treasury / game.legionCost;
+            const maxFleetMaintainable = game.republic.treasury / game.fleetCost;
 
-      if (!Util.anyWarPresent(game)) {
-        // mantain basic legion and fleet
-        const toReachMinimumLegions = 10 - game.republic.legions;
-        const toReachMinimumLegionsCost = toReachMinimumLegions * game.legionCost
-        if (toReachMinimumLegions > 0 && toReachMinimumLegions < game.republic.treasury) {
-          console.log('create', toReachMinimumLegions, ' legions for', toReachMinimumLegionsCost);
-        }
+            if (!Util.anyWarPresent(game)) {
+                // mantain basic legion and fleet
+                const toReachMinimumLegions = 10 - game.republic.legions;
+                const toReachMinimumLegionsCost = toReachMinimumLegions * game.legionCost
+                if (toReachMinimumLegions > 0 && toReachMinimumLegions < game.republic.treasury) {
+                    console.log('create', toReachMinimumLegions, ' legions for', toReachMinimumLegionsCost);
+                }
 
-        const toReachMinimumFleet = 5 - game.republic.fleets;
-        const toReachMinimumFleetCost = toReachMinimumFleet * game.fleetCost;
-        if (toReachMinimumFleet > 0 && toReachMinimumFleet < game.republic.treasury) {
-          console.log('create', toReachMinimumFleet, 'fleet for', toReachMinimumFleetCost)
-        }
+                const toReachMinimumFleet = 5 - game.republic.fleets;
+                const toReachMinimumFleetCost = toReachMinimumFleet * game.fleetCost;
+                if (toReachMinimumFleet > 0 && toReachMinimumFleet < game.republic.treasury) {
+                    console.log('create', toReachMinimumFleet, 'fleet for', toReachMinimumFleetCost)
+                }
 
-        if (toReachMinimumLegionsCost + toReachMinimumFleetCost < game.republic.treasury) {
-          game.republic.legions += toReachMinimumLegions;
-          game.republic.fleets += toReachMinimumFleet;
-          game.republic.treasury -= toReachMinimumLegionsCost + toReachMinimumFleetCost;
-        }
+                if (toReachMinimumLegionsCost + toReachMinimumFleetCost < game.republic.treasury) {
+                    game.republic.legions += toReachMinimumLegions;
+                    game.republic.fleets += toReachMinimumFleet;
+                    game.republic.treasury -= toReachMinimumLegionsCost + toReachMinimumFleetCost;
+                }
 
-      }
-      
+            }
 
 
-      return game;
-    },
+            return game;
+        },
 
         doSpoilsDistribution: (G, ctx) => {
             let game = {...G}
@@ -671,30 +670,29 @@ class Board extends React.Component {
                         {this.props.ctx.phase === 'senate'
                         && <SenateBoard {...this.props}></SenateBoard>}
 
-              {this.props.ctx.phase === 'combat' 
-                && <CombatBoard {...this.props}></CombatBoard>}
+                        {this.props.ctx.phase === 'combat'
+                        && <CombatBoard {...this.props}></CombatBoard>}
 
-              {this.props.ctx.phase === 'revolution' 
-                && <RevolutionBoard {...this.props}></RevolutionBoard>}
+                        {this.props.ctx.phase === 'revolution'
+                        && <RevolutionBoard {...this.props}></RevolutionBoard>}
 
-            </div>
-            <div className="col-sm-4">
-              <button onClick={() => this.goToGameState('forum', forumState)}>GO TO FORUM</button>
-              <button onClick={() => this.goToGameState('senate', senateState)}>GO TO SENATE</button>
-            </div>
                     </div>
                     <div className="col-sm-4">
                         <button onClick={() => this.goToGameState('forum', forumState)}>GO TO FORUM</button>
                         <button onClick={() => this.goToGameState('senate', senateState)}>GO TO SENATE</button>
                     </div>
+                </div>
+                <div className="col-sm-4">
+                    <button onClick={() => this.goToGameState('forum', forumState)}>GO TO FORUM</button>
+                    <button onClick={() => this.goToGameState('senate', senateState)}>GO TO SENATE</button>
+                </div>
 
-                    <div className="col-sm-12">
-                        <PlayerBoard {...this.props}></PlayerBoard>
-                    </div>
+                <div className="col-sm-12">
+                    <PlayerBoard {...this.props}></PlayerBoard>
+                </div>
 
-                    <div className="col-sm-12">
-                        <Neutrals {...this.props}></Neutrals>
-                    </div>
+                <div className="col-sm-12">
+                    <Neutrals {...this.props}></Neutrals>
                 </div>
             </div>
         )
