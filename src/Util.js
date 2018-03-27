@@ -138,4 +138,17 @@ export default class Utils {
             || G.republic.unprosecutedWars.length !== 0
     }
 
+    // 4.05.32
+    // se eiste una dangerous war 
+    static anyDangerousWar(G) {
+        return false;
+    }
+
+    // 4.05.31
+    // deve ritornare un array con le guerre possibili da ingaggiare con adequate force 
+    static hasAdequateForce(G) {
+        // deve controllare quenti build di legion + flotte possono essere fatti e fare i conti
+        return [];
+    }
+
 }
