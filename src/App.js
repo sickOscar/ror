@@ -280,7 +280,8 @@ const Ror = Game({
             base += parseInt(offer, 10);
             const roll = Random.Die(6, 2);
             const rollTotal = roll.reduce((sum, n) => sum + n, 0);
-
+            persuasor.talents -= offer;
+            
             if (rollTotal <= base) {
                 let cards, targetIndex;
                 if (senatorTarget.player) {
@@ -681,10 +682,6 @@ class Board extends React.Component {
                         <button onClick={() => this.goToGameState('forum', forumState)}>GO TO FORUM</button>
                         <button onClick={() => this.goToGameState('senate', senateState)}>GO TO SENATE</button>
                     </div>
-                </div>
-                <div className="col-sm-4">
-                    <button onClick={() => this.goToGameState('forum', forumState)}>GO TO FORUM</button>
-                    <button onClick={() => this.goToGameState('senate', senateState)}>GO TO SENATE</button>
                 </div>
 
                 <div className="col-sm-12">
