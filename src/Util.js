@@ -131,4 +131,11 @@ export default class Utils {
         return G.republic.activeWars.length >= 3 || bigWar || rebel; 
     }
 
+    static anyWarPresent(G) {
+        return G.republic.activeWars.length !== 0
+            || G.republic.inactiveWars.length !== 0
+            || G.republic.imminentWars.length !== 0
+            || G.republic.unprosecutedWars.length !== 0
+    }
+
 }

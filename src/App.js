@@ -15,6 +15,8 @@ import  RevenueBoard from './RevenueBoard.js'
 import PopulationBoard from './PopulationBoard';
 import ForumBoard from './ForumBoard';
 import SenateBoard from './SenateBoard';
+import CombatBoard from './CombatBoard';
+import RevolutionBoard from './RevolutionBoard';
 import PlayerBoard from './PlayerBoard';
 import { Neutrals } from './Neutrals.js';
 import { CardModel } from './Card';
@@ -78,6 +80,7 @@ const Ror = Game({
 
     legionCost: 10,
     fleetCost: 10,
+    militaryPlan: null,
 
     forum: {
       events: [],
@@ -370,12 +373,33 @@ const Ror = Game({
     doMilitaryPlan: (G, ctx) => {
       let game = {...G};
 
-      const isCrisis = Util.isCrisis(G);
+      const isCrisis = Util.isCrisis(game);
       console.log('isCrisis', isCrisis);
 
-      const maxLegionsMaintainable = G.republic.treasury / G.legionCost;
-      const maxFleetMaintainable = G.republic.treasury / G.fleetCost;
+      const maxLegionsMaintainable = game.republic.treasury / game.legionCost;
+      const maxFleetMaintainable = game.republic.treasury / game.fleetCost;
 
+      if (!Util.anyWarPresent(game)) {
+        // mantain basic legion and fleet
+        const toReachMinimumLegions = 10 - game.republic.legions;
+        const toReachMinimumLegionsCost = toReachMinimumLegions * game.legionCost
+        if (toReachMinimumLegions > 0 && toReachMinimumLegions < game.republic.treasury) {
+          console.log('create', toReachMinimumLegions, ' legions for', toReachMinimumLegionsCost);
+        }
+
+        const toReachMinimumFleet = 5 - game.republic.fleets;
+        const toReachMinimumFleetCost = toReachMinimumFleet * game.fleetCost;
+        if (toReachMinimumFleet > 0 && toReachMinimumFleet < game.republic.treasury) {
+          console.log('create', toReachMinimumFleet, 'fleet for', toReachMinimumFleetCost)
+        }
+
+        if (toReachMinimumLegionsCost + toReachMinimumFleetCost < game.republic.treasury) {
+          game.republic.legions += toReachMinimumLegions;
+          game.republic.fleets += toReachMinimumFleet;
+          game.republic.treasury -= toReachMinimumLegionsCost + toReachMinimumFleetCost;
+        }
+
+      }
       
 
 
@@ -618,6 +642,12 @@ class Board extends React.Component {
 
               {this.props.ctx.phase === 'senate' 
                 && <SenateBoard {...this.props}></SenateBoard>}
+
+              {this.props.ctx.phase === 'combat' 
+                && <CombatBoard {...this.props}></CombatBoard>}
+
+              {this.props.ctx.phase === 'revolution' 
+                && <RevolutionBoard {...this.props}></RevolutionBoard>}
 
             </div>
             <div className="col-sm-4">

@@ -1,28 +1,111 @@
 const PopulationTable = [
-
     {
-        val: 0
+        val: -1,
+        label: "People revole, all players lose",
+        apply: (G, ctx) => {
+            const game = {...G};
+            game.republic.unrest += 100;
+            return {...game}
+        },
+        destroy: (G, ctx) => {
+            return {...G}
+        }
     },
     {
-        val: 1
+        val: 0,
+        label: "+6 to Unrest Level, NR, Mob",
+        apply: (G, ctx) => {
+            const game = {...G};
+            game.republic.unrest += 6;
+            return {...game}
+        },
+        destroy: (G, ctx) => {
+            return {...G}
+        }
     },
     {
-        val: 2
+        val: 1,
+        label: "+5 to Unrest Level, NR, Mob",
+        apply: (G, ctx) => {
+            const game = {...G};
+            game.republic.unrest += 5;
+            return {...game}
+        },
+        destroy: (G, ctx) => {
+            return {...G}
+        }
     },
     {
-        val: 3
+        val: 2,
+        label: "+5 to Unrest Level, NR",
+        apply: (G, ctx) => {
+            const game = {...G};
+            game.republic.unrest += 5;
+            return {...game}
+        },
+        destroy: (G, ctx) => {
+            return {...G}
+        }
     },
     {
-        val: 4
+        val: 3,
+        label: "+5 to Unrest Level, MS",
+        apply: (G, ctx) => {
+            const game = {...G};
+            game.republic.unrest += 5;
+            return {...game}
+        },
+        destroy: (G, ctx) => {
+            return {...G}
+        }
     },
     {
-        val: 5
+        val: 4,
+        label: "+5 to Unrest Level",
+        apply: (G, ctx) => {
+            const game = {...G};
+            game.republic.unrest += 5;
+            return {...game}
+        },
+        destroy: (G, ctx) => {
+            return {...G}
+        }
     },
     {
-        val: 6
+        val: 5,
+        label: "+4 to Unrest Level, MS",
+        apply: (G, ctx) => {
+            const game = {...G};
+            game.republic.unrest += 4;
+            return {...game}
+        },
+        destroy: (G, ctx) => {
+            return {...G}
+        }
     },
     {
-        val: 7
+        val: 6,
+        label: "+4 to Unrest Level",
+        apply: (G, ctx) => {
+            const game = {...G};
+            game.republic.unrest += 4;
+            return {...game}
+        },
+        destroy: (G, ctx) => {
+            return {...G}
+        }
+    },
+    {
+        val: 7,
+        label: "+3 to Unrest Level, MS",
+        apply: (G, ctx) => {
+            const game = {...G};
+            game.republic.unrest += 3;
+            return {...game}
+        },
+        destroy: (G, ctx) => {
+            return {...G}
+        }
     },
     {
         val: 8,
@@ -37,7 +120,16 @@ const PopulationTable = [
         }
     },
     {
-        val: 9
+        val: 9,
+        label: "+2 to Unrest Level",
+        apply: (G, ctx) => {
+            const game = {...G};
+            game.republic.unrest += 2;
+            return {...game}
+        },
+        destroy: (G, ctx) => {
+            return {...G}
+        }
     },
     {
         val: 10,
@@ -52,10 +144,24 @@ const PopulationTable = [
         }
     },
     {
-        val: 11
+        val: 11,
+        label: "No Change",
+        apply: (G, ctx) => {
+            return {...G}
+        },
+        destroy: (G,ctx) => {
+            return {...G}
+        }
     },
     {
-        val: 12
+        val: 12,
+        label: "No Change",
+        apply: (G, ctx) => {
+            return {...G}
+        },
+        destroy: (G,ctx) => {
+            return {...G}
+        }
     },
     {
         val: 13,
@@ -68,18 +174,61 @@ const PopulationTable = [
         }
     },
     {
-        val: 14
+        val: 14,
+        label: "No Change",
+        apply: (G, ctx) => {
+            return {...G}
+        },
+        destroy: (G,ctx) => {
+            return {...G}
+        }
     },
     {
-        val: 15
+        val: 15,
+        label: "No Change",
+        apply: (G, ctx) => {
+            return {...G}
+        },
+        destroy: (G,ctx) => {
+            return {...G}
+        }
     },
     {
-        val: 16
+        val: 16,
+        label: "-1 to Unrest Level",
+        apply: (G, ctx) => {
+            const game = {...G};
+            game.republic.unrest -= 1;
+            return {...game}
+        },
+        destroy: (G, ctx) => {
+            return {...G}
+        }
     },
     {
-        val: 17
+        val: 17,
+        label: "-2 to Unrest Level",
+        apply: (G, ctx) => {
+            const game = {...G};
+            game.republic.unrest -= 2;
+            return {...game}
+        },
+        destroy: (G, ctx) => {
+            return {...G}
+        }
     },
-
+    {
+        val: 18,
+        label: "-3 to Unrest Level",
+        apply: (G, ctx) => {
+            const game = {...G};
+            game.republic.unrest -= 3;
+            return {...game}
+        },
+        destroy: (G, ctx) => {
+            return {...G}
+        }
+    },
 ]
 
 export default PopulationTable;
