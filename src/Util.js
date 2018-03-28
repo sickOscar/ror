@@ -62,7 +62,7 @@ export default class Utils {
                 })
             }
         }
-
+        // Qui va dentro senza index e player
         persuasable = persuasable.concat(G.forum.senators.map(senator => ({senator})));
         return persuasable;
 

@@ -37,7 +37,6 @@ export class DeckModel {
     static drawRandomCard(deck) {
         let card, index;
         index = Math.round(Random.Number() * (deck.cards.length - 1));
-        console.log(deck)
         card = deck.cards.slice(index, index + 1)[0];
         deck.cards.splice(index, 1);
         return new CardModel(card);
