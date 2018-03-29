@@ -1,0 +1,14 @@
+.align-center {
+    text-align: center;
+}
+
+.tableCardsContainer {
+    margin: 0 0 10px 0;
+}
+
+.tableCards {
+    width: 100%;
+    /*background-color: blue;*/
+    text-align: center;
+}
+
