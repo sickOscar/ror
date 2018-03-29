@@ -2,119 +2,195 @@
     {
         "id": "1",
         "name": "Oscar",
-        "type": "senator"
+        "type": "senator",
+        "military": 2,
+        "oratory": 9,
+        "loyalty": 2,
+        "influence": 9
     },
     {
         "id": "2",
         "name": "Livio",
-        "type": "senator"
+        "type": "senator",
+        "military": 3,
+        "oratory": 8,
+        "loyalty": 4,
+        "influence": 6
     },
     {
         "id": "3",
         "name": "Alessio",
-        "type": "senator"
+        "type": "senator",
+        "military": 8,
+        "oratory": 6,
+        "loyalty": 1,
+        "influence": 7
     },
     {
         "id": "4",
         "name": "Gianluca",
-        "type": "senator"
+        "type": "senator",
+        "military": 1,
+        "oratory": 5,
+        "loyalty": 3,
+        "influence": 5
     },
     {
         "id": "5",
         "name": "Giulio",
-        "type": "senator"
+        "type": "senator",
+        "military": 5,
+        "oratory": 3,
+        "loyalty": 9,
+        "influence": 4
     },
     {
         "id": "6",
         "name": "Pericoli",
-        "type": "senator"
+        "type": "senator",
+        "military": 8,
+        "oratory": 7,
+        "loyalty": 1,
+        "influence": 9
     },
     {
         "id": "7",
         "name": "Shoto",
-        "type": "senator"
+        "type": "senator",
+        "military": 6,
+        "oratory": 3,
+        "loyalty": 2,
+        "influence": 7
     },
     {
         "id": "8",
         "name": "Barozzi",
-        "type": "senator"
+        "type": "senator",
+        "military": 2,
+        "oratory": 9,
+        "loyalty": 5,
+        "influence": 9
     },
     {
         "id": "9",
         "name": "Alvise",
-        "type": "senator"
+        "type": "senator",
+        "military": 6,
+        "oratory": 1,
+        "loyalty": 7,
+        "influence": 5
     },
     {
         "id": "10",
         "name": "Scaputi",
-        "type": "senator"
+        "type": "senator",
+        "military": 8,
+        "oratory": 2,
+        "loyalty": 3,
+        "influence": 7
     },
     {
         "id": "11",
         "name": "Massimo",
-        "type": "senator"
+        "type": "senator",
+        "military": 9,
+        "oratory": 7,
+        "loyalty": 7,
+        "influence": 8
     },
     {
         "id": "12",
         "name": "Piaia",
-        "type": "senator"
+        "type": "senator",
+        "military": 4,
+        "oratory": 2,
+        "loyalty": 5,
+        "influence": 2
     },
     {
         "id": "13",
         "name": "Giopego",
-        "type": "senator"
+        "type": "senator",
+        "military": 7,
+        "oratory": 6,
+        "loyalty": 3,
+        "influence": 8
     },
     {
         "id": "14",
         "name": "De Zordi",
-        "type": "senator"
+        "type": "senator",
+        "military": 4,
+        "oratory": 2,
+        "loyalty": 7,
+        "influence": 6
     },
     {
         "id": "15",
         "name": "Privato",
-        "type": "senator"
+        "type": "senator",
+        "military": 8,
+        "oratory": 6,
+        "loyalty": 4,
+        "influence": 6
     },
     {
         "id": "16",
         "name": "Manuel",
-        "type": "senator"
+        "type": "senator",
+        "military": 1,
+        "oratory": 8,
+        "loyalty": 8,
+        "influence": 7
     },
     {
         "id": "17",
         "name": "Militello",
-        "type": "senator"
+        "type": "senator",
+        "military": 6,
+        "oratory": 9,
+        "loyalty": 2,
+        "influence": 8
     },
     {
         "id": "18",
         "name": "Chioggia",
-        "type": "senator"
+        "type": "senator",
+        "military": 4,
+        "oratory": 4,
+        "loyalty": 8,
+        "influence": 5
     },
     {
         "id": "19",
         "name": "Fulvio",
-        "type": "senator"
+        "type": "senator",
+        "military": 8,
+        "oratory": 2,
+        "loyalty": 5,
+        "influence": 3
     },
 
 
     {
         "id": "1A",
-        "name": "Stateman Oscar",
-        "type": "stateman"
+        "name": "Statesman Oscar",
+        "type": "statesman"
     },
     {
         "id": "6A",
-        "name": "Stateman Pericoli",
-        "type": "stateman"
+        "name": "Statesman Pericoli",
+        "type": "statesman"
     },
     {
         "id": "4A",
-        "name": "Stateman Gianluca",
-        "type": "stateman"
+        "name": "Statesman Gianluca",
+        "type": "statesman"
     },
     {
         "id": "2A",
-        "name": "Stateman Livio",
-        "type": "stateman"
+        "name": "Statesman Livio",
+        "type": "statesman"
     },
 
 

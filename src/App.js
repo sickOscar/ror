@@ -149,7 +149,7 @@ const Ror = Game({
         drawMortalityChit(G, ctx) {
             let senatorsToKill = [];
             for (let i = 0; i < G.mortalityChitsToDraw; i++) {
-                senatorsToKill.push(Random.Die(36));
+                senatorsToKill.push(Random.Die(15)); // 36
             }
             return {...G, mortalityChits: senatorsToKill}
         },
