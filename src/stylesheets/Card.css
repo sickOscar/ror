@@ -1,0 +1,35 @@
+
+.game-card {
+    border: 2px solid cadetblue;
+}
+
+.game-card.faction-leader {
+    border: 2px solid aqua;
+}
+
+
+.game-card.active-selected {
+    background-color: chartreuse;
+}
+.game-card.passive-selected {
+    background-color: forestgreen;
+}
+
+.small-card {
+    border: 2px solid blue;
+    margin: 0 80px 40px 80px
+}
+
+.table-small-cards {
+    width: 100%;
+    /*background-color: blue;*/
+    text-align: center;
+}
+
+.small-card .active-selected {
+    background-color: brown;
+}
+
+.small-card .passive-selected {
+    background-color: saddlebrown;
+}

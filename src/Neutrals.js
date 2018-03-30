@@ -3,8 +3,17 @@ import { SmallCard } from './SmallCard';
 import './stylesheets/common.css'
 
 export class Neutrals extends React.Component {
-
+    
     render() {
+        
+        const SELECETD_ACTIVE = this.props.G.interface.selectedCard.active.length > 0
+            ? this.props.G.interface.selectedCard.active
+            : null;
+        
+        const SELECETD_PASSIVE = this.props.G.interface.selectedCard.passive.length > 0
+            ? this.props.G.interface.selectedCard.passive
+            : null;
+        
         return (
             <div className="row">
                 <div className="col-sm-12">
@@ -19,24 +28,31 @@ export class Neutrals extends React.Component {
                     
                     
                     let tableCardsContainer = player.tableCards && player.tableCards.length > 0 ? 
-                        <div className="tableCardsContainer" >
+                        <div>
                             <h6 className="align-center">Table Cards</h6>
-                            <table className="tableCards">
+                            <table className="table-small-cards">
                                 <tbody>
                                 <tr>
                                     <th>ID</th>
                                     <th>Type</th>
                                     <th>Name</th>
-                                    <th>Talents</th>
-                                    <th>Popularity</th>
-                                    <th>Influence</th>
                                     <th>Military</th>
                                     <th>Oratory</th>
                                     <th>Loyalty</th>
+                                    {/**/}
+                                    <th>Popularity</th>
+                                    <th>Influence</th>
+                                    <th>Knights</th>
+                                    <th>Talents</th>
                                 </tr>
                                 {player.tableCards.map(card => {
                                     return (
-                                        <SmallCard {...card} key={card.id} highlights={this.props.G.mortalityChits}></SmallCard>
+                                        <SmallCard {...card}
+                                                   key={card.id}
+                                                   active={SELECETD_ACTIVE && SELECETD_ACTIVE.indexOf(card.id) > -1}
+                                                   passive={SELECETD_PASSIVE && SELECETD_PASSIVE.indexOf(card.id) > -1}
+                                        >
+                                        </SmallCard>
                                     )
                                 })}
                                 </tbody>
@@ -45,7 +61,7 @@ export class Neutrals extends React.Component {
                         <div></div>;
                                             
                     let handCardsContainer = player.hand && player.hand.length > 0 ? 
-                        <div className="handCardsContainer">
+                        <div className="hand-cards-container">
                             <h6 className="align-center">Hand Cards</h6>
                             {player.hand.map(card => {
                                 return (
@@ -56,8 +72,8 @@ export class Neutrals extends React.Component {
                         <div></div>;
                     
                     return (
-                        <div style={{border: "2px solid blue", margin: "0 10px 10px 10px"}} key={playerIndex} className="col-sm-5">
-                            <p>Player: {player.name} <small>faction talents: {player.talents}</small></p>
+                        <div key={playerIndex} className="col-sm-5 small-card">
+                            <p className="align-center">Player: {player.name} <small>faction talents: {player.talents}</small></p>
                             {tableCardsContainer}
                             {handCardsContainer}
                         </div>

@@ -166,8 +166,10 @@ export default class ForumBoard extends React.Component {
                         <EventCard key={event.id} {...event}></EventCard>
                     ))}
                     {this.props.G.forum.senators.map(senator => (
+                        <table><body>
                         <SmallCard key={senator.id} {...senator}></SmallCard>
-                    ))}
+                        </body></table>
+                        ))}
                 </div>
             </div>
         )

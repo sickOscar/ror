@@ -19,7 +19,9 @@ class StateContributionBoard extends React.Component {
         this.setState({
             contributor: event.target.value,
             contribution: 0
-        })
+        });
+        this.props.moves.resetSelected();
+        this.props.moves.setCardAsSelected(event.target.value, 'ACTIVE');
     }
 
     handleContributionChange(event) {
