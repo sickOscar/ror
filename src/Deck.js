@@ -22,9 +22,9 @@ export class DeckModel {
         if (card.type === 'senator') {
             // card.oratory = 2 + Math.floor(Random.Number() * 6);
             // card.influence = 2 + Math.floor(Random.Number() * 6);
-            card.popularity = 0;
             // card.military = 2 + Math.floor(Random.Number() * 6);
             // card.loyalty = 2 + Math.floor(Random.Number() * 7);
+            card.popularity = 0;
             card.talents = 0;
             card.knights = 0;
             card.spoils = [];

@@ -23,6 +23,7 @@ export default class MortalityBoard extends React.Component {
 
     endPhase() {
         this.props.moves.resetMortalityChit();
+        this.props.moves.resetSelected();
         this.props.events.endPhase();
     }
 

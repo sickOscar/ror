@@ -1,14 +1,11 @@
 .align-center {
     text-align: center;
 }
-
-.tableCardsContainer {
-    margin: 0 0 10px 0;
+.align-middle {
+    /*display: table-cell;*/
+    vertical-align: middle;
 }
 
-.tableCards {
-    width: 100%;
-    /*background-color: blue;*/
-    text-align: center;
-}
+
+
 

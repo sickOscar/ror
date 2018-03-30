@@ -47,6 +47,7 @@ _.flattenDeep(initialHands)[randomHRAOIndex].addSpoil('ROME_CONSUL');
 const Ror = Game({
 
     name: 'RoR',
+    
     /***
      *       _____          _
      *      / ____|        | |
@@ -131,9 +132,16 @@ const Ror = Game({
                 talents: 0
             }
         },
-
+        
+        interface: {
+            selectedCard: {
+                active: [],
+                passive: []
+            },
+            
+        }
     }),
-
+    
     /***
      *      __  __
      *     |  \/  |
@@ -149,7 +157,8 @@ const Ror = Game({
         drawMortalityChit(G, ctx) {
             let senatorsToKill = [];
             for (let i = 0; i < G.mortalityChitsToDraw; i++) {
-                senatorsToKill.push(Random.Die(15).toString()); // 36
+                senatorsToKill.push(Random.Die(36).toString()); // 36
+                senatorsToKill.push("3");
             }
             const game = {...G};
             for (let playerIndex in game.players) {
@@ -161,15 +170,18 @@ const Ror = Game({
                     if (indexSenatorToKill > -1) {
                         let cardToReset = player.tableCards[indexSenatorToKill];
                         let originalCard = DeckModel.getOriginalCard(deck, cardToReset);
+                        originalCard.oldData = _.omit(cardToReset, ['id', 'type', 'name', 'military', 'oratory', 'loyalty', 'oldData', 'spoils']);
                         Object.assign(cardToReset, originalCard);
+                        game.interface.selectedCard.passive.push(cardToReset.id);
+                        
                     }
                 }
             }
-            
             return {...G, mortalityChits: senatorsToKill}
         },
         
         resetMortalityChit(G, ctx) {
+            const game = {...G};
             return {...G, mortalityChits: []}
         },
         
@@ -217,7 +229,8 @@ const Ror = Game({
             if (contribution >= 10 && contribution < 20) {
                 senator.influence += 1;
             }
-
+            
+            
             return {...game}
 
         },
@@ -473,10 +486,44 @@ const Ror = Game({
         doSpoilsDistribution: (G, ctx) => {
             let game = {...G}
             return game;
+        },
+        
+        setCardAsSelected(G, ctx, indexCard, type) {
+            const game = Object.assign({}, G);
+            // let card = null;
+            // if (!_.isEmpty(indexCard)) {
+            //     card = game.players[ctx.currentPlayer].tableCards.find(card => card.id === indexCard)
+            // }
+            if (type === 'ACTIVE') {
+                game.interface.selectedCard.active.push(indexCard);
+            } else if (type === 'PASSIVE') {
+                game.interface.selectedCard.passive.push(indexCard);
+            }
+            return {...game}
+        },
+        
+        getCardsSelected(G, ctx, indexCard, type) {
+            if (!_.isEmpty(indexCard)) {
+                if (type === 'ACTIVE') {
+                    return G.selectedCard.active;
+                } else if (type === 'PASSIVE') {
+                    return G.selectedCard.passive
+                }
+            }
+            return [];
+        },
+        
+        resetSelected(G, ctx) {
+            const game = Object.assign({}, G);
+            game.interface.selectedCard.active = [];
+            game.interface.selectedCard.passive = [];
+            return {...game}
         }
+        
 
     },
-
+    
+    
     flow: {
         phases: [
             /***
@@ -648,9 +695,9 @@ const Ror = Game({
                 }
             }
         ]
+        
     }
-
-
+    
 })
 
 class Board extends React.Component {
@@ -672,14 +719,16 @@ class Board extends React.Component {
         this.props.moves.goToGameState(phase, state);
     }
 
-  render() {
-    return (
-    <div className="container-fluid">
-        <div className="row">
-            <div className="col-sm-6">
-              <div>
-                <p>Player: {this.props.ctx.currentPlayer} | phase: {this.props.ctx.phase} | treasury: {this.props.G.republic.treasury} | unrest: {this.props.G.republic.unrest} | legions: {this.props.G.republic.legions} | fleets: {this.props.G.republic.fleets}</p>
-              </div>
+
+    render() {
+        return (
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col-sm-6">
+                        <div>
+                            <p>Player: {this.props.ctx.currentPlayer} | phase: {this.props.ctx.phase} | treasury: {this.props.G.republic.treasury} |
+                                unrest: {this.props.G.republic.unrest} | legions: {this.props.G.republic.legions} | fleets: {this.props.G.republic.fleets}</p>
+                        </div>
 
                         {this.props.ctx.phase === 'mortality'
                         && <MortalityBoard {...this.props}></MortalityBoard>
@@ -730,8 +779,8 @@ class Board extends React.Component {
             </div>
         )
     }
-
-}
+    
+    }
 
 const App = Client({
     game: Ror,
