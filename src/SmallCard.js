@@ -1,7 +1,8 @@
 import React from 'react';
 
 export const SmallCard = (props) => (
-    <tr>
+    
+    <tr style={{backgroundColor: props.highlights.indexOf(props.id) > -1 ? 'yellow' : ''}}>
         <td>[{("0" + props.id).slice(-2)}]</td>
         <td>{props.type}</td>
         <td>{props.name}</td>

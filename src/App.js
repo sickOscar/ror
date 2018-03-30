@@ -149,24 +149,41 @@ const Ror = Game({
         drawMortalityChit(G, ctx) {
             let senatorsToKill = [];
             for (let i = 0; i < G.mortalityChitsToDraw; i++) {
-                senatorsToKill.push(Random.Die(15)); // 36
+                senatorsToKill.push(Random.Die(15).toString()); // 36
             }
-            return {...G, mortalityChits: senatorsToKill}
-        },
-
-        killSenator(G, ctx, id) {
             const game = {...G};
-
             for (let playerIndex in game.players) {
                 let player = game.players[playerIndex];
-                const foundSenatorIndex = player.tableCards.findIndex(card => card.id === id);
-                if (foundSenatorIndex > -1) {
-                    player.tableCards.slice(foundSenatorIndex, foundSenatorIndex + 1);
+                for (let indexToKill = 0; indexToKill < senatorsToKill.length; indexToKill++) {
+                    const indexSenatorToKill = player.tableCards.findIndex(card => {
+                        return card.id === senatorsToKill[indexToKill].toString();
+                    });
+                    if (indexSenatorToKill > -1) {
+                        let cardToReset = player.tableCards[indexSenatorToKill];
+                        let originalCard = DeckModel.getOriginalCard(deck, cardToReset);
+                        Object.assign(cardToReset, originalCard);
+                    }
                 }
             }
-
-            return {...game}
+            
+            return {...G, mortalityChits: senatorsToKill}
         },
+        
+        resetMortalityChit(G, ctx) {
+            return {...G, mortalityChits: []}
+        },
+        
+        // killSenator(G, ctx, id) {
+        //     const game = {...G};
+        //     for (let playerIndex in game.players) {
+        //         let player = game.players[playerIndex];
+        //         const foundSenatorIndex = player.tableCards.findIndex(card => card.id === id);
+        //         if (foundSenatorIndex > -1) {
+        //             player.tableCards.slice(foundSenatorIndex, foundSenatorIndex + 1);
+        //         }
+        //     }
+        //     return {...game}
+        // },
 
         distributeTalents(G, ctx, talentsObject) {
             const players = Object.assign({}, G.players);

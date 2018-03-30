@@ -41,7 +41,14 @@ export class DeckModel {
         deck.cards.splice(index, 1);
         return new CardModel(card);
     }
-
+    
+    static getOriginalCard(deck, card) {
+        let originalCards = require('./data/cards.json');
+        return originalCards.find(c => {
+            return c.id === card.id;
+        });
+    }
+    
     drawRandom(type) {
         let card, index;
         if (type) {

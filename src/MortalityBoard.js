@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 export default class MortalityBoard extends React.Component {
 
     constructor(props) {
@@ -15,13 +16,13 @@ export default class MortalityBoard extends React.Component {
 
     drawMortalityChit() {
         this.props.moves.drawMortalityChit();
-        this.props.G.mortalityChits.map(this.props.moves.killSenator);
         this.setState({
             done: true
-        })
+        });
     }
 
     endPhase() {
+        this.props.moves.resetMortalityChit();
         this.props.events.endPhase();
     }
 
