@@ -17,6 +17,7 @@ export class Neutrals extends React.Component {
                         return '';
                     }
                     
+                    
                     let tableCardsContainer = player.tableCards && player.tableCards.length > 0 ? 
                         <div className="tableCardsContainer" >
                             <h6 className="align-center">Table Cards</h6>
@@ -35,7 +36,7 @@ export class Neutrals extends React.Component {
                                 </tr>
                                 {player.tableCards.map(card => {
                                     return (
-                                        <SmallCard {...card} key={card.id}></SmallCard>
+                                        <SmallCard {...card} key={card.id} highlights={this.props.G.mortalityChits}></SmallCard>
                                     )
                                 })}
                                 </tbody>
