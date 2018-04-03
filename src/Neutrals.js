@@ -6,8 +6,6 @@ export class Neutrals extends React.Component {
     
     render() {
         
-        // console.log('### this.props.G.players[0] --> ', this.props.G.players[0]);
-        
         const SELECETD_ACTIVE = this.props.G.interface.selectedCard.active.length > 0
             ? this.props.G.interface.selectedCard.active
             : null;

@@ -23,6 +23,7 @@ import {CardModel} from './Card';
 import {EventDeck} from './Event';
 import GamesTable from './GamesTable';
 import PopulationTable from './PopulationTable';
+import MilitaryPlan from './MilitaryPlan';
 
 import RevenueBot from './RevenueBot';
 import ForumBot from './ForumBot';
@@ -184,17 +185,6 @@ const Ror = Game({
             return {...G, mortalityChits: []}
         },
         
-        // killSenator(G, ctx, id) {
-        //     const game = {...G};
-        //     for (let playerIndex in game.players) {
-        //         let player = game.players[playerIndex];
-        //         const foundSenatorIndex = player.tableCards.findIndex(card => card.id === id);
-        //         if (foundSenatorIndex > -1) {
-        //             player.tableCards.slice(foundSenatorIndex, foundSenatorIndex + 1);
-        //         }
-        //     }
-        //     return {...game}
-        // },
 
         distributeTalents(G, ctx, talentsObject) {
             const game = {...G};
@@ -466,19 +456,23 @@ const Ror = Game({
 
       } else {
 
-        if (game.republic.activeWars.length > 1 && Util.hasAdequateForce(G).length > 1) {
+        if (game.republic.activeWars.length > 1 && Util.hasAdequateForce(game).length > 1) {
           // plan 1
-          const toFight = Util.hasAdequateForce(G);
-        } else if (Util.anyDangerousWar(G) && Util.hasAdequateForce(G).length > 0) {
+          const toFight = Util.hasAdequateForce(game);
+          game = MilitaryPlan.applyPlan1(game, ctx);
+        } else if (Util.anyDangerousWar(game) && Util.hasAdequateForce(game).length > 0) {
           // paln 2
           // intersect di Utils.anyDangerousWar(G) e Util.hasAdequateForce(G)
           // prendo il primo elemento
-        } else if (game.republic.activeWars.length > 0 && Util.hasAdequateForce(G).length === 1) {
+          game = MilitaryPlan.applyPlan2(game, ctx);
+        } else if (game.republic.activeWars.length > 0 && Util.hasAdequateForce(game).length === 1) {
           // plan3
           // controllare che Util.hasAdequateForce(G)[0] sia inclusa in game.republic.activeWars
-        } else if (game.republic.inactiveWars.length > 0 && Util.hasAdequateForce(G).length === 1) {
+          game = MilitaryPlan.applyPlan3(game, ctx);
+        } else if (game.republic.inactiveWars.length > 0 && Util.hasAdequateForce(game).length === 1) {
           // plan4
           // controllare che Util.hasAdequateForce(G)[0] sia inclusa in game.republic.inactiveWars
+          game = MilitaryPlan.applyPlan4(game, ctx);
         }
 
 
@@ -787,7 +781,7 @@ class Board extends React.Component {
         )
     }
     
-    }
+}
 
 const App = Client({
     game: Ror,
