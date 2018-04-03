@@ -21,24 +21,24 @@ export const SmallCard = (props) => {
             <td>{props.oratory}</td>
             <td>{props.loyalty}</td>
             {
-                props.highlight && props.oldData ?
-                    <td>{props.oldData.popularity} -> {props.popularity}</td> :
-                    <td>{props.popularity}</td>
+                (props.active || props.passive) && props.oldData
+                    ? <td>{props.oldData.popularity} -> {props.popularity}</td>
+                    : <td>{props.popularity}</td>
             }
             {
-                props.highlight && props.oldData ?
-                    <td>{props.oldData.influence} -> {props.influence}</td> :
-                    <td>{props.influence}</td>
+                (props.active || props.passive) && props.oldData
+                    ? <td>{props.oldData.influence} -> {props.influence}</td>
+                    : <td>{props.influence}</td>
             }
             {
-                props.highlight && props.oldData ?
-                    <td>{props.oldData.knights} -> {props.knights}</td> :
-                    <td>{props.knights}</td>
+                (props.active || props.passive) && props.oldData
+                    ? <td>{props.oldData.knights} -> {props.knights}</td>
+                    : <td>{props.knights}</td>
             }
             {
-                props.highlight && props.oldData ?
-                    <td>{props.oldData.talents} -> {props.talents}</td> :
-                    <td>{props.talents}</td>
+                (props.active || props.passive) && props.oldData
+                    ? <td>{props.oldData.talents} -> {props.talents}</td>
+                    : <td>{props.talents}</td>
             }
         </tr>
     )

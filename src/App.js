@@ -138,6 +138,7 @@ const Ror = Game({
                 active: [],
                 passive: []
             },
+            changed: []
             
         }
     }),
@@ -180,8 +181,7 @@ const Ror = Game({
             return {...G, mortalityChits: senatorsToKill}
         },
         
-        resetMortalityChit(G, ctx) {
-            const game = {...G};
+        resetMortalityChit(G) {
             return {...G, mortalityChits: []}
         },
         
