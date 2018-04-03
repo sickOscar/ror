@@ -59,6 +59,10 @@ export default class SenateBoard extends React.Component {
                     <button onClick={this.doMilitaryPlan}>Do military plan</button>
                 }
 
+                {this.state.militaryPlanDone && 
+                    <MilitaryPlanBoard {...this.props}></MilitaryPlanBoard>
+                }
+
                 {this.state.militaryPlanDone && !this.state.spoilsDistributionDone && 
                     <button onClick={this.doSpoilsDistribution}>Spoils distribution</button>
                 }
@@ -94,6 +98,15 @@ const RulingCoalitionBoard = (props) => (
                     })
                     .join(' + ')
             }</span>
+        </div>
+    </div>
+)
+
+const MilitaryPlanBoard = (props) => (
+    <div className="row">
+        <div className="col-sm-6">
+            <p>Military plan</p>
+            <p><b>{props.G.militaryPlan.description}</b></p>
         </div>
     </div>
 )

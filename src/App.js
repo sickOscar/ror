@@ -32,7 +32,7 @@ import Util from './Util';
 const forumState = require('./data/forum.json');
 const senateState = require('./data/senate.json');
 
-const deck = new DeckModel();
+const deck = new DeckModel('early');
 
 const initialHands = [
     PlayerModel.getRandomSenators(deck),
@@ -439,52 +439,30 @@ const Ror = Game({
             const maxFleetMaintainable = game.republic.treasury / game.fleetCost;
 
             if (!Util.anyWarPresent(game)) {
-                // mantain basic legion and fleet
-                const toReachMinimumLegions = 10 - game.republic.legions;
-                const toReachMinimumLegionsCost = toReachMinimumLegions * game.legionCost
-                if (toReachMinimumLegions > 0 && toReachMinimumLegions < game.republic.treasury) {
-                    console.log('create', toReachMinimumLegions, ' legions for', toReachMinimumLegionsCost);
+                
+                game = MilitaryPlan.applyPeacePlan(game);
+
+            } else {
+
+                if (game.republic.activeWars.length > 1 && Util.hasAdequateForce(game).length > 1) {
+                    // plan 1
+                    game = MilitaryPlan.applyPlan1(game, ctx);
+                } else if (Util.anyDangerousWar(game) && Util.hasAdequateForce(game).length > 0) {
+                    // plan 2
+                    // intersect di Utils.anyDangerousWar(G) e Util.hasAdequateForce(G)
+                    // prendo il primo elemento
+                    game = MilitaryPlan.applyPlan2(game, ctx);
+                } else if (game.republic.activeWars.length > 0 && Util.hasAdequateForce(game).length === 1) {
+                    // plan3
+                    // controllare che Util.hasAdequateForce(G)[0] sia inclusa in game.republic.activeWars
+                    game = MilitaryPlan.applyPlan3(game, ctx);
+                } else if (game.republic.inactiveWars.length > 0 && Util.hasAdequateForce(game).length === 1) {
+                    // plan4
+                    // controllare che Util.hasAdequateForce(G)[0] sia inclusa in game.republic.inactiveWars
+                    game = MilitaryPlan.applyPlan4(game, ctx);
                 }
-
-                const toReachMinimumFleet = 5 - game.republic.fleets;
-                const toReachMinimumFleetCost = toReachMinimumFleet * game.fleetCost;
-                if (toReachMinimumFleet > 0 && toReachMinimumFleet < game.republic.treasury) {
-                    console.log('create', toReachMinimumFleet, 'fleet for', toReachMinimumFleetCost)
-                }
-
-                if (toReachMinimumLegionsCost + toReachMinimumFleetCost < game.republic.treasury) {
-                    game.republic.legions += toReachMinimumLegions;
-                    game.republic.fleets += toReachMinimumFleet;
-                    game.republic.treasury -= toReachMinimumLegionsCost + toReachMinimumFleetCost;
-                }
-
-      } else {
-
-        if (game.republic.activeWars.length > 1 && Util.hasAdequateForce(game).length > 1) {
-          // plan 1
-          const toFight = Util.hasAdequateForce(game);
-          game = MilitaryPlan.applyPlan1(game, ctx);
-        } else if (Util.anyDangerousWar(game) && Util.hasAdequateForce(game).length > 0) {
-          // paln 2
-          // intersect di Utils.anyDangerousWar(G) e Util.hasAdequateForce(G)
-          // prendo il primo elemento
-          game = MilitaryPlan.applyPlan2(game, ctx);
-        } else if (game.republic.activeWars.length > 0 && Util.hasAdequateForce(game).length === 1) {
-          // plan3
-          // controllare che Util.hasAdequateForce(G)[0] sia inclusa in game.republic.activeWars
-          game = MilitaryPlan.applyPlan3(game, ctx);
-        } else if (game.republic.inactiveWars.length > 0 && Util.hasAdequateForce(game).length === 1) {
-          // plan4
-          // controllare che Util.hasAdequateForce(G)[0] sia inclusa in game.republic.inactiveWars
-          game = MilitaryPlan.applyPlan4(game, ctx);
-        }
-
-
-
-      }
-      
-
-
+            }
+    
             return game;
         },
 

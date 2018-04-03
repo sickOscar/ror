@@ -3,7 +3,7 @@
   "mortalityChits": [],
   "republic": {
     "treasury": 200,
-    "unrest": 3,
+    "unrest": 0,
     "landBills": [],
     "laws": [],
     "legions": 4,
@@ -18,6 +18,7 @@
   },
   "legionCost": 10,
   "fleetCost": 10,
+  "militaryPlan": null,
   "forum": {
     "events": [],
     "provinces": [],
@@ -32,53 +33,53 @@
   "forumDeck": {
     "cards": [
       {
-        "id": "2",
-        "name": "Livio",
+        "id": "5",
+        "name": "Giulio",
         "type": "senator",
-        "oratory": 4,
-        "influence": 7,
-        "popularity": 0,
-        "military": 6,
-        "loyalty": 6,
-        "talents": 0,
-        "knights": 0,
-        "spoils": []
-      },
-      {
-        "id": "10",
-        "name": "Scaputi",
-        "type": "senator",
-        "oratory": 7,
-        "influence": 3,
-        "popularity": 0,
-        "military": 6,
-        "loyalty": 7,
-        "talents": 0,
-        "knights": 0,
-        "spoils": []
-      },
-      {
-        "id": "12",
-        "name": "Piaia",
-        "type": "senator",
+        "military": 5,
         "oratory": 3,
+        "loyalty": 9,
         "influence": 4,
         "popularity": 0,
-        "military": 3,
-        "loyalty": 7,
         "talents": 0,
         "knights": 0,
         "spoils": []
       },
       {
-        "id": "15",
-        "name": "Privato",
+        "id": "7",
+        "name": "Shoto",
         "type": "senator",
+        "military": 6,
+        "oratory": 3,
+        "loyalty": 2,
+        "influence": 7,
+        "popularity": 0,
+        "talents": 0,
+        "knights": 0,
+        "spoils": []
+      },
+      {
+        "id": "11",
+        "name": "Massimo",
+        "type": "senator",
+        "military": 9,
+        "oratory": 7,
+        "loyalty": 7,
+        "influence": 8,
+        "popularity": 0,
+        "talents": 0,
+        "knights": 0,
+        "spoils": []
+      },
+      {
+        "id": "19",
+        "name": "Fulvio",
+        "type": "senator",
+        "military": 8,
         "oratory": 2,
+        "loyalty": 5,
         "influence": 3,
         "popularity": 0,
-        "military": 2,
-        "loyalty": 5,
         "talents": 0,
         "knights": 0,
         "spoils": []
@@ -99,25 +100,375 @@
         "type": "statesman"
       },
       {
-        "id": "20",
-        "name": "Tribune",
-        "type": "intrigue"
+        "id": "2A",
+        "name": "Statesman Livio",
+        "type": "statesman"
       },
       {
-        "id": "21",
-        "name": "Tribune",
-        "type": "intrigue"
+        "id": "049",
+        "type": "intrigue",
+        "subtype": "assassin",
+        "name": "Assassin"
       },
       {
-        "id": "22",
-        "name": "Cilician Pirates",
+        "id": "052",
+        "type": "concession",
+        "name": "Armaments",
+        "talents": 2,
+        "activation": "legionBuild",
+        "destroyable": true,
+        "destroyedBy": [
+          "naturalDisaster"
+        ]
+      },
+      {
+        "id": "053",
+        "type": "concession",
+        "name": "Ship Building",
+        "talents": 2,
+        "activation": "fleetBuild",
+        "destroyable": true,
+        "destroyedBy": [
+          "naturalDisaster"
+        ]
+      },
+      {
+        "id": "054",
+        "type": "concession",
+        "name": "Aegyptian Grain",
+        "talents": 5,
+        "activation": "turn",
+        "destroyable": true,
+        "destroyedBy": [
+          "Alexandrine War"
+        ]
+      },
+      {
+        "id": "055",
+        "type": "concession",
+        "name": "Sicilian Grain",
+        "talents": 4,
+        "activation": "turn",
+        "destroyable": true,
+        "destroyedBy": [
+          "sicilian Slave Revolt"
+        ]
+      },
+      {
+        "id": "056",
+        "type": "concession",
+        "name": "Harbor Fees",
+        "talents": 3,
+        "activation": "turn",
+        "destroyable": true,
+        "destroyedBy": [
+          "naturalDisaster"
+        ]
+      },
+      {
+        "id": "057",
+        "type": "concession",
+        "name": "Mining",
+        "talents": 3,
+        "activation": "turn",
+        "destroyable": true,
+        "destroyedBy": [
+          "naturalDisaster"
+        ]
+      },
+      {
+        "id": "058",
+        "type": "concession",
+        "name": "Land Commissioner",
+        "talents": 3,
+        "activation": "turn",
+        "destroyable": false
+      },
+      {
+        "id": "005",
+        "name": "1st Gallic War",
         "type": "war",
-        "landStrength": 3,
+        "landStrength": 10,
+        "navalSupport": 0,
+        "navalStrength": null,
+        "disaster": 13,
+        "standoff": 15,
+        "talents": 20,
+        "armament": true,
+        "description": "1st of 3 gallic wars (225 - 222 BC)",
+        "conditions": {
+          "provinceCreation": [
+            "Gallia Cisalpina"
+          ]
+        }
+      },
+      {
+        "id": "001",
+        "name": "1st Punic War",
+        "type": "war",
+        "landStrength": 10,
+        "navalSupport": 5,
+        "navalStrength": 10,
+        "disaster": 13,
+        "standoff": 11,
+        "talents": 35,
+        "armament": false,
+        "description": "1st of 3 punic wars (264 - 241 BC)",
+        "conditions": {
+          "activation": "attackedOrMatched",
+          "provinceCreation": [
+            "Sicilia & Corsica et Sardinia"
+          ]
+        }
+      },
+      {
+        "id": "002",
+        "name": "2nd Punic War",
+        "type": "war",
+        "landStrength": 15,
+        "navalSupport": 5,
+        "navalStrength": null,
+        "disaster": 10,
+        "standoff": 11,
+        "talents": 25,
+        "armament": true,
+        "description": "2nd of 3 punic wars (218 - 201 BC)",
+        "conditions": {
+          "provinceCreation": [
+            "Hispania Citerior",
+            "Hispania Ulterior"
+          ]
+        }
+      },
+      {
+        "id": "003",
+        "name": "1st Illyrian War",
+        "type": "war",
+        "landStrength": 5,
+        "navalSupport": 3,
+        "navalStrength": null,
+        "disaster": 5,
+        "standoff": 17,
+        "talents": 10,
+        "armament": false,
+        "drought": true,
+        "description": "1st of 2 illyrian wars (229 - 228 BC)",
+        "conditions": {
+          "activation": "attackedOrMatched",
+          "provinceCreation": [
+            "Illyrium"
+          ]
+        }
+      },
+      {
+        "id": "004",
+        "name": "2nd Illyrian War",
+        "type": "war",
+        "landStrength": 4,
         "navalSupport": 2,
-        "navalStrength": 8,
-        "disaster": 18,
-        "stalemate": 15,
-        "talents": 10
+        "navalStrength": null,
+        "disaster": 5,
+        "standoff": 17,
+        "talents": 10,
+        "armament": true,
+        "drought": true,
+        "description": "1st of 2 illyrian wars (220 - 219 BC)",
+        "conditions": {
+          "provinceCreation": [
+            "Illyrium"
+          ]
+        }
+      },
+      {
+        "id": "007",
+        "name": "2nd Macedonian War",
+        "type": "war",
+        "landStrength": 10,
+        "navalSupport": 5,
+        "navalStrength": null,
+        "disaster": 13,
+        "standoff": 14,
+        "talents": 45,
+        "armament": false,
+        "description": "2nd of 4 Macedonian wars (200 - 196 BC)",
+        "conditions": {
+          "activation": "attackedOrMatched",
+          "revolt": "hasProvince('Macedonia')"
+        }
+      },
+      {
+        "id": "008",
+        "name": "Syrian War",
+        "type": "war",
+        "landStrength": 6,
+        "navalSupport": 2,
+        "navalStrength": null,
+        "disaster": 16,
+        "standoff": 15,
+        "talents": 45,
+        "armament": true,
+        "description": "(192 - 189 BC)",
+        "conditions": {
+          "revolt": "hasProvince('Syria')"
+        }
+      },
+      {
+        "id": "034",
+        "name": "Hamilcar",
+        "type": "leader",
+        "associatedWar": [
+          "001",
+          "002"
+        ],
+        "strength": 3,
+        "disaster": 8,
+        "standoff": 12
+      },
+      {
+        "id": "035",
+        "name": "Hannibal",
+        "type": "leader",
+        "associatedWar": [
+          "001",
+          "002"
+        ],
+        "strength": 7,
+        "disaster": 9,
+        "standoff": 16
+      },
+      {
+        "id": "036",
+        "name": "Antiochus III",
+        "type": "leader",
+        "associatedWar": [
+          "008"
+        ],
+        "strength": 5,
+        "disaster": 14,
+        "standoff": 17
+      },
+      {
+        "id": "037",
+        "name": "Philip V",
+        "type": "leader",
+        "associatedWar": [
+          "006",
+          "007"
+        ],
+        "strength": 6,
+        "disaster": 15,
+        "standoff": 14
+      },
+      {
+        "type": "concession",
+        "name": "Tax Farmer",
+        "talent": 2,
+        "activation": "turn",
+        "destroyable": true,
+        "destroyedBy": [
+          ""
+        ],
+        "id": "059"
+      },
+      {
+        "type": "concession",
+        "name": "Tax Farmer",
+        "talent": 2,
+        "activation": "turn",
+        "destroyable": true,
+        "destroyedBy": [
+          ""
+        ],
+        "id": "060"
+      },
+      {
+        "type": "concession",
+        "name": "Tax Farmer",
+        "talent": 2,
+        "activation": "turn",
+        "destroyable": true,
+        "destroyedBy": [
+          ""
+        ],
+        "id": "061"
+      },
+      {
+        "type": "concession",
+        "name": "Tax Farmer",
+        "talent": 2,
+        "activation": "turn",
+        "destroyable": true,
+        "destroyedBy": [
+          ""
+        ],
+        "id": "062"
+      },
+      {
+        "type": "concession",
+        "name": "Tax Farmer",
+        "talent": 2,
+        "activation": "turn",
+        "destroyable": true,
+        "destroyedBy": [
+          ""
+        ],
+        "id": "063"
+      },
+      {
+        "type": "concession",
+        "name": "Tax Farmer",
+        "talent": 2,
+        "activation": "turn",
+        "destroyable": true,
+        "destroyedBy": [
+          ""
+        ],
+        "id": "064"
+      },
+      {
+        "type": "intrigue",
+        "name": "Tribune",
+        "id": "038"
+      },
+      {
+        "type": "intrigue",
+        "name": "Tribune",
+        "id": "039"
+      },
+      {
+        "type": "intrigue",
+        "name": "Tribune",
+        "id": "040"
+      },
+      {
+        "type": "intrigue",
+        "name": "Tribune",
+        "id": "041"
+      },
+      {
+        "type": "intrigue",
+        "name": "Tribune",
+        "id": "042"
+      },
+      {
+        "type": "intrigue",
+        "name": "Tribune",
+        "id": "043"
+      },
+      {
+        "type": "intrigue",
+        "name": "Tribune",
+        "id": "044"
+      },
+      {
+        "type": "intrigue",
+        "name": "Tribune",
+        "id": "045"
+      },
+      {
+        "type": "intrigue",
+        "name": "Tribune",
+        "id": "046"
       }
     ]
   },
@@ -133,27 +484,46 @@
       "name": "Player",
       "tableCards": [
         {
-          "id": "8",
-          "name": "Barozzi",
+          "id": "3",
+          "name": "Alessio",
           "type": "senator",
-          "oratory": 3,
-          "influence": 6,
+          "military": 8,
+          "oratory": 6,
+          "loyalty": 1,
+          "influence": 7,
           "popularity": 0,
-          "military": 5,
-          "loyalty": 4,
+          "talents": 1,
+          "knights": 0,
+          "spoils": [],
+          "oldData": {
+            "influence": 7,
+            "popularity": 0,
+            "talents": 0,
+            "knights": 0
+          }
+        },
+        {
+          "id": "12",
+          "name": "Piaia",
+          "type": "senator",
+          "military": 4,
+          "oratory": 2,
+          "loyalty": 5,
+          "influence": 2,
+          "popularity": 0,
           "talents": 1,
           "knights": 0,
           "spoils": []
         },
         {
-          "id": "14",
-          "name": "De Zordi",
+          "id": "16",
+          "name": "Manuel",
           "type": "senator",
-          "oratory": 4,
-          "influence": 9,
+          "military": 1,
+          "oratory": 8,
+          "loyalty": 8,
+          "influence": 12,
           "popularity": 0,
-          "military": 6,
-          "loyalty": 3,
           "talents": 3,
           "knights": 0,
           "spoils": [
@@ -165,19 +535,6 @@
             }
           ],
           "isFactionLeader": true
-        },
-        {
-          "id": "18",
-          "name": "Chioggia",
-          "type": "senator",
-          "oratory": 7,
-          "influence": 4,
-          "popularity": 0,
-          "military": 2,
-          "loyalty": 6,
-          "talents": 1,
-          "knights": 0,
-          "spoils": []
         }
       ],
       "hand": [],
@@ -187,41 +544,41 @@
       "name": "Neutral 1",
       "tableCards": [
         {
-          "id": "1",
-          "name": "Oscar",
+          "id": "9",
+          "name": "Alvise",
           "type": "senator",
-          "oratory": 5,
-          "influence": 6,
+          "military": 6,
+          "oratory": 1,
+          "loyalty": 7,
+          "influence": 5,
           "popularity": 0,
-          "military": 2,
-          "loyalty": 6,
           "talents": 1,
           "knights": 0,
           "spoils": []
         },
         {
-          "id": "13",
-          "name": "Giopego",
+          "id": "18",
+          "name": "Chioggia",
           "type": "senator",
-          "oratory": 3,
-          "influence": 6,
-          "popularity": 0,
           "military": 4,
-          "loyalty": 2,
+          "oratory": 4,
+          "loyalty": 8,
+          "influence": 5,
+          "popularity": 0,
           "talents": 3,
           "knights": 0,
           "spoils": [],
           "isFactionLeader": true
         },
         {
-          "id": "5",
-          "name": "Giulio",
+          "id": "13",
+          "name": "Giopego",
           "type": "senator",
-          "oratory": 7,
-          "influence": 2,
+          "military": 7,
+          "oratory": 6,
+          "loyalty": 3,
+          "influence": 8,
           "popularity": 0,
-          "military": 5,
-          "loyalty": 2,
           "talents": 1,
           "knights": 0,
           "spoils": []
@@ -234,44 +591,44 @@
       "name": "Neutral 2",
       "tableCards": [
         {
-          "id": "3",
-          "name": "Alessio",
+          "id": "2",
+          "name": "Livio",
           "type": "senator",
-          "oratory": 2,
-          "influence": 3,
+          "military": 3,
+          "oratory": 8,
+          "loyalty": 4,
+          "influence": 6,
           "popularity": 0,
-          "military": 4,
-          "loyalty": 8,
           "talents": 1,
           "knights": 0,
           "spoils": []
-        },
-        {
-          "id": "7",
-          "name": "Shoto",
-          "type": "senator",
-          "oratory": 2,
-          "influence": 7,
-          "popularity": 0,
-          "military": 7,
-          "loyalty": 3,
-          "talents": 3,
-          "knights": 0,
-          "spoils": [],
-          "isFactionLeader": true
         },
         {
           "id": "6",
           "name": "Pericoli",
           "type": "senator",
-          "oratory": 6,
-          "influence": 2,
+          "military": 8,
+          "oratory": 7,
+          "loyalty": 1,
+          "influence": 9,
           "popularity": 0,
-          "military": 4,
-          "loyalty": 7,
           "talents": 1,
           "knights": 0,
           "spoils": []
+        },
+        {
+          "id": "8",
+          "name": "Barozzi",
+          "type": "senator",
+          "military": 2,
+          "oratory": 9,
+          "loyalty": 5,
+          "influence": 9,
+          "popularity": 0,
+          "talents": 3,
+          "knights": 0,
+          "spoils": [],
+          "isFactionLeader": true
         }
       ],
       "hand": [],
@@ -281,44 +638,51 @@
       "name": "Neutral 3",
       "tableCards": [
         {
-          "id": "11",
-          "name": "Massimo",
-          "type": "senator",
-          "oratory": 4,
-          "influence": 4,
-          "popularity": 0,
-          "military": 6,
-          "loyalty": 7,
-          "talents": 1,
-          "knights": 0,
-          "spoils": []
-        },
-        {
           "id": "17",
           "name": "Militello",
           "type": "senator",
-          "oratory": 7,
-          "influence": 2,
-          "popularity": 0,
           "military": 6,
-          "loyalty": 6,
+          "oratory": 9,
+          "loyalty": 2,
+          "influence": 8,
+          "popularity": 0,
           "talents": 1,
           "knights": 0,
           "spoils": []
         },
         {
-          "id": "19",
-          "name": "Fulvio",
+          "id": "10",
+          "name": "Scaputi",
           "type": "senator",
-          "oratory": 3,
-          "influence": 2,
+          "military": 8,
+          "oratory": 2,
+          "loyalty": 3,
+          "influence": 7,
           "popularity": 0,
-          "military": 5,
-          "loyalty": 7,
+          "talents": 1,
+          "knights": 0,
+          "spoils": []
+        },
+        {
+          "id": "4",
+          "name": "Gianluca",
+          "type": "senator",
+          "military": 1,
+          "oratory": 5,
+          "loyalty": 3,
+          "influence": 5,
+          "popularity": 0,
           "talents": 3,
           "knights": 0,
           "spoils": [],
-          "isFactionLeader": true
+          "isFactionLeader": true,
+          "oldData": {
+            "influence": 5,
+            "popularity": 0,
+            "talents": 0,
+            "knights": 0,
+            "isFactionLeader": true
+          }
         }
       ],
       "hand": [],
@@ -328,41 +692,41 @@
       "name": "Neutral 4",
       "tableCards": [
         {
-          "id": "16",
-          "name": "Manuel",
+          "id": "15",
+          "name": "Privato",
           "type": "senator",
-          "oratory": 3,
+          "military": 8,
+          "oratory": 6,
+          "loyalty": 4,
           "influence": 6,
           "popularity": 0,
-          "military": 6,
-          "loyalty": 7,
-          "talents": 1,
-          "knights": 0,
-          "spoils": []
-        },
-        {
-          "id": "9",
-          "name": "Alvise",
-          "type": "senator",
-          "oratory": 6,
-          "influence": 4,
-          "popularity": 0,
-          "military": 7,
-          "loyalty": 6,
           "talents": 3,
           "knights": 0,
           "spoils": [],
           "isFactionLeader": true
         },
         {
-          "id": "4",
-          "name": "Gianluca",
+          "id": "1",
+          "name": "Oscar",
           "type": "senator",
-          "oratory": 7,
-          "influence": 5,
-          "popularity": 0,
           "military": 2,
+          "oratory": 9,
+          "loyalty": 2,
+          "influence": 9,
+          "popularity": 0,
+          "talents": 1,
+          "knights": 0,
+          "spoils": []
+        },
+        {
+          "id": "14",
+          "name": "De Zordi",
+          "type": "senator",
+          "military": 4,
+          "oratory": 2,
           "loyalty": 7,
+          "influence": 6,
+          "popularity": 0,
           "talents": 1,
           "knights": 0,
           "spoils": []
@@ -370,6 +734,12 @@
       ],
       "hand": [],
       "talents": 0
+    }
+  },
+  "interface": {
+    "selectedCard": {
+      "active": [],
+      "passive": []
     }
   }
 }

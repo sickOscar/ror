@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card } from './Card';
 
 export default class RevolutionBoard extends React.Component {
 
@@ -11,6 +12,12 @@ export default class RevolutionBoard extends React.Component {
         return (
             <div>
                 <h2>Revolution Board</h2>
+
+                <h3>Hand Cards</h3>
+                {this.props.G.players[this.props.ctx.currentPlayer].hand.map(card => (
+                    <Card {...card}></Card>
+                ))}
+
                 <button onClick={() => this.props.events.endPhase()}>End revolution Phase</button>
             </div>
         )

@@ -138,17 +138,92 @@ export default class Utils {
             || G.republic.unprosecutedWars.length !== 0
     }
 
-    // 4.05.32
-    // se eiste una dangerous war 
+    /**
+     * 4.05.32
+     * 
+     * A War is “Dangerous” if it has matching cards waiting to be drawn regardless 
+     * of whether or not it is currently Active. 
+     * 
+     * The measure of the relative danger such Wars pose when more than one is in play 
+     * is determined by the force that would be Adequate against it if all of those 
+     * remaining matching cards were in play.
+     * 
+     * @param {*} G 
+     */
     static anyDangerousWar(G) {
         return false;
     }
 
-    // 4.05.31
-    // deve ritornare un array con le guerre possibili da ingaggiare con adequate force 
-    static hasAdequateForce(G) {
+    /**
+     * 4.05.31
+     * 
+     * “Adequate Force” is defined as a number of Legions (or Fleets in the case of Naval Battles) 
+     * equal to the Strength of the opposing War. 
+     * 
+     * Commander and Veteran bonuses are not calculated in determining whether a force is adequate.
+     *  
+     * The minimum number of Fleets is always used in support. 
+     * 
+     * Half (fractions rounded down) of any excess Legions (or Fleets in the case of Naval Battles) 
+     * up to the maximum modi er of +15 not committed to any battle accompany the “Adequate Force”.
+     *  
+     * Veterans owing allegiance to any Senator of the Commander’s Faction will accompany that force.
+     *  
+     * Otherwise, commitment of excess Veterans and the decision of which Commander  
+     * fights which of the two Wars being attacked is at the discretion of the Dominant Player. 
+     * 
+     * __________________________________________________________________________________
+     * 
+     * Checks all wars passed (or if not passed, checks active wars) and finds a combination
+     * of wars that can be fought
+     * 
+     * @param {*} G 
+     * @return Array ok ids of wars which can be fought
+     */
+    static hasAdequateForce(G, warsToCheck) {
         // deve controllare quenti build di legion + flotte possono essere fatti e fare i conti
-        return [];
+
+        warsToCheck = warsToCheck || G.republic.activeWars;
+
+        // const maxBuildableLegions = Math.floor(G.republic.treasury / G.legionCost);
+        // const maxBuildableFleet = Math.floor(G.republic.treasury / G.fleetCost);
+
+        warsToCheck = _.orderBy(warsToCheck, war => war.landStrength);
+
+        const game = {...G};
+
+        const canBuildToFightArray = warsToCheck.map(war => Utils.canBuildToFight(war, game));
+        const fightable = _.zip(warsToCheck, canBuildToFightArray)
+            .filter(pair => pair[1]) // get those with canFight === true
+
+        return fightable;
+    }
+
+    /**
+     * 
+     * Return true or false, changes game object passed so the next call has an updated game
+     * if previous iterations have found a fightable war
+     * 
+     * @param {*} game 
+     * @param {*} war 
+     * @return boolean
+     */
+    static canBuildToFight(war, game) { 
+        // already has force to fight
+        if (game.republic.legions >= war.landStrength && game.republic.fleets >= war.navalSupport + war.navalStrength) {
+            return true;
+        } 
+
+        const fleetsToBuild = (war.navalSupport + war.navalStrenght) - game.republic.fleets;
+        const legionsToBuild = war.landStrength - game.republic.legions;
+        const totalCost = (fleetsToBuild * game.fleetCost) + (legionsToBuild * game.legionCost);
+
+        if (totalCost < game.republic.treasury) {
+            // can build
+            game.republic.treasury -= totalCost;
+            return true;
+        }
+
     }
 
 }
