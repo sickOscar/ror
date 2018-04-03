@@ -74,7 +74,8 @@ export default class RevenueBoard extends React.Component {
                 obj[senator.id] = Object.assign({}, senator);
                 return obj;
             }, {})
-        }
+        };
+        // this.state.originalSenators = JSON.parse(JSON.stringify(this.state.senators)) // Object.assign({}, this.state.senators);
         
     }
     
@@ -107,6 +108,7 @@ export default class RevenueBoard extends React.Component {
     }
 
     endTurn() {
+        this.props.moves.resetSelected();
         this.props.events.endTurn();
     }
 
@@ -119,7 +121,7 @@ export default class RevenueBoard extends React.Component {
                     {Object.values(this.state.senators).map(senator => (
                         <div className="input-group" key={senator.id}>
                             <label>{senator.name}</label>
-                            <input type="number" onChange={(event) => this.changeSenatorTalents(senator.id, event)} step="1" min="0" value={senator.talents} ></input>
+                            <input type="number" onChange={(event) => this.changeSenatorTalents(senator.id, event)} step="1" min="0" max="1000" value={senator.talents} ></input>
                         </div>
                     ))}
                     <button onClick={() => this.save()}>Save</button>

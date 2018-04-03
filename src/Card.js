@@ -2,6 +2,7 @@ import React from 'react';
 import './stylesheets/common.css'
 import './stylesheets/Card.css'
 import { Spoils } from './Spoil';
+import _ from 'lodash';
 
 export const Card = (props) => {
     
@@ -51,7 +52,7 @@ export const Card = (props) => {
             <div className="col-sm-3 align-center align-middle">
                 <small>Talents</small>
                 {
-                    (props.active || props.passive) && props.oldData
+                    (props.active || props.passive) && _.has(props.oldData, 'talents')
                         ? <p className="card-value">{props.oldData.talents} -> {props.talents}</p>
                         : <p className="card-value">{props.talents}</p>
                 }
@@ -78,7 +79,7 @@ export const Card = (props) => {
             <div className="col-sm-3 align-center align-middle">
                 <small>Popularity</small>
                 {
-                    (props.active || props.passive) && props.oldData
+                    (props.active || props.passive) && _.has(props.oldData, 'popularity')
                         ? <p className="card-value">{props.oldData.popularity} -> {props.popularity}</p>
                         : <p className="card-value">{props.popularity}</p>
                 }</div>
@@ -86,7 +87,7 @@ export const Card = (props) => {
             <div className="col-sm-6 align-center align-middle">
                 <small>Influence</small>
                 {
-                    (props.active || props.passive) && props.oldData
+                    (props.active || props.passive) && _.has(props.oldData, 'influence')
                         ? <p className="card-value">{props.oldData.influence} -> {props.influence}</p>
                         : <p className="card-value">{props.influence}</p>
                 }
@@ -95,7 +96,7 @@ export const Card = (props) => {
             <div className="col-sm-3 align-center align-middle">
                 <small>Knights</small>
                 {
-                    (props.active || props.passive) && props.oldData
+                    (props.active || props.passive) && _.has(props.oldData, 'knights')
                         ? <p className="card-value">{props.oldData.knights} -> {props.knights}</p>
                         : <p className="card-value">{props.knights}</p>
                 }

@@ -139,7 +139,7 @@ const Ror = Game({
                 active: [],
                 passive: []
             },
-            
+            // changed: []
         }
     }),
     
@@ -181,28 +181,24 @@ const Ror = Game({
             return {...G, mortalityChits: senatorsToKill}
         },
         
-        resetMortalityChit(G, ctx) {
-            const game = {...G};
+        resetMortalityChit(G) {
             return {...G, mortalityChits: []}
         },
         
-        // killSenator(G, ctx, id) {
-        //     const game = {...G};
-        //     for (let playerIndex in game.players) {
-        //         let player = game.players[playerIndex];
-        //         const foundSenatorIndex = player.tableCards.findIndex(card => card.id === id);
-        //         if (foundSenatorIndex > -1) {
-        //             player.tableCards.slice(foundSenatorIndex, foundSenatorIndex + 1);
-        //         }
-        //     }
-        //     return {...game}
-        // },
 
         distributeTalents(G, ctx, talentsObject) {
+            const game = {...G};
             const players = Object.assign({}, G.players);
-            players[ctx.currentPlayer].tableCards = Object.values(talentsObject.senators);
+            const originalSenators = players[ctx.currentPlayer].tableCards;
             players[ctx.currentPlayer].talents = talentsObject.familyTalents;
-
+            _.each(talentsObject.senators, senator => {
+                let originalSenator = _.find(originalSenators, {id: senator.id});
+                if (senator.talents !== originalSenator.talents) {
+                    game.interface.selectedCard.passive.push(senator.id);
+                    senator.oldData = _.pick(originalSenator, ['talents']);
+                }
+            });
+            players[ctx.currentPlayer].tableCards = Object.values(talentsObject.senators);
             return {...G, players}
         },
 
@@ -763,7 +759,7 @@ class Board extends React.Component {
         )
     }
     
-    }
+}
 
 const App = Client({
     game: Ror,
