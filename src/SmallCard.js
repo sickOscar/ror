@@ -15,8 +15,9 @@ export const SmallCard = (props) => {
     
     return (
         <tr className={mainClass}>
-            <td>[{("0" + props.id).slice(-2)}]</td>
-            <td>{props.type}</td>
+            {/* <td>[{("0" + props.id).slice(-2)}]</td> */}
+            <td>{ props.type === 'senator' ? '[' + props.id +']' : ""}</td>
+            {/* <td>{props.type}</td> */}
             <td>{props.name}</td>
             <td>{props.military}</td>
             <td>{props.oratory}</td>

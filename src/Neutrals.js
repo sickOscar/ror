@@ -31,20 +31,22 @@ export class Neutrals extends React.Component {
                         <div>
                             <h6 className="align-center">Table Cards</h6>
                             <table className="table-small-cards">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        {/* <th>Type</th> */}
+                                        <th>Name</th>
+                                        <th>Military</th>
+                                        <th>Oratory</th>
+                                        <th>Loyalty</th>
+                                        {/**/}
+                                        <th>Popularity</th>
+                                        <th>Influence</th>
+                                        <th>Knights</th>
+                                        <th>Talents</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Type</th>
-                                    <th>Name</th>
-                                    <th>Military</th>
-                                    <th>Oratory</th>
-                                    <th>Loyalty</th>
-                                    {/**/}
-                                    <th>Popularity</th>
-                                    <th>Influence</th>
-                                    <th>Knights</th>
-                                    <th>Talents</th>
-                                </tr>
                                 {player.tableCards.map(card => {
                                     return (
                                         <SmallCard {...card}

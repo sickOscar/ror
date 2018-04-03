@@ -52,6 +52,10 @@ export class DeckModel {
 
     }
 
+    push(card) {
+        this.cards.push(card);
+    }
+
     /**
      * Adds tribunes to stage deck
      * @param {*} deck 
@@ -59,6 +63,7 @@ export class DeckModel {
     static addTribunesToDeck(deck, stage) {
         const tribuneCard = {
             type: "intrigue",
+            subtype: "tribune",
             name: "Tribune"
         }
 
@@ -113,16 +118,13 @@ export class DeckModel {
     }
 
     static augmentCard(card) {
-        
         if (card.type === 'senator') {
             card.popularity = card.popularity || 0;
             card.talents = 0;
             card.knights = 0;
             card.spoils = [];
         }
-
         return card;
-
     }
 
     static drawRandomCard(deck) {
@@ -139,6 +141,48 @@ export class DeckModel {
             return c.id === card.id;
         });
     }
+
+    /**
+     * 
+     * @param {stage, earlyDeck, middleDeck, lateDeck} params 
+     */
+    static buildInitialDeck(params) {
+        const deck = new DeckModel();
+
+        const eraEndsCard = {
+            id: "065",
+            type: "end",
+            name: "Era Ends"
+        }
+
+        if (params.stage === 'early') {
+            const sixEarlyCards = [];
+            let i;
+            for(i = 0; i < 6; i++) {
+                sixEarlyCards.push(params.earlyDeck.drawRandom());
+            }
+            const sixMiddleCards = [];
+            for(i = 0; i < 6; i++) {
+                sixMiddleCards.push(params.middleDeck.drawRandom());
+            }
+            const mix = Random.Shuffle(sixEarlyCards.concat(sixMiddleCards).concat([eraEndsCard]));
+            
+            params.earlyDeck.cards = Random.Shuffle(params.earlyDeck.cards);
+
+            for (i = 0; i < params.earlyDeck.cards.length; i++) {
+                deck.push(params.earlyDeck.cards[i]);
+            }
+
+            for (i = 0; i < mix.length; i++) {
+                deck.push(mix[i]);
+            }
+        }
+        return deck;
+    }
+
+    static drawFromTop(deck) {
+        return deck.cards.shift();
+    }
     
     drawRandom(params) {
         let card, index;
@@ -152,6 +196,30 @@ export class DeckModel {
         this.cards.splice(index, 1);
 
         return new CardModel(card);
+    }
+
+    drawInitialRandom() {
+        const cards = [];
+        let validCard = false;
+        for(let i = 0; i < 3; i++) {
+            validCard = false;
+            let card;
+            let drawnCard;
+            while(!validCard) {
+                let cardIndex = Math.round(Random.Number() * (this.cards.length - 1));
+                card = this.cards[cardIndex];
+                if (card.type === 'intrigue' 
+                    || (card.type === 'senator' && card.statesman === true)
+                    || card.type === 'concession'
+                ) {
+                    validCard = true;
+                    drawnCard = this.cards.slice(cardIndex, cardIndex + 1)[0];
+                    this.cards.splice(cardIndex, 1);
+                }
+            }
+            cards.push(new CardModel(drawnCard));
+        }
+        return cards;
     }
 
     concat() {

@@ -36,20 +36,33 @@ const earlyDeck = new DeckModel('early');
 const middleDeck = new DeckModel('middle');
 const lateDeck = new DeckModel('late');
 
-const earlyDeckCopy = new DeckModel('early');
-
-const initialHands = [
-    PlayerModel.getRandomSenators(earlyDeckCopy),
-    PlayerModel.getRandomSenators(earlyDeckCopy),
-    PlayerModel.getRandomSenators(earlyDeckCopy),
-    PlayerModel.getRandomSenators(earlyDeckCopy),
-    PlayerModel.getRandomSenators(earlyDeckCopy)
+const initialTableCards = [
+    PlayerModel.getRandomSenators(earlyDeck),
+    PlayerModel.getRandomSenators(earlyDeck),
+    PlayerModel.getRandomSenators(earlyDeck),
+    PlayerModel.getRandomSenators(earlyDeck),
+    PlayerModel.getRandomSenators(earlyDeck)
 ]
 
-const forumDeck = new DeckModel();
+const initialHands = [
+    earlyDeck.drawInitialRandom(),
+    earlyDeck.drawInitialRandom(),
+    earlyDeck.drawInitialRandom(),
+    earlyDeck.drawInitialRandom(),
+    earlyDeck.drawInitialRandom()
+]
+
+const forumDeck = DeckModel.buildInitialDeck({
+    stage: 'early',
+    earlyDeck: earlyDeck,
+    middleDeck: middleDeck
+});
+
+console.log('forum deck', forumDeck);
+
 
 const randomHRAOIndex = Math.round(Random.Number(14));
-_.flattenDeep(initialHands)[randomHRAOIndex].addSpoil('ROME_CONSUL');
+_.flattenDeep(initialTableCards)[randomHRAOIndex].addSpoil('ROME_CONSUL');
 
 const Ror = Game({
 
@@ -110,32 +123,32 @@ const Ror = Game({
         players: {
             0: {
                 name: "Player",
-                tableCards: initialHands[0],
-                hand: [],
+                tableCards: initialTableCards[0],
+                hand: initialHands[0],
                 talents: 0,
             },
             1: {
                 name: "Neutral 1",
-                tableCards: initialHands[1],
-                hand: [],
+                tableCards: initialTableCards[1],
+                hand: initialHands[1],
                 talents: 0
             },
             2: {
                 name: "Neutral 2",
-                tableCards: initialHands[2],
-                hand: [],
+                tableCards: initialTableCards[2],
+                hand: initialHands[2],
                 talents: 0
             },
             3: {
                 name: "Neutral 3",
-                tableCards: initialHands[3],
-                hand: [],
+                tableCards: initialTableCards[3],
+                hand: initialHands[3],
                 talents: 0
             },
             4: {
                 name: "Neutral 4",
-                tableCards: initialHands[4],
-                hand: [],
+                tableCards: initialTableCards[4],
+                hand: initialHands[4],
                 talents: 0
             }
         },
@@ -240,7 +253,7 @@ const Ror = Game({
 
         drawForumCard(G, ctx) {
             const game = {...G};
-            const card = DeckModel.drawRandomCard(game.forumDeck);
+            const card = DeckModel.drawFromTop(game.forumDeck);
 
             switch (card.type) {
                 case 'senator':
