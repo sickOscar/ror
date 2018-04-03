@@ -32,15 +32,21 @@ import Util from './Util';
 const forumState = require('./data/forum.json');
 const senateState = require('./data/senate.json');
 
-const deck = new DeckModel('early');
+const earlyDeck = new DeckModel('early');
+const middleDeck = new DeckModel('middle');
+const lateDeck = new DeckModel('late');
+
+const earlyDeckCopy = new DeckModel('early');
 
 const initialHands = [
-    PlayerModel.getRandomSenators(deck),
-    PlayerModel.getRandomSenators(deck),
-    PlayerModel.getRandomSenators(deck),
-    PlayerModel.getRandomSenators(deck),
-    PlayerModel.getRandomSenators(deck)
+    PlayerModel.getRandomSenators(earlyDeckCopy),
+    PlayerModel.getRandomSenators(earlyDeckCopy),
+    PlayerModel.getRandomSenators(earlyDeckCopy),
+    PlayerModel.getRandomSenators(earlyDeckCopy),
+    PlayerModel.getRandomSenators(earlyDeckCopy)
 ]
+
+const forumDeck = new DeckModel();
 
 const randomHRAOIndex = Math.round(Random.Number(14));
 _.flattenDeep(initialHands)[randomHRAOIndex].addSpoil('ROME_CONSUL');
@@ -97,7 +103,7 @@ const Ror = Game({
             leaders: []
         },
 
-        forumDeck: deck,
+        forumDeck: forumDeck,
 
         playersOrder: [0, 1, 2, 3, 4],
 
@@ -170,7 +176,7 @@ const Ror = Game({
                     });
                     if (indexSenatorToKill > -1) {
                         let cardToReset = player.tableCards[indexSenatorToKill];
-                        let originalCard = DeckModel.getOriginalCard(deck, cardToReset);
+                        let originalCard = DeckModel.getOriginalCard(earlyDeck.concat(middleDeck, lateDeck), cardToReset);
                         originalCard.oldData = _.omit(cardToReset, ['id', 'type', 'name', 'military', 'oratory', 'loyalty', 'oldData', 'spoils']);
                         Object.assign(cardToReset, originalCard);
                         game.interface.selectedCard.passive.push(cardToReset.id);
@@ -481,16 +487,16 @@ const Ror = Game({
             return {...game}
         },
         
-        getCardsSelected(G, ctx, indexCard, type) {
-            if (!_.isEmpty(indexCard)) {
-                if (type === 'ACTIVE') {
-                    return G.selectedCard.active;
-                } else if (type === 'PASSIVE') {
-                    return G.selectedCard.passive
-                }
-            }
-            return [];
-        },
+        // getCardsSelected(G, ctx, indexCard, type) {
+        //     if (!_.isEmpty(indexCard)) {
+        //         if (type === 'ACTIVE') {
+        //             return G.selectedCard.active;
+        //         } else if (type === 'PASSIVE') {
+        //             return G.selectedCard.passive
+        //         }
+        //     }
+        //     return [];
+        // },
         
         resetSelected(G, ctx) {
             const game = Object.assign({}, G);

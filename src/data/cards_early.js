@@ -1,196 +1,277 @@
 const cards = [
-    {
-        "id": "1",
-        "name": "Oscar",
-        "type": "senator",
-        "military": 2,
-        "oratory": 9,
-        "loyalty": 2,
-        "influence": 9
-    },
-    {
-        "id": "2",
-        "name": "Livio",
-        "type": "senator",
-        "military": 3,
-        "oratory": 8,
-        "loyalty": 4,
-        "influence": 6
-    },
-    {
-        "id": "3",
-        "name": "Alessio",
-        "type": "senator",
-        "military": 8,
-        "oratory": 6,
-        "loyalty": 1,
-        "influence": 7
-    },
-    {
-        "id": "4",
-        "name": "Gianluca",
-        "type": "senator",
-        "military": 1,
-        "oratory": 5,
-        "loyalty": 3,
-        "influence": 5
-    },
-    {
-        "id": "5",
-        "name": "Giulio",
-        "type": "senator",
-        "military": 5,
-        "oratory": 3,
-        "loyalty": 9,
-        "influence": 4
-    },
-    {
-        "id": "6",
-        "name": "Pericoli",
-        "type": "senator",
-        "military": 8,
-        "oratory": 7,
-        "loyalty": 1,
-        "influence": 9
-    },
-    {
-        "id": "7",
-        "name": "Shoto",
-        "type": "senator",
-        "military": 6,
-        "oratory": 3,
-        "loyalty": 2,
-        "influence": 7
-    },
-    {
-        "id": "8",
-        "name": "Barozzi",
-        "type": "senator",
-        "military": 2,
-        "oratory": 9,
-        "loyalty": 5,
-        "influence": 9
-    },
-    {
-        "id": "9",
-        "name": "Alvise",
-        "type": "senator",
-        "military": 6,
-        "oratory": 1,
-        "loyalty": 7,
-        "influence": 5
-    },
+
+     /***
+     *     _____                  _                 
+     *    /  ___|                | |                
+     *    \ `--.  ___ _ __   __ _| |_ ___  _ __ ___ 
+     *     `--. \/ _ \ '_ \ / _` | __/ _ \| '__/ __|
+     *    /\__/ /  __/ | | | (_| | || (_) | |  \__ \
+     *    \____/ \___|_| |_|\__,_|\__\___/|_|  |___/
+     *                                              
+     *                                              
+     */
     {
         "id": "10",
-        "name": "Scaputi",
+        "name": "Junius",
         "type": "senator",
-        "military": 8,
+        "military": 1,
         "oratory": 2,
-        "loyalty": 3,
-        "influence": 7
-    },
-    {
-        "id": "11",
-        "name": "Massimo",
-        "type": "senator",
-        "military": 9,
-        "oratory": 7,
-        "loyalty": 7,
-        "influence": 8
-    },
-    {
-        "id": "12",
-        "name": "Piaia",
-        "type": "senator",
-        "military": 4,
-        "oratory": 2,
-        "loyalty": 5,
-        "influence": 2
-    },
-    {
-        "id": "13",
-        "name": "Giopego",
-        "type": "senator",
-        "military": 7,
-        "oratory": 6,
-        "loyalty": 3,
-        "influence": 8
-    },
-    {
-        "id": "14",
-        "name": "De Zordi",
-        "type": "senator",
-        "military": 4,
-        "oratory": 2,
-        "loyalty": 7,
-        "influence": 6
-    },
-    {
-        "id": "15",
-        "name": "Privato",
-        "type": "senator",
-        "military": 8,
-        "oratory": 6,
-        "loyalty": 4,
-        "influence": 6
+        "loyalty": 8,
+        "influence": 3,
+        statesman: false
     },
     {
         "id": "16",
-        "name": "Manuel",
+        "name": "Calpurnicus",
         "type": "senator",
         "military": 1,
-        "oratory": 8,
+        "oratory": 2,
+        "loyalty": 9,
+        "influence": 2,
+        statesman: false
+    },
+    {
+        "id": "1",
+        "name": "Cornelius",
+        "type": "senator",
+        "military": 4,
+        "oratory": 3,
+        "loyalty": 9,
+        "influence": 5,
+        statesman: false
+    },
+    {
+        "id": "9",
+        "name": "Aurelius",
+        "type": "senator",
+        "military": 2,
+        "oratory": 3,
+        "loyalty": 7,
+        "influence": 3,
+        statesman: false
+    },
+    {
+        "id": "25",
+        "name": "Sulpicius",
+        "type": "senator",
+        "military": 3,
+        "oratory": 2,
         "loyalty": 8,
-        "influence": 7
+        "influence": 2,
+        statesman: false
+    },
+    {
+        "id": "7",
+        "name": "Fulvius",
+        "type": "senator",
+        "military": 2,
+        "oratory": 2,
+        "loyalty": 8,
+        "influence": 4,
+        statesman: false
     },
     {
         "id": "17",
-        "name": "Militello",
+        "name": "Plautius",
         "type": "senator",
-        "military": 6,
-        "oratory": 9,
-        "loyalty": 2,
-        "influence": 8
+        "military": 2,
+        "oratory": 1,
+        "loyalty": 6,
+        "influence": 2,
+        statesman: false
     },
     {
-        "id": "18",
-        "name": "Chioggia",
+        "id": "13",
+        "name": "Flaminius",
         "type": "senator",
         "military": 4,
-        "oratory": 4,
-        "loyalty": 8,
-        "influence": 5
+        "oratory": 2,
+        "loyalty": 6,
+        "influence": 3,
+        statesman: false
+    },
+    {
+        "id": "2",
+        "name": "Fabius",
+        "type": "senator",
+        "military": 4,
+        "oratory": 2,
+        "loyalty": 9,
+        "influence": 5,
+        statesman: false
     },
     {
         "id": "19",
-        "name": "Fulvio",
+        "name": "Aemilus",
         "type": "senator",
-        "military": 8,
+        "military": 4,
         "oratory": 2,
-        "loyalty": 5,
-        "influence": 3
+        "loyalty": 8,
+        "influence": 1,
+        statesman: false
+    },
+    {
+        "id": "6",
+        "name": "Manlius",
+        "type": "senator",
+        "military": 3,
+        "oratory": 2,
+        "loyalty": 7,
+        "influence": 4,
+        statesman: false
+    },
+    {
+        "id": "14",
+        "name": "Aelius",
+        "type": "senator",
+        "military": 3,
+        "oratory": 4,
+        "loyalty": 7,
+        "influence": 2,
+        statesman: false
+    },
+    {
+        "id": "5",
+        "name": "Claudius",
+        "type": "senator",
+        "military": 2,
+        "oratory": 3,
+        "loyalty": 7,
+        "influence": 4,
+        statesman: false
+    },
+    {
+        "id": "12",
+        "name": "Acilius",
+        "type": "senator",
+        "military": 2,
+        "oratory": 2,
+        "loyalty": 7,
+        "influence": 3,
+        statesman: false
+    },
+    {
+        "id": "8",
+        "name": "Furius",
+        "type": "senator",
+        "military": 3,
+        "oratory": 3,
+        "loyalty": 8,
+        "influence": 3,
+        statesman: false
+    },
+    {
+        "id": "18",
+        "name": "Quinticus",
+        "type": "senator",
+        "military": 3,
+        "oratory": 2,
+        "loyalty": 6,
+        "influence": 1,
+        statesman: false
+    },
+    {
+        "id": "11",
+        "name": "Papirius",
+        "type": "senator",
+        "military": 1,
+        "oratory": 2,
+        "loyalty": 6,
+        "influence": 3,
+        statesman: false
+    },
+    {
+        "id": "4",
+        "name": "Julius",
+        "type": "senator",
+        "military": 4,
+        "oratory": 3,
+        "loyalty": 9,
+        "influence": 4,
+        statesman: false
+    },
+    {
+        "id": "3",
+        "name": "Valerius",
+        "type": "senator",
+        "military": 1,
+        "oratory": 2,
+        "loyalty": 10,
+        "influence": 5,
+        statesman: false
+    },
+    {
+        "id": "20",
+        "name": "Terentius",
+        "type": "senator",
+        "military": 2,
+        "oratory": 1,
+        "loyalty": 6,
+        "influence": 1,
+        statesman: false
     },
 
 
+    /***
+     *     _____ _        _                                 
+     *    /  ___| |      | |                                
+     *    \ `--.| |_ __ _| |_ ___  ___ _ __ ___   ___ _ __  
+     *     `--. \ __/ _` | __/ _ \/ __| '_ ` _ \ / _ \ '_ \ 
+     *    /\__/ / || (_| | ||  __/\__ \ | | | | |  __/ | | |
+     *    \____/ \__\__,_|\__\___||___/_| |_| |_|\___|_| |_|
+     *                                                      
+     *                                                      
+     */
+
     {
-        "id": "1A",
-        "name": "Statesman Oscar",
-        "type": "statesman"
-    },
-    {
-        "id": "6A",
-        "name": "Statesman Pericoli",
-        "type": "statesman"
-    },
-    {
-        "id": "4A",
-        "name": "Statesman Gianluca",
-        "type": "statesman"
+        "id": "19A",
+        "name": "L Aemilius Paullus Macedonicus",
+        "type": "senator",
+        "military": 5,
+        "oratory": 4,
+        "loyalty": 8,
+        "influence": 4,
+        statesman: true,
     },
     {
         "id": "2A",
-        "name": "Statesman Livio",
-        "type": "statesman"
+        "name": "Q. Fabius Maximus Verrucosus Cucantor",
+        "type": "senator",
+        "military": 5,
+        "oratory": 2,
+        "loyalty": 7,
+        "influence": 3,
+        statesman: true,
+    },
+    {
+        "id": "18A",
+        "name": "T Quinticus Flaminius",
+        "type": "senator",
+        "military": 5,
+        "oratory": 4,
+        "loyalty": "7/0|22A",
+        "influence": 4,
+        statesman: true,
+    },
+    {
+        "id": "1A",
+        "name": "P Cornelius Scipio Africanus",
+        "type": "senator",
+        "military": 5,
+        "oratory": 5,
+        "loyalty": "7/0|22A",
+        "influence": 6,
+        statesman: true,
+    },
+    {
+        "id": "22A",
+        "name": "M Porcius Cato The Elder",
+        "type": "senator",
+        "military": 1,
+        "oratory": 6,
+        "loyalty": "10/0|1A|1B|18A",
+        "influence": 1,
+        statesman: true,
     },
 
     /***

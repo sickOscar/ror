@@ -14,9 +14,9 @@ export class PlayerModel {
     static getRandomSenators(deck) {
 
         const senators = [
-            deck.drawRandom('senator'),
-            deck.drawRandom('senator'),
-            deck.drawRandom('senator')
+            deck.drawRandom({type:'senator', statesman: false}),
+            deck.drawRandom({type:'senator', statesman: false}),
+            deck.drawRandom({type:'senator', statesman: false})
         ];
 
         var leaderIndex = Math.round(Random.Number() * 2);
