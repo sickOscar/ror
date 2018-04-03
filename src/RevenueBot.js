@@ -15,8 +15,6 @@ export default class RevenueBot extends React.Component {
 
     endTurn() {
         setTimeout(() => {
-            console.log('end Turn')
-            
             if (this.props.ctx.currentPlayer === '4') {
                 this.props.events.endTurn();
                 this.props.events.endPhase();

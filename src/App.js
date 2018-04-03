@@ -138,8 +138,7 @@ const Ror = Game({
                 active: [],
                 passive: []
             },
-            changed: []
-            
+            // changed: []
         }
     }),
     
@@ -198,10 +197,18 @@ const Ror = Game({
         // },
 
         distributeTalents(G, ctx, talentsObject) {
+            const game = {...G};
             const players = Object.assign({}, G.players);
-            players[ctx.currentPlayer].tableCards = Object.values(talentsObject.senators);
+            const originalSenators = players[ctx.currentPlayer].tableCards;
             players[ctx.currentPlayer].talents = talentsObject.familyTalents;
-
+            _.each(talentsObject.senators, senator => {
+                let originalSenator = _.find(originalSenators, {id: senator.id});
+                if (senator.talents !== originalSenator.talents) {
+                    game.interface.selectedCard.passive.push(senator.id);
+                    senator.oldData = _.pick(originalSenator, ['talents']);
+                }
+            });
+            players[ctx.currentPlayer].tableCards = Object.values(talentsObject.senators);
             return {...G, players}
         },
 
