@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 class StateContributionBoard extends React.Component {
 
@@ -7,7 +8,8 @@ class StateContributionBoard extends React.Component {
         this.state = {
             player: this.props.G.players[this.props.ctx.currentPlayer],
             contributor: undefined,
-            contribution: 0
+            contribution: 0,
+            maxContribution: 0
         }
 
         this.handleContributionChange = this.handleContributionChange.bind(this);
@@ -16,6 +18,7 @@ class StateContributionBoard extends React.Component {
     }
 
     handleContributorChange(event) {
+        
         this.setState({
             contributor: event.target.value,
             contribution: 0
@@ -31,17 +34,25 @@ class StateContributionBoard extends React.Component {
     }
 
     saveContribution() {
+        if (this.state.contribution > this.state.maxContribution) {
+            this.state.contribution = this.state.maxContribution;
+        }
         this.props.moves.doStateContribution(this.state.contributor, this.state.contribution);
+        this.state.contribution = 0;
     }
 
     render() {
-
         let contributionInput = '';
         if (this.state.contributor) {
-            const maxContribution = this.state.player.tableCards
+            this.state.maxContribution = this.state.player.tableCards
                 .find(card => card.id === this.state.contributor)
-                .talents;
-            contributionInput = <input type="number" step="1" max={maxContribution} min="0" onChange={this.handleContributionChange} value={this.state.contribution}/> 
+                .talents;   
+            
+            if (_.isNaN(this.state.contribution)) {
+                this.state.contribution = 0;
+            }
+            
+            contributionInput = <input type="number" step="1" max={this.state.maxContribution} min="0" onChange={this.handleContributionChange} value={this.state.contribution}/> 
         }
 
         return (
