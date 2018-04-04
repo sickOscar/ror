@@ -178,7 +178,6 @@ const Ror = Game({
             let senatorsToKill = [];
             for (let i = 0; i < G.mortalityChitsToDraw; i++) {
                 senatorsToKill.push(Random.Die(36).toString()); // 36
-                senatorsToKill.push("3");
             }
             const game = {...G};
             for (let playerIndex in game.players) {

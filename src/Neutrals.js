@@ -65,13 +65,33 @@ export class Neutrals extends React.Component {
                     let handCardsContainer = player.hand && player.hand.length > 0 ? 
                         <div className="hand-cards-container">
                             <h6 className="align-center">Hand Cards</h6>
-                            {player.hand.map(card => {
-                                return (
-                                    <SmallCard {...card} key={card.id}></SmallCard>
-                                )
-                            })}
-                        </div> :
-                        <div></div>;
+                            <table className="table-small-cards">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        {/* <th>Type</th> */}
+                                        <th>Name</th>
+                                        <th>Military</th>
+                                        <th>Oratory</th>
+                                        <th>Loyalty</th>
+                                        {/**/}
+                                        <th>Popularity</th>
+                                        <th>Influence</th>
+                                        <th>Knights</th>
+                                        <th>Talents</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                
+                                {player.hand.map(card => {
+                                    return (
+                                        <SmallCard {...card} key={card.id}></SmallCard>
+                                    )
+                                })}
+                                </tbody>
+                                </table>
+                            </div> :
+                            <div></div>;
                     
                     return (
                         <div key={playerIndex} className="col-sm-5 small-card">
