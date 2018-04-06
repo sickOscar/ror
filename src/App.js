@@ -36,6 +36,8 @@ const earlyDeck = new DeckModel('early');
 const middleDeck = new DeckModel('middle');
 const lateDeck = new DeckModel('late');
 
+const stage = 'early';
+
 const initialTableCards = [
     PlayerModel.getRandomSenators(earlyDeck),
     PlayerModel.getRandomSenators(earlyDeck),
@@ -53,10 +55,20 @@ const initialHands = [
 ]
 
 const forumDeck = DeckModel.buildInitialDeck({
-    stage: 'early',
+    stage,
     earlyDeck: earlyDeck,
     middleDeck: middleDeck
 });
+
+const startingInactiveWars = [];
+
+if (stage === 'early') {
+    // 001 -> 1st punic war
+    const punicWarIndex = earlyDeck.cards.findIndex(card => card.id === "001")
+    const punicWarCard = earlyDeck.cards.slice(punicWarIndex, punicWarIndex + 1);
+    startingInactiveWars.push(punicWarCard)
+    earlyDeck.cards.splice(punicWarIndex, 1);
+}
 
 // console.log('forum deck', forumDeck);
 
@@ -93,14 +105,14 @@ const Ror = Game({
             events: [],
             activeWars: [],
             unprosecutedWars: [],
-            inactiveWars: [],
+            inactiveWars: startingInactiveWars,
             imminentWars: [],
             stateOfRepublicSpeechExit: null,
         },
 
         legionCost: 10,
         fleetCost: 10,
-        militaryPlan: null,
+        militaryPlan: {},
 
         forum: {
             events: [],
@@ -450,6 +462,8 @@ const Ror = Game({
 
             const maxLegionsMaintainable = game.republic.treasury / game.legionCost;
             const maxFleetMaintainable = game.republic.treasury / game.fleetCost;
+
+            game = MilitaryPlan.applyNeutralPlan(game);
 
             if (!Util.anyWarPresent(game)) {
                 

@@ -183,7 +183,7 @@ export default class Utils {
     static hasAdequateForce(G, warsToCheck) {
         // deve controllare quenti build di legion + flotte possono essere fatti e fare i conti
 
-        warsToCheck = warsToCheck || G.republic.activeWars;
+        warsToCheck = warsToCheck || G.republic.activeWars.concat(G.republic.inactiveWars);
 
         // const maxBuildableLegions = Math.floor(G.republic.treasury / G.legionCost);
         // const maxBuildableFleet = Math.floor(G.republic.treasury / G.fleetCost);
