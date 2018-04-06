@@ -193,6 +193,7 @@ export default class Utils {
         const game = {...G};
 
         const canBuildToFightArray = warsToCheck.map(war => Utils.canBuildToFight(war, game));
+        // console.log('canBuildToFightArray', canBuildToFightArray)
         const fightable = _.zip(warsToCheck, canBuildToFightArray)
             .filter(pair => pair[1]) // get those with canFight === true
 
@@ -209,20 +210,23 @@ export default class Utils {
      * @return boolean
      */
     static canBuildToFight(war, game) { 
+
         // already has force to fight
         if (game.republic.legions >= war.landStrength && game.republic.fleets >= war.navalSupport + war.navalStrength) {
             return true;
         } 
 
-        const fleetsToBuild = (war.navalSupport + war.navalStrenght) - game.republic.fleets;
+        const fleetsToBuild = (war.navalSupport + war.navalStrength) - game.republic.fleets;
         const legionsToBuild = war.landStrength - game.republic.legions;
         const totalCost = (fleetsToBuild * game.fleetCost) + (legionsToBuild * game.legionCost);
 
-        if (totalCost < game.republic.treasury) {
+        if (totalCost <= game.republic.treasury) {
             // can build
             game.republic.treasury -= totalCost;
             return true;
         }
+
+        return false;
 
     }
 

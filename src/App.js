@@ -58,8 +58,7 @@ const forumDeck = DeckModel.buildInitialDeck({
     middleDeck: middleDeck
 });
 
-console.log('forum deck', forumDeck);
-
+// console.log('forum deck', forumDeck);
 
 const randomHRAOIndex = Math.round(Random.Number(14));
 _.flattenDeep(initialTableCards)[randomHRAOIndex].addSpoil('ROME_CONSUL');

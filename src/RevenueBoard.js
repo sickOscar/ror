@@ -18,9 +18,14 @@ class StateContributionBoard extends React.Component {
     }
 
     handleContributorChange(event) {
+
+        const maxContribution = this.state.player.tableCards
+            .find(card => card.id === event.target.value)
+            .talents
         
         this.setState({
             contributor: event.target.value,
+            maxContribution,
             contribution: 0
         });
         this.props.moves.resetSelected();
@@ -29,31 +34,24 @@ class StateContributionBoard extends React.Component {
 
     handleContributionChange(event) {
         this.setState({
-            contribution: parseInt(event.target.value, 10)
+            contribution: _.isNaN(parseInt(event.target.value, 10)) ? 0 : parseInt(event.target.value, 10)
         })
     }
 
     saveContribution() {
+        let actualContribution = this.state.contribution;
         if (this.state.contribution > this.state.maxContribution) {
-            this.state.contribution = this.state.maxContribution;
+            actualContribution = this.state.maxContribution;
         }
-        this.props.moves.doStateContribution(this.state.contributor, this.state.contribution);
-        this.state.contribution = 0;
+        this.props.moves.doStateContribution(this.state.contributor, actualContribution);
+        this.setState({
+            contribution: 0,
+            maxContribution: this.state.maxContribution - actualContribution
+        })
     }
 
     render() {
-        let contributionInput = '';
-        if (this.state.contributor) {
-            this.state.maxContribution = this.state.player.tableCards
-                .find(card => card.id === this.state.contributor)
-                .talents;   
-            
-            if (_.isNaN(this.state.contribution)) {
-                this.state.contribution = 0;
-            }
-            
-            contributionInput = <input type="number" step="1" max={this.state.maxContribution} min="0" onChange={this.handleContributionChange} value={this.state.contribution}/> 
-        }
+        let contributionInput = <input type="number" step="1" max={this.state.maxContribution} min="0" onChange={this.handleContributionChange} value={this.state.contribution}/> 
 
         return (
             <div>
@@ -86,7 +84,6 @@ export default class RevenueBoard extends React.Component {
                 return obj;
             }, {})
         };
-        // this.state.originalSenators = JSON.parse(JSON.stringify(this.state.senators)) // Object.assign({}, this.state.senators);
         
     }
     
