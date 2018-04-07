@@ -45,7 +45,7 @@ const initialTableCards = [
     PlayerModel.getRandomSenators(earlyDeck),
     PlayerModel.getRandomSenators(earlyDeck),
     PlayerModel.getRandomSenators(earlyDeck)
-]
+];
 
 const initialHands = [
     earlyDeck.drawInitialRandom(),
@@ -53,7 +53,7 @@ const initialHands = [
     earlyDeck.drawInitialRandom(),
     earlyDeck.drawInitialRandom(),
     earlyDeck.drawInitialRandom()
-]
+];
 
 const forumDeck = DeckModel.buildInitialDeck({
     stage,
@@ -461,8 +461,8 @@ const Ror = Game({
             const isCrisis = Util.isCrisis(game);
             console.log('isCrisis', isCrisis);
 
-            const maxLegionsMaintainable = game.republic.treasury / game.legionCost;
-            const maxFleetMaintainable = game.republic.treasury / game.fleetCost;
+            // const maxLegionsMaintainable = game.republic.treasury / game.legionCost;
+            // const maxFleetMaintainable = game.republic.treasury / game.fleetCost;
 
             game = MilitaryPlan.applyNeutralPlan(game);
 
@@ -709,7 +709,7 @@ const Ror = Game({
 
     }
 
-})
+});
 
 class Board extends React.Component {
 

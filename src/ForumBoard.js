@@ -1,7 +1,5 @@
 import React from 'react';
 import { Random } from 'boardgame.io/core';
-import { EventCard} from './Event'
-import { SmallCard} from './SmallCard';
 import Util from './Util';
 import GamesTable from './GamesTable';
 
@@ -36,8 +34,9 @@ export default class ForumBoard extends React.Component {
     }
 
     rollInitiative() {
-        const rolls = [4, 4]//Random.Die(6, 2);
-        const rolled = rolls.reduce((sum,n) => sum + n, 0)
+        // const rolls = [4, 4];
+        const rolls = Random.Die(6, 2);
+        const rolled = rolls.reduce((sum,n) => sum + n, 0);
         this.setState({
             rolledInitiative: rolled
         })
@@ -48,7 +47,7 @@ export default class ForumBoard extends React.Component {
         const rolled = rolls.reduce((sum,n) => sum + n, 0)
         this.setState({
             rolledEventTable: rolled
-        })
+        });
         this.props.moves.drawEvent(8);
     }
 
@@ -68,7 +67,7 @@ export default class ForumBoard extends React.Component {
     doPersuasionAttempt(persuasor, senatorObject, offer) {
         this.setState({
             persuasionAttemptDone: true
-        })
+        });
         this.props.moves.doPersuasionAttempt(persuasor, senatorObject, offer)
     }
 
@@ -81,7 +80,7 @@ export default class ForumBoard extends React.Component {
     doAttractKnight(attractor, offer) {
         this.setState({
             attractKnightDone: true
-        })
+        });
         this.props.moves.doAttractKnight(attractor, offer);
     }
 
@@ -94,7 +93,7 @@ export default class ForumBoard extends React.Component {
     doSponsorGames(gameType, sponsor) {
         this.setState({
             sponsorGamesDone: true
-        })
+        });
         this.props.moves.doSponsorGames(gameType, sponsor);
     }
 
@@ -110,7 +109,7 @@ export default class ForumBoard extends React.Component {
 
         return (
             <div className="row">
-                <div className="col-sm-6">
+                <div className="col-sm-12">
                     <h4>Forum Board</h4>
 
                     <RollInitiativeButtonContainer 
@@ -136,7 +135,7 @@ export default class ForumBoard extends React.Component {
                     }
 
                     {(this.state.startedPersuasionAttempt && !this.state.persuasionAttemptDone) && 
-                        <PersuasionAttemptBoard {...this.props} doPersuasionAttempt={this.doPersuasionAttempt}></PersuasionAttemptBoard>
+                        <PersuasionAttemptBoard {...this.props} doPersuasionAttempt={this.doPersuasionAttempt} />
                     }
 
                     {(this.state.rolledEventTable || this.state.drawnForumCard) && !this.state.attractKnightDone
@@ -160,16 +159,6 @@ export default class ForumBoard extends React.Component {
                     }
                     
 
-                </div>
-                <div className="col-sm-6">
-                    {this.props.G.forum.events.map(event => (
-                        <EventCard key={event.id} {...event}></EventCard>
-                    ))}
-                    {this.props.G.forum.senators.map(senator => (
-                        <table><body>
-                        <SmallCard key={senator.id} {...senator}></SmallCard>
-                        </body></table>
-                        ))}
                 </div>
             </div>
         )

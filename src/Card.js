@@ -17,12 +17,12 @@ export const Card = (props) => {
     if (props.passive) {
         mainClass += ' passive-selected';
     }
-    
-    const ROME_CONSUL = props.spoils.map(s => s.id).includes('ROME_CONSUL')
+
+    const ROME_CONSUL = props.spoils && props.spoils.map(s => s.id).includes('ROME_CONSUL')
         ? <small><b>ROME_CONSUL</b></small>
         : ''
 
-    const FIELD_CONSUL = props.spoils.map(s => s.id).includes('FIELD_CONSUL')
+    const FIELD_CONSUL = props.spoils && props.spoils.map(s => s.id).includes('FIELD_CONSUL')
         ? <small><b>FIELD_CONSUL</b></small>
         : ''
     

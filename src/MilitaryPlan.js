@@ -4,7 +4,7 @@ export default class MilitaryPlan {
         game.militaryPlan = {
             description: 'No military plan applicable',
             attacks: []
-        }
+        };
         return game;
     }
 
@@ -39,18 +39,22 @@ export default class MilitaryPlan {
 
     static applyPlan1(G, ctx) {
         console.log('apply military 1');
+        return {...G}
     }
 
     static applyPlan2(G, ctx) {
         console.log('apply military 2');
+        return {...G}
     }
 
     static applyPlan3(G, ctx) {
         console.log('apply military 3');
+        return {...G}
     }
 
     static applyPlan4(G, ctx) {
         console.log('apply military 4');
+        return {...G}
     }
 
 }

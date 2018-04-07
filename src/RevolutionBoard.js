@@ -15,7 +15,7 @@ export default class RevolutionBoard extends React.Component {
 
                 <h3>Hand Cards</h3>
                 {this.props.G.players[this.props.ctx.currentPlayer].hand.map(card => (
-                    <Card {...card}></Card>
+                    <Card key={card.id} {...card}></Card>
                 ))}
 
                 <button onClick={() => this.props.events.endPhase()}>End revolution Phase</button>

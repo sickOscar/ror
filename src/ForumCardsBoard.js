@@ -1,4 +1,5 @@
 import React from 'react';
+import {EventCard} from "./Event";
 
 export default class ForumCardsBoard extends React.Component {
 
@@ -17,7 +18,10 @@ export default class ForumCardsBoard extends React.Component {
                             <h5>Forum Cards</h5>
                         </div>
                         {this.props.G.forum.senators.map(card => {
-                            return <div className="col-sm-6">{card.name}</div>
+                            return <SenatorCard key={card.id} {...card}></SenatorCard>
+                        })}
+                        {this.props.G.forum.events.map(card => {
+                            return <EventCard key={card.id} {...card}></EventCard>
                         })}
                     </div>
 
@@ -27,7 +31,7 @@ export default class ForumCardsBoard extends React.Component {
                             <h5>Active Wars</h5>
                         </div>
                         {this.props.G.republic.activeWars.map(war => {
-                            return <div className="col-sm-6">WAR {war.name}</div>
+                            return <WarCard key={war.id} className="col-sm-6">WAR {war.name}</WarCard>
                         })}
                     </div>
 
@@ -36,7 +40,7 @@ export default class ForumCardsBoard extends React.Component {
                             <h5>Inactive Wars</h5>
                         </div>
                         {this.props.G.republic.inactiveWars.map(war => {
-                            return <div className="col-sm-6" key={war.id}>{war.name}</div>
+                            return <WarCard key={war.id} {...war}></WarCard>
                         })}
                     </div>
 
@@ -45,3 +49,15 @@ export default class ForumCardsBoard extends React.Component {
         )
     }
 }
+
+const WarCard = (props) => (
+    <div className="col-sm-12 col-md-6">
+        WAR {props.name}
+    </div>
+);
+
+const SenatorCard = (props) => (
+    <div className="col-sm-12 col-md-6">
+        SENATOR {props.name}
+    </div>
+);
