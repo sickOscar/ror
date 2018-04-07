@@ -15,9 +15,9 @@
     background-color: forestgreen;
 }
 
-.small-card {
+.neutral {
     border: 2px solid blue;
-    margin: 0 80px 40px 80px
+    margin: 15px 0;
 }
 
 .table-small-cards {

@@ -18,6 +18,7 @@ import SenateBoard from './SenateBoard';
 import CombatBoard from './CombatBoard';
 import RevolutionBoard from './RevolutionBoard';
 import PlayerBoard from './PlayerBoard';
+import ForumCardsBoard from './ForumCardsBoard';
 import {Neutrals} from './Neutrals.js';
 import {CardModel} from './Card';
 import {EventDeck} from './Event';
@@ -65,7 +66,7 @@ const startingInactiveWars = [];
 if (stage === 'early') {
     // 001 -> 1st punic war
     const punicWarIndex = earlyDeck.cards.findIndex(card => card.id === "001")
-    const punicWarCard = earlyDeck.cards.slice(punicWarIndex, punicWarIndex + 1);
+    const punicWarCard = earlyDeck.cards.slice(punicWarIndex, punicWarIndex + 1)[0];
     startingInactiveWars.push(punicWarCard)
     earlyDeck.cards.splice(punicWarIndex, 1);
 }
@@ -78,7 +79,7 @@ _.flattenDeep(initialTableCards)[randomHRAOIndex].addSpoil('ROME_CONSUL');
 const Ror = Game({
 
     name: 'RoR',
-    
+
     /***
      *       _____          _
      *      / ____|        | |
@@ -163,7 +164,7 @@ const Ror = Game({
                 talents: 0
             }
         },
-        
+
         interface: {
             selectedCard: {
                 active: [],
@@ -172,7 +173,7 @@ const Ror = Game({
             // changed: []
         }
     }),
-    
+
     /***
      *      __  __
      *     |  \/  |
@@ -203,17 +204,17 @@ const Ror = Game({
                         originalCard.oldData = _.omit(cardToReset, ['id', 'type', 'name', 'military', 'oratory', 'loyalty', 'oldData', 'spoils']);
                         Object.assign(cardToReset, originalCard);
                         game.interface.selectedCard.passive.push(cardToReset.id);
-                        
+
                     }
                 }
             }
             return {...G, mortalityChits: senatorsToKill}
         },
-        
+
         resetMortalityChit(G) {
             return {...G, mortalityChits: []}
         },
-        
+
 
         distributeTalents(G, ctx, talentsObject) {
             const game = {...G};
@@ -255,8 +256,8 @@ const Ror = Game({
             if (contribution >= 10 && contribution < 20) {
                 senator.influence += 1;
             }
-            
-            
+
+
             return {...game}
 
         },
@@ -337,7 +338,7 @@ const Ror = Game({
             const roll = Random.Die(6, 2);
             const rollTotal = roll.reduce((sum, n) => sum + n, 0);
             persuasor.talents -= offer;
-            
+
             if (rollTotal <= base) {
                 let cards, targetIndex;
                 if (senatorTarget.player) {
@@ -466,7 +467,7 @@ const Ror = Game({
             game = MilitaryPlan.applyNeutralPlan(game);
 
             if (!Util.anyWarPresent(game)) {
-                
+
                 game = MilitaryPlan.applyPeacePlan(game);
 
             } else {
@@ -489,7 +490,7 @@ const Ror = Game({
                     game = MilitaryPlan.applyPlan4(game, ctx);
                 }
             }
-    
+
             return game;
         },
 
@@ -497,7 +498,7 @@ const Ror = Game({
             let game = {...G}
             return game;
         },
-        
+
         setCardAsSelected(G, ctx, indexCard, type) {
             const game = Object.assign({}, G);
             // let card = null;
@@ -511,7 +512,7 @@ const Ror = Game({
             }
             return {...game}
         },
-        
+
         // getCardsSelected(G, ctx, indexCard, type) {
         //     if (!_.isEmpty(indexCard)) {
         //         if (type === 'ACTIVE') {
@@ -522,18 +523,18 @@ const Ror = Game({
         //     }
         //     return [];
         // },
-        
+
         resetSelected(G, ctx) {
             const game = Object.assign({}, G);
             game.interface.selectedCard.active = [];
             game.interface.selectedCard.passive = [];
             return {...game}
         }
-        
+
 
     },
-    
-    
+
+
     flow: {
         phases: [
             /***
@@ -705,9 +706,9 @@ const Ror = Game({
                 }
             }
         ]
-        
+
     }
-    
+
 })
 
 class Board extends React.Component {
@@ -733,6 +734,12 @@ class Board extends React.Component {
     render() {
         return (
             <div className="container-fluid">
+                <div className="row">
+                    <div className="col-sm-12">
+                        <button onClick={() => this.goToGameState('forum', forumState)}>GO TO FORUM</button>
+                        <button onClick={() => this.goToGameState('senate', senateState)}>GO TO SENATE</button>
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-sm-6">
                         <div>
@@ -773,10 +780,10 @@ class Board extends React.Component {
                         && <RevolutionBoard {...this.props}></RevolutionBoard>}
 
                     </div>
-                    <div className="col-sm-4">
-                        <button onClick={() => this.goToGameState('forum', forumState)}>GO TO FORUM</button>
-                        <button onClick={() => this.goToGameState('senate', senateState)}>GO TO SENATE</button>
+                    <div className="col-sm-6">
+                        <ForumCardsBoard {...this.props}></ForumCardsBoard>
                     </div>
+
                 </div>
 
                 <div className="col-sm-12">
@@ -789,7 +796,7 @@ class Board extends React.Component {
             </div>
         )
     }
-    
+
 }
 
 const App = Client({

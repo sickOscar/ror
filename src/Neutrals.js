@@ -94,7 +94,7 @@ export class Neutrals extends React.Component {
                             <div></div>;
                     
                     return (
-                        <div key={playerIndex} className="col-sm-5 small-card">
+                        <div key={playerIndex} className="col-sm-12 col-md-12 col-lg-6 neutral">
                             <p className="align-center">Player: {player.name} <small>faction talents: {player.talents}</small></p>
                             {tableCardsContainer}
                             {handCardsContainer}
