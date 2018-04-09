@@ -5,7 +5,8 @@ describe('hasAdequateForce', () => {
     it('should return an empty array if no war is passed or present', () => {
         const G = {
             republic: {
-                activeWars: []
+                activeWars: [],
+                inactiveWars: []
             }
         }
         const hasForce = Utils.hasAdequateForce(G);
@@ -17,6 +18,7 @@ describe('hasAdequateForce', () => {
         const G = {
             republic: {
                 activeWars: [],
+                inactiveWars: [],
                 legions: 0,
                 fleets: 0,
                 treasury: 0
@@ -44,6 +46,7 @@ describe('hasAdequateForce', () => {
                     navalSupport: 1,
                     navalStrength: 1
                 }],
+                inactiveWars: [],
                 legions: 0,
                 fleets: 0,
                 treasury: 0
@@ -64,6 +67,7 @@ describe('hasAdequateForce', () => {
                     navalSupport: 1,
                     navalStrength: 1
                 }],
+                inactiveWars: [],
                 legions: 0,
                 fleets: 0,
                 treasury: 30

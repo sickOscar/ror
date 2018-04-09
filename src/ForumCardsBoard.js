@@ -44,6 +44,24 @@ export default class ForumCardsBoard extends React.Component {
                         })}
                     </div>
 
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <h5>Imminent Wars</h5>
+                        </div>
+                        {this.props.G.republic.imminentWars.map(war => {
+                            return <WarCard key={war.id} {...war}></WarCard>
+                        })}
+                    </div>
+
+                    <div className="row">
+                        <div className="col-sm-12">
+                            <h5>Unprosecuted Wars</h5>
+                        </div>
+                        {this.props.G.republic.unprosecutedWars.map(war => {
+                            return <WarCard key={war.id} {...war}></WarCard>
+                        })}
+                    </div>
+
                 </div>
             </div>
         )

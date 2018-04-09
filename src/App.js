@@ -29,6 +29,7 @@ import MilitaryPlan from './MilitaryPlan';
 import RevenueBot from './RevenueBot';
 import ForumBot from './ForumBot';
 import Util from './Util';
+import Moves from './Moves';
 
 const forumState = require('./data/forum.json');
 const senateState = require('./data/senate.json');
@@ -263,21 +264,7 @@ const Ror = Game({
         },
 
         drawForumCard(G, ctx) {
-            const game = {...G};
-            const card = DeckModel.drawFromTop(game.forumDeck);
-
-            switch (card.type) {
-                case 'senator':
-                    game.forum.senators.push(card);
-                    break;
-                case 'concession':
-                    game.forum.concessions.push(card);
-                    break;
-                default:
-                    break;
-            }
-
-            return {...game}
+            return Moves.drawForumCard(G, ctx);
         },
 
         goToGameState(G, ctx, phase, gameState) {
