@@ -1,3 +1,6 @@
+import Utils from "./Util";
+import _ from 'lodash';
+
 export default class MilitaryPlan {
 
     static applyNeutralPlan(game, ctx) {
@@ -52,7 +55,33 @@ export default class MilitaryPlan {
         return {...G}
     }
 
+    // plan 4 - Attack an Inactive War with Adequate Force
     static applyPlan4(G, ctx) {
+
+        const game = _.cloneDeep(G);
+        const toFight = Utils.hasAdequateForce(game)[0][0];
+        console.log(toFight);
+
+        const landCost = Math.max(0, toFight.landStrength - G.republic.legions) * G.legionCost;
+        
+        const fleetsLeftAfterSupport = Math.max(0, G.republic.fleets - toFight.navalSupport);
+        const navalCost = (toFight.navalSupport * G.fleetCost) 
+            + (Math.max(0, toFight.navalStrength - fleetsLeftAfterSupport) * G.fleetCost);
+
+        G.republic.treasury -= (landCost + navalCost);
+        G.republic.fleets = toFight.navalStrength + toFight.navalSupport;
+        G.republic.legions = toFight.landStrength;
+
+        G.republic.activeWars.push(toFight);
+
+        G.militaryPlan = {
+            description: 'Apply military Plan 4 || Attack an Inactive War with Adequate Force',
+            attacks: [toFight]
+        }
+
+        _.remove(G.republic.inactiveWars, war => war.id === toFight.id)
+        
+
         console.log('apply military 4');
         return {...G}
     }

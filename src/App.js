@@ -188,78 +188,19 @@ const Ror = Game({
     moves: {
 
         drawMortalityChit(G, ctx) {
-            let senatorsToKill = [];
-            for (let i = 0; i < G.mortalityChitsToDraw; i++) {
-                senatorsToKill.push(Random.Die(36).toString()); // 36
-            }
-            const game = {...G};
-            for (let playerIndex in game.players) {
-                let player = game.players[playerIndex];
-                for (let indexToKill = 0; indexToKill < senatorsToKill.length; indexToKill++) {
-                    const indexSenatorToKill = player.tableCards.findIndex(card => {
-                        return card.id === senatorsToKill[indexToKill].toString();
-                    });
-                    if (indexSenatorToKill > -1) {
-                        let cardToReset = player.tableCards[indexSenatorToKill];
-                        let originalCard = DeckModel.getOriginalCard(earlyDeck.concat(middleDeck, lateDeck), cardToReset);
-                        originalCard.oldData = _.omit(cardToReset, ['id', 'type', 'name', 'military', 'oratory', 'loyalty', 'oldData', 'spoils']);
-                        Object.assign(cardToReset, originalCard);
-                        game.interface.selectedCard.passive.push(cardToReset.id);
-
-                    }
-                }
-            }
-            return {...G, mortalityChits: senatorsToKill}
+            return Moves.drawMortalityChit(G, ctx);
         },
 
         resetMortalityChit(G) {
             return {...G, mortalityChits: []}
         },
 
-
         distributeTalents(G, ctx, talentsObject) {
-            const game = {...G};
-            const players = Object.assign({}, G.players);
-            const originalSenators = players[ctx.currentPlayer].tableCards;
-            players[ctx.currentPlayer].talents = talentsObject.familyTalents;
-            _.each(talentsObject.senators, senator => {
-                let originalSenator = _.find(originalSenators, {id: senator.id});
-                if (senator.talents !== originalSenator.talents) {
-                    game.interface.selectedCard.passive.push(senator.id);
-                    senator.oldData = _.pick(originalSenator, ['talents']);
-                }
-            });
-            players[ctx.currentPlayer].tableCards = Object.values(talentsObject.senators);
-            return {...G, players}
+            return Moves.distributeTalents(G, ctx, talentsObject);
         },
 
         doStateContribution(G, ctx, contributor, contribution) {
-            const game = Object.assign({}, G);
-
-            if (!contributor) {
-                return game;
-            }
-
-            game.republic.treasury += contribution;
-
-            const senator = game.players[ctx.currentPlayer].tableCards
-                .find(card => card.id === contributor)
-            senator.talents -= contribution;
-
-            if (contribution >= 50) {
-                senator.influence += 7;
-            }
-
-            if (contribution >= 25 && contribution < 50) {
-                senator.influence += 3;
-            }
-
-            if (contribution >= 10 && contribution < 20) {
-                senator.influence += 1;
-            }
-
-
-            return {...game}
+            return Moves.doStateContribution(G, ctx, contributor, contribution);
 
         },
 
@@ -443,42 +384,7 @@ const Ror = Game({
         },
 
         doMilitaryPlan: (G, ctx) => {
-            let game = {...G};
-
-            const isCrisis = Util.isCrisis(game);
-            console.log('isCrisis', isCrisis);
-
-            // const maxLegionsMaintainable = game.republic.treasury / game.legionCost;
-            // const maxFleetMaintainable = game.republic.treasury / game.fleetCost;
-
-            game = MilitaryPlan.applyNeutralPlan(game);
-
-            if (!Util.anyWarPresent(game)) {
-
-                game = MilitaryPlan.applyPeacePlan(game);
-
-            } else {
-
-                if (game.republic.activeWars.length > 1 && Util.hasAdequateForce(game).length > 1) {
-                    // plan 1
-                    game = MilitaryPlan.applyPlan1(game, ctx);
-                } else if (Util.anyDangerousWar(game) && Util.hasAdequateForce(game).length > 0) {
-                    // plan 2
-                    // intersect di Utils.anyDangerousWar(G) e Util.hasAdequateForce(G)
-                    // prendo il primo elemento
-                    game = MilitaryPlan.applyPlan2(game, ctx);
-                } else if (game.republic.activeWars.length > 0 && Util.hasAdequateForce(game).length === 1) {
-                    // plan3
-                    // controllare che Util.hasAdequateForce(G)[0] sia inclusa in game.republic.activeWars
-                    game = MilitaryPlan.applyPlan3(game, ctx);
-                } else if (game.republic.inactiveWars.length > 0 && Util.hasAdequateForce(game).length === 1) {
-                    // plan4
-                    // controllare che Util.hasAdequateForce(G)[0] sia inclusa in game.republic.inactiveWars
-                    game = MilitaryPlan.applyPlan4(game, ctx);
-                }
-            }
-
-            return game;
+            return Moves.doMilitaryPlan(G, ctx);
         },
 
         doSpoilsDistribution: (G, ctx) => {

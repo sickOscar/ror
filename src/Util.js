@@ -181,16 +181,11 @@ export default class Utils {
      * @return Array ok ids of wars which can be fought
      */
     static hasAdequateForce(G, warsToCheck) {
-        // deve controllare quenti build di legion + flotte possono essere fatti e fare i conti
+        const game = _.cloneDeep(G);
 
-        warsToCheck = warsToCheck || G.republic.activeWars.concat(G.republic.inactiveWars);
-
-        // const maxBuildableLegions = Math.floor(G.republic.treasury / G.legionCost);
-        // const maxBuildableFleet = Math.floor(G.republic.treasury / G.fleetCost);
+        warsToCheck = warsToCheck || game.republic.activeWars.concat(game.republic.inactiveWars);
 
         warsToCheck = _.orderBy(warsToCheck, war => war.landStrength);
-
-        const game = {...G};
 
         const canBuildToFightArray = warsToCheck.map(war => Utils.canBuildToFight(war, game));
         // console.log('canBuildToFightArray', canBuildToFightArray)
@@ -228,6 +223,17 @@ export default class Utils {
 
         return false;
 
+    }
+
+
+    static getTalentsNeededForWar(war, G) {
+
+        const spentForSupport = Math.max(0, war.navalSupport - G.republic.fleets) * G.fleetCost;
+        const remainigFleetAfterSupport = Math.max(0, G.republic.fleets - war.navalSupport)
+
+        return Math.max(0, war.landStrength - G.republic.legions) * G.legionCost
+            + spentForSupport
+            + Math.max(0, war.navalStrength - remainigFleetAfterSupport) * G.fleetCost
     }
 
 }

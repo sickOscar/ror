@@ -107,6 +107,11 @@ const MilitaryPlanBoard = (props) => (
         <div className="col-sm-6">
             <p>Military plan</p>
             <p><b>{props.G.militaryPlan.description}</b></p>
+            <p>Attack: {props.G.militaryPlan.attacks.map(war => (
+                <span key={war.id}>
+                    {war.name}
+                </span>   
+            ))}</p>   
         </div>
     </div>
 )
