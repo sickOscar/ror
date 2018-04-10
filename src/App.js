@@ -422,6 +422,10 @@ const Ror = Game({
             game.interface.selectedCard.active = [];
             game.interface.selectedCard.passive = [];
             return {...game}
+        },
+
+        fightWar(G, ctx, warId) {
+            return Moves.fightWar(G, ctx, warId);
         }
 
 

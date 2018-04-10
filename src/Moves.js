@@ -155,4 +155,10 @@ export default class Moves {
         return game;
     }
 
+    static fightWar(G, ctx, warId) {
+
+        console.log('fight war', warId);
+
+    }
+
 }
