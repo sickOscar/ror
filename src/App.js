@@ -424,8 +424,8 @@ const Ror = Game({
             return {...game}
         },
 
-        fightWar(G, ctx, warId) {
-            return Moves.fightWar(G, ctx, warId);
+        attackWar(G, ctx, warId) {
+            return Moves.attackWar(G, ctx, warId);
         }
 
 

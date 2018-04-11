@@ -155,9 +155,42 @@ export default class Moves {
         return game;
     }
 
-    static fightWar(G, ctx, warId) {
+    static attackWar(G, ctx, warToAttack) {
 
-        console.log('fight war', warId);
+        const game = _.cloneDeep(G);
+
+        const war = game.republic.activeWars.find(w => warToAttack.id === w.id);
+
+        war.assignedResources = {
+            legions: war.landStrength,
+            veterans: 0,
+            navalSupport: war.navalSupport,
+            naval: war.navalStrength
+        };
+
+        game.republic.legions -= war.landStrength;
+        game.republic.fleets -= war.navalSupport + war.navalStrength;
+
+        if (war.navalStrength && !war.navalVictory) {
+            const roll = Random.Die(6, 3).reduce((sum, next) => sum + next, 0);
+            war.navalBattleResult = roll + war.assignedResources.naval - war.navalStrength;
+
+            if (war.navalBattleResult === war.standoff) {
+                console.log('STANDOFF')
+                war.assignedResources.naval -= Math.ceil(war.assignedResources.naval / 4);
+                console.log(war)
+            }
+            
+
+        }
+
+
+        console.log(game.militaryPlan)
+        const attacksIndex = game.militaryPlan.attacks.findIndex(w => w.id === war.id);
+        game.militaryPlan.attacks[attacksIndex] = war;
+
+        
+        return {...game};
 
     }
 
