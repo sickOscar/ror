@@ -3,10 +3,12 @@ import {Random} from 'boardgame.io/core';
 import _ from 'lodash';
 import Utils from './Util';
 import MilitaryPlan from './MilitaryPlan';
+import CombatTable from './CombatTable';
 
 const earlyDeck = new DeckModel('early');
 const middleDeck = new DeckModel('middle');
 const lateDeck = new DeckModel('late');
+
 
 export default class Moves {
 
@@ -173,19 +175,37 @@ export default class Moves {
 
         if (war.navalStrength && !war.navalVictory) {
             const roll = Random.Die(6, 3).reduce((sum, next) => sum + next, 0);
-            war.navalBattleResult = roll + war.assignedResources.naval - war.navalStrength;
 
-            if (war.navalBattleResult === war.standoff) {
+            if (roll === war.standoff) {
+
                 console.log('STANDOFF')
                 war.assignedResources.naval -= Math.ceil(war.assignedResources.naval / 4);
-                console.log(war)
+
+            } else if (roll === war.disaster) {
+
+                console.log('DISASTER')
+                war.assignedResources.naval -= Math.ceil(war.assignedResources.naval / 2);
+                war.assignedResources.legions -= Math.ceil(war.assignedResources.legions / 2);
+                G.republic.unrest += 1;
+
+            } else {
+
+                war.navalBattleResult = roll + war.assignedResources.naval - war.navalStrength;
+
+                // check result on combat table
+                const navalBattle = CombatTable[war.navalBattleResult];
+                console.log('COMBAT RESULT', navalBattle);
+
+                war.assignedResources.naval -= Math.max(0, navalBattle.losses.fleets);
+                war.assignedResources.legions -= Math.max(0, navalBattle.losses.legions);
+
             }
+
+            
             
 
         }
 
-
-        console.log(game.militaryPlan)
         const attacksIndex = game.militaryPlan.attacks.findIndex(w => w.id === war.id);
         game.militaryPlan.attacks[attacksIndex] = war;
 
