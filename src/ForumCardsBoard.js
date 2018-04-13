@@ -26,7 +26,6 @@ export default class ForumCardsBoard extends React.Component {
                         })}
                     </div>
 
-
                     <div className="row border-top">
                         <div className="col-sm-12">
                             <h5>Active Wars</h5>
