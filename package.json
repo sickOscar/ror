@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "animate.css": "^3.6.1",
     "boardgame.io": "^0.20.1",
     "bootstrap": "^4.0.0",
     "lodash": "^4.17.5",

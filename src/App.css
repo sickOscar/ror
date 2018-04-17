@@ -1,3 +1,9 @@
+
+
 body {
   font-size: 11px;
+}
+
+.active-war {
+  border: 2px dashed red;
 }

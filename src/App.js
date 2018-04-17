@@ -4,6 +4,8 @@ import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.css'
 
+import 'animate.css/animate.min.css'
+
 import {Client} from 'boardgame.io/react';
 import {Game, PlayerView} from 'boardgame.io/core';
 import {Random} from 'boardgame.io/core';

@@ -111,6 +111,11 @@ export class War {
         return (!this.navalStrength || this.navalResult === 'victory') && !this.landResult
     }
 
+    isActive(game) {
+        console.log(game.republic.activeWars.find(war => war.id === this.id))
+        return game.republic.activeWars.find(war => war.id === this.id);
+    }
+
     static areFought(wars) {
         return wars.reduce((fought, war) => {
             return fought && ( (war.navalStrength && war.navalResult) || war.landResult )
