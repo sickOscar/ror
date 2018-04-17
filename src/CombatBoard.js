@@ -1,5 +1,6 @@
 import React from 'react';
 import { War } from './War';
+import _ from 'lodash';
 
 export default class CombatBoard extends React.Component {
 
@@ -50,13 +51,13 @@ class Battle extends React.Component {
                 <p>{war.name} | standoff {war.standoff} | war.disaster {war.disaster}</p>
                 {assignedResources}
 
-                <p>Naval Battle Result: {war.navalResult}</p>
+                <p>Naval Battle Result:<b>{_.toUpper(war.navalResult)}</b></p>
 
                 
                 <p>Losses: 
                     {war.battleResult && 
                         <span>naval {war.battleResult.losses.fleets}</span>
-                    }
+                    } | 
                     {war.battleResult && 
                         <span>land {war.battleResult.losses.legions}</span>
                     }

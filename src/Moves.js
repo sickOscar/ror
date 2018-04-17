@@ -171,25 +171,11 @@ export default class Moves {
 
         const roll = Random.Die(6, 3).reduce((sum, next) => sum + next, 0);
 
-        if(war.shouldDoNavalBattle()) {
-            
-            game = war.processStandoff(game, roll);
+        game = war.processStandoff(game, roll);
 
-            game = war.processDisaster(game, roll);
+        game = war.processDisaster(game, roll);
 
-            game = war.processRollBattle(game, roll);
-
-        }
-
-        if(war.shouldDoLandBattle()) {
-
-            game = war.processStandoff(game, roll);
-
-            game = war.processDisaster(game, roll);
-
-            game = war.processRollBattle(game, roll);
-        }
-
+        game = war.processRollBattle(game, roll);
 
         const attacksIndex = game.militaryPlan.attacks.findIndex(w => w.id === war.id);
         game.militaryPlan.attacks[attacksIndex] = war;
