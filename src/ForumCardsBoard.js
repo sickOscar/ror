@@ -70,7 +70,13 @@ export default class ForumCardsBoard extends React.Component {
 
 const WarCard = (props) => (
     <div className="col-sm-12 col-md-12">
-        WAR {props.name} - | land: {props.landStrength} | navalSupport: {props.navalSupport} | navalStrength: {props.navalStrength} | needs {Utils.getTalentsNeededForWar(props, props.game)}t
+        <p>
+            <b>WAR {props.name}</b><br />
+            land: {props.landStrength} | navalSupport: {props.navalSupport} | navalStrength: {props.navalStrength}<br/>
+            needs: {Utils.getTalentsNeededForWar(props, props.game)}<br />
+            navalResult: {props.navalResult}<br />
+            landResult: {props.landResult}<br/>
+         </p>
     </div>
 );
 

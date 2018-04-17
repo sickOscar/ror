@@ -3,7 +3,7 @@ import {Random} from 'boardgame.io/core';
 import _ from 'lodash';
 import Utils from './Util';
 import MilitaryPlan from './MilitaryPlan';
-import CombatTable from './CombatTable';
+import { War } from './War';
 
 const earlyDeck = new DeckModel('early');
 const middleDeck = new DeckModel('middle');
@@ -157,58 +157,44 @@ export default class Moves {
         return game;
     }
 
+    static navalAttack(G, ctx, warToAttack) {
+
+    }
+
     static attackWar(G, ctx, warToAttack) {
 
-        const game = _.cloneDeep(G);
+        let game = _.cloneDeep(G);
 
-        const war = game.republic.activeWars.find(w => warToAttack.id === w.id);
+        let war = new War(game.republic.activeWars.find(w => warToAttack.id === w.id));
 
-        war.assignedResources = {
-            legions: war.landStrength,
-            veterans: 0,
-            navalSupport: war.navalSupport,
-            naval: war.navalStrength
-        };
+        game = war.assignResources(game);
 
-        game.republic.legions -= war.landStrength;
-        game.republic.fleets -= war.navalSupport + war.navalStrength;
+        const roll = Random.Die(6, 3).reduce((sum, next) => sum + next, 0);
 
-        if (war.navalStrength && !war.navalVictory) {
-            const roll = Random.Die(6, 3).reduce((sum, next) => sum + next, 0);
-
-            if (roll === war.standoff) {
-
-                console.log('STANDOFF')
-                war.assignedResources.naval -= Math.ceil(war.assignedResources.naval / 4);
-
-            } else if (roll === war.disaster) {
-
-                console.log('DISASTER')
-                war.assignedResources.naval -= Math.ceil(war.assignedResources.naval / 2);
-                war.assignedResources.legions -= Math.ceil(war.assignedResources.legions / 2);
-                G.republic.unrest += 1;
-
-            } else {
-
-                war.navalBattleResult = roll + war.assignedResources.naval - war.navalStrength;
-
-                // check result on combat table
-                const navalBattle = CombatTable[war.navalBattleResult];
-                console.log('COMBAT RESULT', navalBattle);
-
-                war.assignedResources.naval -= Math.max(0, navalBattle.losses.fleets);
-                war.assignedResources.legions -= Math.max(0, navalBattle.losses.legions);
-
-            }
-
+        if(war.shouldDoNavalBattle()) {
             
-            
+            game = war.processStandoff(game, roll);
+
+            game = war.processDisaster(game, roll);
+
+            game = war.processRollBattle(game, roll);
 
         }
 
+        if(war.shouldDoLandBattle()) {
+
+            game = war.processStandoff(game, roll);
+
+            game = war.processDisaster(game, roll);
+
+            game = war.processRollBattle(game, roll);
+        }
+
+
         const attacksIndex = game.militaryPlan.attacks.findIndex(w => w.id === war.id);
         game.militaryPlan.attacks[attacksIndex] = war;
-
+        const activeWarsIndex = game.republic.activeWars.findIndex(w => w.id === war.id);
+        game.republic.activeWars[activeWarsIndex] = war;
         
         return {...game};
 
