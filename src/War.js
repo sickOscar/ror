@@ -95,6 +95,10 @@ export class War {
                 this.landResult = battle.result
             }
 
+            if (this.battleResult.result === 'defeat') {
+                game.republic.unrest += 2;
+            }
+
             this.assignedResources.naval -= Math.max(0, battle.losses.fleets);
             this.assignedResources.legions -= Math.max(0, battle.losses.legions);
 
