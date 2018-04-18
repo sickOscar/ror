@@ -186,4 +186,8 @@ export default class Moves {
 
     }
 
+    static doSpoilsDistribution(G, ctx) {
+        
+    }
+
 }

@@ -58,6 +58,86 @@ const initialHands = [
     earlyDeck.drawInitialRandom()
 ];
 
+const assignFaction = (initialTableCards) => {
+
+    const tableCards = _.cloneDeep(initialTableCards);
+    const alreadyAssignedIndexes = [0];
+
+    const maxInfluence = tableCards.reduce((current, hand, i) => {
+        if (alreadyAssignedIndexes.includes(i)) return current;
+        let infl = hand.reduce((sum, card) => sum + card.influence, 0);
+       
+        if (infl > current.influence) {
+            current.index = i;
+            current.influence = infl;
+        }
+        return current;
+    }, {index: 0, influence: 0})
+
+    alreadyAssignedIndexes.push(maxInfluence.index);
+
+    const maxMilitary = tableCards.reduce((current, hand, i) => {
+        if (alreadyAssignedIndexes.includes(i)) return current;
+        let infl = hand.reduce((sum, card) => sum + card.military, 0);
+       
+        if (infl > current.military) {
+            current.index = i;
+            current.military = infl;
+        }
+        return current;
+    }, {index: 0, military: 0})
+
+    alreadyAssignedIndexes.push(maxMilitary.index);
+
+    const minInfluence = tableCards.reduce((current, hand, i) => {
+        if (alreadyAssignedIndexes.includes(i)) return current;
+        let infl = hand.reduce((sum, card) => sum + card.influence, 0);
+       
+        if (infl < current.influence) {
+            current.index = i;
+            current.influence = infl;
+        }
+        return current;
+    }, {index: 0, influence: 1000})
+
+    alreadyAssignedIndexes.push(minInfluence.index);
+
+    return initialTableCards.map((hand, index) => {
+        
+        let faction = ''
+
+        switch(index) {
+            case 0:
+                break;
+            case maxInfluence.index:
+                faction = 'plutocrats'
+                break;
+            case maxMilitary.index:
+                faction = 'imperials'
+                break;
+            case minInfluence.index:
+                faction = 'conservatives'
+
+                hand.push(earlyDeck.drawRandom({type:'senator', statesman: false}))
+                hand.push(earlyDeck.drawRandom({type:'senator', statesman: false}))
+                
+
+                break;
+            default:
+                faction = 'populists'
+
+                hand.push(earlyDeck.drawRandom({type:'senator', statesman: false}))
+
+                break
+        }
+
+        return {hand, faction}
+    })
+}
+
+const cardsFactionPairs = assignFaction(initialTableCards);
+
+
 const forumDeck = DeckModel.buildInitialDeck({
     stage,
     earlyDeck: earlyDeck,
@@ -138,31 +218,36 @@ const Ror = Game({
         players: {
             0: {
                 name: "Player",
-                tableCards: initialTableCards[0],
+                tableCards: cardsFactionPairs[0].hand,
+                faction: cardsFactionPairs[0].faction,
                 hand: initialHands[0],
                 talents: 0,
             },
             1: {
                 name: "Neutral 1",
-                tableCards: initialTableCards[1],
+                tableCards: cardsFactionPairs[1].hand,
+                faction: cardsFactionPairs[1].faction,
                 hand: initialHands[1],
                 talents: 0
             },
             2: {
                 name: "Neutral 2",
-                tableCards: initialTableCards[2],
+                tableCards: cardsFactionPairs[2].hand,
+                faction: cardsFactionPairs[2].faction,
                 hand: initialHands[2],
                 talents: 0
             },
             3: {
                 name: "Neutral 3",
-                tableCards: initialTableCards[3],
+                tableCards: cardsFactionPairs[3].hand,
+                faction: cardsFactionPairs[3].faction,
                 hand: initialHands[3],
                 talents: 0
             },
             4: {
                 name: "Neutral 4",
-                tableCards: initialTableCards[4],
+                tableCards: cardsFactionPairs[4].hand,
+                faction: cardsFactionPairs[4].faction,
                 hand: initialHands[4],
                 talents: 0
             }
@@ -390,8 +475,7 @@ const Ror = Game({
         },
 
         doSpoilsDistribution: (G, ctx) => {
-            let game = {...G}
-            return game;
+            return Moves.doSpoilsDistribution(G, ctx)
         },
 
         setCardAsSelected(G, ctx, indexCard, type) {

@@ -42,6 +42,10 @@ export default class SenateBoard extends React.Component {
         })
     }
 
+    getAvailableSpoils(game) {
+        return [];
+    }
+
     render() {
         return (
             <div>
@@ -63,8 +67,12 @@ export default class SenateBoard extends React.Component {
                     <MilitaryPlanBoard {...this.props}></MilitaryPlanBoard>
                 }
 
-                {this.state.militaryPlanDone && !this.state.spoilsDistributionDone && 
-                    <button onClick={this.doSpoilsDistribution}>Spoils distribution</button>
+                {this.state.militaryPlanDone && !this.state.spoilsDistributionDone &&
+                    <div>
+                        <p>Available spoils {this.getAvailableSpoils(this.props.G)}</p>   
+                        <button onClick={this.doSpoilsDistribution}>Spoils distribution</button>
+                    </div> 
+                    
                 }
 
                 {this.state.spoilsDistributionDone &&

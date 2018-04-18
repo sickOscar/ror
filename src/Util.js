@@ -99,7 +99,7 @@ export default class Utils {
             return [plGameIndex(2), plGameIndex(3), plGameIndex(4)]
         }
 
-        if (pl(0).votes + pl[4].votes > majority) {
+        if (pl(0).votes + pl(4).votes > majority) {
             return [plGameIndex(0), plGameIndex(4)]
         }
 

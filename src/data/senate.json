@@ -2,7 +2,7 @@
   "mortalityChitsToDraw": 1,
   "mortalityChits": [],
   "republic": {
-    "treasury": 300,
+    "treasury": 200,
     "unrest": 1,
     "landBills": [],
     "laws": [],
@@ -43,24 +43,21 @@
   "forum": {
     "events": [],
     "provinces": [],
-    "senators": [
+    "senators": [],
+    "concessions": [
       {
-        "id": "2A",
-        "name": "Q. Fabius Maximus Verrucosus Cucantor",
-        "type": "senator",
-        "military": 5,
-        "oratory": 2,
-        "loyalty": 7,
-        "influence": 3,
-        "statesman": true,
-        "deck": "early",
-        "popularity": 0,
-        "talents": 0,
-        "knights": 0,
-        "spoils": []
+        "type": "concession",
+        "name": "Tax Farmer",
+        "talent": 2,
+        "activation": "turn",
+        "destroyable": true,
+        "destroyedBy": [
+          ""
+        ],
+        "id": "064",
+        "deck": "early"
       }
-    ],
-    "concessions": []
+    ]
   },
   "curia": {
     "senators": [],
@@ -70,13 +67,65 @@
   "forumDeck": {
     "cards": [
       {
-        "id": "13",
-        "name": "Flaminius",
+        "type": "intrigue",
+        "subtype": "tribune",
+        "name": "Tribune",
+        "id": "043",
+        "deck": "early"
+      },
+      {
+        "type": "concession",
+        "name": "Tax Farmer",
+        "talent": 2,
+        "activation": "turn",
+        "destroyable": true,
+        "destroyedBy": [
+          ""
+        ],
+        "id": "060",
+        "deck": "early"
+      },
+      {
+        "id": "003",
+        "name": "1st Illyrian War",
+        "type": "war",
+        "landStrength": 5,
+        "navalSupport": 3,
+        "navalStrength": null,
+        "disaster": 5,
+        "standoff": 17,
+        "talents": 10,
+        "armament": false,
+        "drought": true,
+        "description": "1st of 2 illyrian wars (229 - 228 BC)",
+        "conditions": {
+          "activation": "attackedOrMatched",
+          "provinceCreation": [
+            "Illyrium"
+          ]
+        },
+        "deck": "early"
+      },
+      {
+        "id": "054",
+        "type": "concession",
+        "name": "Aegyptian Grain",
+        "talents": 5,
+        "activation": "turn",
+        "destroyable": true,
+        "destroyedBy": [
+          "Alexandrine War"
+        ],
+        "deck": "early"
+      },
+      {
+        "id": "25",
+        "name": "Sulpicius",
         "type": "senator",
-        "military": 4,
+        "military": 3,
         "oratory": 2,
-        "loyalty": 6,
-        "influence": 3,
+        "loyalty": 8,
+        "influence": 2,
         "statesman": false,
         "deck": "early",
         "popularity": 0,
@@ -102,6 +151,93 @@
         "deck": "early"
       },
       {
+        "id": "050",
+        "type": "intrigue",
+        "subtype": "seduction",
+        "name": "Seduction",
+        "deck": "early"
+      },
+      {
+        "type": "intrigue",
+        "subtype": "tribune",
+        "name": "Tribune",
+        "id": "040",
+        "deck": "early"
+      },
+      {
+        "type": "intrigue",
+        "subtype": "tribune",
+        "name": "Tribune",
+        "id": "046",
+        "deck": "early"
+      },
+      {
+        "type": "intrigue",
+        "subtype": "tribune",
+        "name": "Tribune",
+        "id": "045",
+        "deck": "early"
+      },
+      {
+        "id": "047",
+        "type": "intrigue",
+        "subtype": "bodyguard",
+        "name": "Secret bodyguard",
+        "deck": "early"
+      },
+      {
+        "id": "034",
+        "name": "Hamilcar",
+        "type": "leader",
+        "associatedWar": [
+          "001",
+          "002"
+        ],
+        "strength": 3,
+        "disaster": 8,
+        "standoff": 12,
+        "deck": "early"
+      },
+      {
+        "id": "052",
+        "type": "concession",
+        "name": "Armaments",
+        "talents": 2,
+        "activation": "legionBuild",
+        "destroyable": true,
+        "destroyedBy": [
+          "naturalDisaster"
+        ],
+        "deck": "early"
+      },
+      {
+        "id": "001",
+        "name": "1st Punic War",
+        "type": "war",
+        "landStrength": 10,
+        "navalSupport": 5,
+        "navalStrength": 10,
+        "disaster": 13,
+        "standoff": 11,
+        "talents": 35,
+        "armament": false,
+        "description": "1st of 3 punic wars (264 - 241 BC)",
+        "conditions": {
+          "activation": "attackedOrMatched",
+          "provinceCreation": [
+            "Sicilia & Corsica et Sardinia"
+          ]
+        },
+        "deck": "early"
+      },
+      {
+        "type": "intrigue",
+        "subtype": "tribune",
+        "name": "Tribune",
+        "id": "042",
+        "deck": "early"
+      },
+      {
         "id": "036",
         "name": "Antiochus III",
         "type": "leader",
@@ -114,25 +250,6 @@
         "deck": "early"
       },
       {
-        "type": "concession",
-        "name": "Tax Farmer",
-        "talent": 2,
-        "activation": "turn",
-        "destroyable": true,
-        "destroyedBy": [
-          ""
-        ],
-        "id": "064",
-        "deck": "early"
-      },
-      {
-        "type": "intrigue",
-        "subtype": "tribune",
-        "name": "Tribune",
-        "id": "043",
-        "deck": "early"
-      },
-      {
         "id": "057",
         "type": "concession",
         "name": "Mining",
@@ -142,49 +259,6 @@
         "destroyedBy": [
           "naturalDisaster"
         ],
-        "deck": "early"
-      },
-      {
-        "id": "048",
-        "type": "intrigue",
-        "subtype": "influence",
-        "name": "Influence Peddling",
-        "deck": "early"
-      },
-      {
-        "id": "25",
-        "name": "Sulpicius",
-        "type": "senator",
-        "military": 3,
-        "oratory": 2,
-        "loyalty": 8,
-        "influence": 2,
-        "statesman": false,
-        "deck": "early",
-        "popularity": 0,
-        "talents": 0,
-        "knights": 0,
-        "spoils": []
-      },
-      {
-        "id": "003",
-        "name": "1st Illyrian War",
-        "type": "war",
-        "landStrength": 5,
-        "navalSupport": 3,
-        "navalStrength": null,
-        "disaster": 5,
-        "standoff": 17,
-        "talents": 10,
-        "armament": false,
-        "drought": true,
-        "description": "1st of 2 illyrian wars (229 - 228 BC)",
-        "conditions": {
-          "activation": "attackedOrMatched",
-          "provinceCreation": [
-            "Illyrium"
-          ]
-        },
         "deck": "early"
       },
       {
@@ -203,33 +277,6 @@
         "spoils": []
       },
       {
-        "id": "037",
-        "name": "Philip V",
-        "type": "leader",
-        "associatedWar": [
-          "006",
-          "007"
-        ],
-        "strength": 6,
-        "disaster": 15,
-        "standoff": 14,
-        "deck": "early"
-      },
-      {
-        "type": "intrigue",
-        "subtype": "tribune",
-        "name": "Tribune",
-        "id": "042",
-        "deck": "early"
-      },
-      {
-        "type": "intrigue",
-        "subtype": "tribune",
-        "name": "Tribune",
-        "id": "040",
-        "deck": "early"
-      },
-      {
         "id": "20",
         "name": "Terentius",
         "type": "senator",
@@ -245,38 +292,11 @@
         "spoils": []
       },
       {
-        "id": "004",
-        "name": "2nd Illyrian War",
-        "type": "war",
-        "landStrength": 4,
-        "navalSupport": 2,
-        "navalStrength": null,
-        "disaster": 5,
-        "standoff": 17,
-        "talents": 10,
-        "armament": true,
-        "drought": true,
-        "description": "1st of 2 illyrian wars (220 - 219 BC)",
-        "conditions": {
-          "provinceCreation": [
-            "Illyrium"
-          ]
-        },
-        "deck": "early"
-      },
-      {
-        "type": "intrigue",
-        "subtype": "tribune",
-        "name": "Tribune",
-        "id": "046",
-        "deck": "early"
-      },
-      {
-        "id": "052",
+        "id": "053",
         "type": "concession",
-        "name": "Armaments",
+        "name": "Ship Building",
         "talents": 2,
-        "activation": "legionBuild",
+        "activation": "fleetBuild",
         "destroyable": true,
         "destroyedBy": [
           "naturalDisaster"
@@ -293,60 +313,6 @@
           ""
         ],
         "id": "062",
-        "deck": "early"
-      },
-      {
-        "id": "007",
-        "name": "2nd Macedonian War",
-        "type": "war",
-        "landStrength": 10,
-        "navalSupport": 5,
-        "navalStrength": null,
-        "disaster": 13,
-        "standoff": 14,
-        "talents": 45,
-        "armament": false,
-        "description": "2nd of 4 Macedonian wars (200 - 196 BC)",
-        "conditions": {
-          "activation": "attackedOrMatched",
-          "revolt": "hasProvince('Macedonia')"
-        },
-        "deck": "early"
-      },
-      {
-        "id": "050",
-        "type": "intrigue",
-        "subtype": "seduction",
-        "name": "Seduction",
-        "deck": "early"
-      },
-      {
-        "type": "intrigue",
-        "subtype": "tribune",
-        "name": "Tribune",
-        "id": "045",
-        "deck": "early"
-      },
-      {
-        "id": "17",
-        "name": "Plautius",
-        "type": "senator",
-        "military": 2,
-        "oratory": 1,
-        "loyalty": 6,
-        "influence": 2,
-        "statesman": false,
-        "deck": "early",
-        "popularity": 0,
-        "talents": 0,
-        "knights": 0,
-        "spoils": []
-      },
-      {
-        "id": "047",
-        "type": "intrigue",
-        "subtype": "bodyguard",
-        "name": "Secret bodyguard",
         "deck": "early"
       },
       {
@@ -380,24 +346,115 @@
         "deck": "early"
       },
       {
-        "id": "001",
-        "name": "1st Punic War",
+        "id": "007",
+        "name": "2nd Macedonian War",
         "type": "war",
         "landStrength": 10,
         "navalSupport": 5,
-        "navalStrength": 10,
+        "navalStrength": null,
         "disaster": 13,
-        "standoff": 11,
-        "talents": 35,
+        "standoff": 14,
+        "talents": 45,
         "armament": false,
-        "description": "1st of 3 punic wars (264 - 241 BC)",
+        "description": "2nd of 4 Macedonian wars (200 - 196 BC)",
         "conditions": {
           "activation": "attackedOrMatched",
+          "revolt": "hasProvince('Macedonia')"
+        },
+        "deck": "early"
+      },
+      {
+        "id": "23",
+        "name": "Popillus",
+        "type": "senator",
+        "military": 1,
+        "oratory": 3,
+        "loyalty": 7,
+        "influence": 3,
+        "statesman": false,
+        "deck": "middle",
+        "popularity": 0,
+        "talents": 0,
+        "knights": 0,
+        "spoils": []
+      },
+      {
+        "id": "098",
+        "type": "intrigue",
+        "subtype": "murder",
+        "name": "Murder of a tribune",
+        "deck": "middle"
+      },
+      {
+        "id": "23A",
+        "name": "P. Popillius Laenas",
+        "type": "senator",
+        "military": 2,
+        "oratory": 5,
+        "loyalty": "6/0|25A|25B|7A",
+        "influence": 4,
+        "statesman": true,
+        "deck": "middle",
+        "popularity": 0,
+        "talents": 0,
+        "knights": 0,
+        "spoils": []
+      },
+      {
+        "id": "005",
+        "name": "1st Gallic War",
+        "type": "war",
+        "landStrength": 10,
+        "navalSupport": 0,
+        "navalStrength": null,
+        "disaster": 13,
+        "standoff": 15,
+        "talents": 20,
+        "armament": true,
+        "description": "1st of 3 gallic wars (225 - 222 BC)",
+        "conditions": {
           "provinceCreation": [
-            "Sicilia & Corsica et Sardinia"
+            "Gallia Cisalpina"
           ]
         },
         "deck": "early"
+      },
+      {
+        "id": "1C",
+        "name": "L. Cornelius Sulla",
+        "type": "senator",
+        "military": 4,
+        "oratory": 4,
+        "loyalty": "5/0|27A",
+        "influence": 5,
+        "statesman": true,
+        "deck": "middle",
+        "popularity": 0,
+        "talents": 0,
+        "knights": 0,
+        "spoils": []
+      },
+      {
+        "id": "048",
+        "type": "intrigue",
+        "subtype": "influence",
+        "name": "Influence Peddling",
+        "deck": "early"
+      },
+      {
+        "id": "7A",
+        "name": "M fulvius Flaccus",
+        "type": "senator",
+        "military": 2,
+        "oratory": 5,
+        "loyalty": "6/0|23A",
+        "influence": 5,
+        "statesman": true,
+        "deck": "middle",
+        "popularity": 0,
+        "talents": 0,
+        "knights": 0,
+        "spoils": []
       },
       {
         "id": "002",
@@ -420,129 +477,11 @@
         "deck": "early"
       },
       {
-        "id": "005",
-        "name": "1st Gallic War",
-        "type": "war",
-        "landStrength": 10,
-        "navalSupport": 0,
-        "navalStrength": null,
-        "disaster": 13,
-        "standoff": 15,
-        "talents": 20,
-        "armament": true,
-        "description": "1st of 3 gallic wars (225 - 222 BC)",
-        "conditions": {
-          "provinceCreation": [
-            "Gallia Cisalpina"
-          ]
-        },
-        "deck": "early"
-      },
-      {
-        "id": "034",
-        "name": "Hamilcar",
-        "type": "leader",
-        "associatedWar": [
-          "001",
-          "002"
-        ],
-        "strength": 3,
-        "disaster": 8,
-        "standoff": 12,
-        "deck": "early"
-      },
-      {
-        "id": "25",
-        "name": "Sempronius",
-        "type": "senator",
-        "military": 1,
-        "oratory": 3,
-        "loyalty": 6,
-        "influence": 3,
-        "statesman": false,
-        "deck": "middle",
-        "popularity": 0,
-        "talents": 0,
-        "knights": 0,
-        "spoils": []
-      },
-      {
-        "id": "097",
         "type": "intrigue",
-        "subtype": "murder",
-        "name": "Murder of a tribune",
+        "subtype": "tribune",
+        "name": "Tribune",
+        "id": "090",
         "deck": "middle"
-      },
-      {
-        "id": "21A",
-        "name": "C Servilus Glauca",
-        "type": "senator",
-        "military": 1,
-        "oratory": 3,
-        "loyalty": "3/0|1C",
-        "influence": 2,
-        "statesman": true,
-        "deck": "middle",
-        "popularity": 0,
-        "talents": 0,
-        "knights": 0,
-        "spoils": []
-      },
-      {
-        "id": "072",
-        "name": "Lusitanian War",
-        "type": "war",
-        "landStrength": 6,
-        "navalSupport": 2,
-        "navalStrength": null,
-        "disaster": 6,
-        "standoff": "11/16",
-        "talents": 0,
-        "armament": false,
-        "description": "1st of 3 Spanish revolts (154 - 138 BC)",
-        "conditions": {
-          "activation": ""
-        },
-        "deck": "middle"
-      },
-      {
-        "type": "concession",
-        "name": "Tax Farmer",
-        "talent": 2,
-        "activation": "turn",
-        "destroyable": true,
-        "destroyedBy": [
-          ""
-        ],
-        "id": "060",
-        "deck": "early"
-      },
-      {
-        "id": "8",
-        "name": "Furius",
-        "type": "senator",
-        "military": 3,
-        "oratory": 3,
-        "loyalty": 8,
-        "influence": 3,
-        "statesman": false,
-        "deck": "early",
-        "popularity": 0,
-        "talents": 0,
-        "knights": 0,
-        "spoils": []
-      },
-      {
-        "id": "054",
-        "type": "concession",
-        "name": "Aegyptian Grain",
-        "talents": 5,
-        "activation": "turn",
-        "destroyable": true,
-        "destroyedBy": [
-          "Alexandrine War"
-        ],
-        "deck": "early"
       },
       {
         "id": "065",
@@ -550,42 +489,48 @@
         "name": "Era Ends"
       },
       {
-        "id": "053",
-        "type": "concession",
-        "name": "Ship Building",
-        "talents": 2,
-        "activation": "fleetBuild",
-        "destroyable": true,
-        "destroyedBy": [
-          "naturalDisaster"
+        "id": "037",
+        "name": "Philip V",
+        "type": "leader",
+        "associatedWar": [
+          "006",
+          "007"
         ],
+        "strength": 6,
+        "disaster": 15,
+        "standoff": 14,
         "deck": "early"
       },
       {
-        "id": "25B",
-        "name": "C Sempronius Gracchus",
-        "type": "senator",
-        "military": 1,
-        "oratory": 5,
-        "loyalty": "6/0|25A",
-        "influence": 4,
-        "popularity": 3,
-        "statesman": true,
-        "deck": "middle",
-        "talents": 0,
-        "knights": 0,
-        "spoils": []
+        "id": "004",
+        "name": "2nd Illyrian War",
+        "type": "war",
+        "landStrength": 4,
+        "navalSupport": 2,
+        "navalStrength": null,
+        "disaster": 5,
+        "standoff": 17,
+        "talents": 10,
+        "armament": true,
+        "drought": true,
+        "description": "1st of 2 illyrian wars (220 - 219 BC)",
+        "conditions": {
+          "provinceCreation": [
+            "Illyrium"
+          ]
+        },
+        "deck": "early"
       },
       {
-        "id": "23",
-        "name": "Popillus",
+        "id": "2A",
+        "name": "Q. Fabius Maximus Verrucosus Cucantor",
         "type": "senator",
-        "military": 1,
-        "oratory": 3,
+        "military": 5,
+        "oratory": 2,
         "loyalty": 7,
         "influence": 3,
-        "statesman": false,
-        "deck": "middle",
+        "statesman": true,
+        "deck": "early",
         "popularity": 0,
         "talents": 0,
         "knights": 0,
@@ -658,6 +603,7 @@
           ]
         }
       ],
+      "faction": "",
       "hand": [
         {
           "type": "concession",
@@ -749,8 +695,24 @@
             "talents": 0,
             "knights": 0
           }
+        },
+        {
+          "id": "8",
+          "name": "Furius",
+          "type": "senator",
+          "military": 3,
+          "oratory": 3,
+          "loyalty": 8,
+          "influence": 3,
+          "statesman": false,
+          "deck": "early",
+          "popularity": 0,
+          "talents": 1,
+          "knights": 0,
+          "spoils": []
         }
       ],
+      "faction": "populists",
       "hand": [
         {
           "type": "intrigue",
@@ -834,6 +796,7 @@
           "isFactionLeader": true
         }
       ],
+      "faction": "plutocrats",
       "hand": [
         {
           "id": "056",
@@ -916,6 +879,7 @@
           "isFactionLeader": true
         }
       ],
+      "faction": "imperials",
       "hand": [
         {
           "type": "intrigue",
@@ -1002,8 +966,39 @@
           "talents": 1,
           "knights": 0,
           "spoils": []
+        },
+        {
+          "id": "17",
+          "name": "Plautius",
+          "type": "senator",
+          "military": 2,
+          "oratory": 1,
+          "loyalty": 6,
+          "influence": 2,
+          "statesman": false,
+          "deck": "early",
+          "popularity": 0,
+          "talents": 1,
+          "knights": 0,
+          "spoils": []
+        },
+        {
+          "id": "13",
+          "name": "Flaminius",
+          "type": "senator",
+          "military": 4,
+          "oratory": 2,
+          "loyalty": 6,
+          "influence": 3,
+          "statesman": false,
+          "deck": "early",
+          "popularity": 0,
+          "talents": 1,
+          "knights": 0,
+          "spoils": []
         }
       ],
+      "faction": "conservatives",
       "hand": [
         {
           "id": "050",
