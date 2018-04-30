@@ -25,6 +25,9 @@ export default class ForumCardsBoard extends React.Component {
                         {this.props.G.forum.events.map(card => {
                             return <EventCard key={card.id} {...card}></EventCard>
                         })}
+                        {this.props.G.forum.concessions.map(card => {
+                            return <ConcessionCard key={card.id} {...card}></ConcessionCard>
+                        })}
                     </div>
 
                     <div className="row border-top">
@@ -98,5 +101,11 @@ const WarCard = (props) => {
 const SenatorCard = (props) => (
     <div className="col-sm-12 col-md-12">
         SENATOR {props.name}
+    </div>
+);
+
+const ConcessionCard = (props) => (
+    <div className="col-sm-12 col-md-12 concession">
+        CONCESSION {props.name}
     </div>
 );

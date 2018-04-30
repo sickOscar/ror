@@ -116,7 +116,7 @@ export class War {
     }
 
     isActive(game) {
-        console.log(game.republic.activeWars.find(war => war.id === this.id))
+        // console.log(game.republic.activeWars.find(war => war.id === this.id))
         return game.republic.activeWars.find(war => war.id === this.id);
     }
 

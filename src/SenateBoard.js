@@ -1,6 +1,7 @@
 import React from 'react';
 import Util from './Util';
 import { PlayerModel } from './Player';
+import { Spoils } from './Spoil';
 
 export default class SenateBoard extends React.Component {
 
@@ -12,13 +13,16 @@ export default class SenateBoard extends React.Component {
 
             militaryPlanDone: false,
 
+
+            spoilsDistributionStarted: false,
+
             spoilsDistributionDone: false,
 
         }
 
         this.buildRulingCoalition = this.buildRulingCoalition.bind(this)
         this.doMilitaryPlan = this.doMilitaryPlan.bind(this);
-        this.doSpoilsDistribution = this.doSpoilsDistribution.bind(this);
+        this.startSpoilsDistribution = this.startSpoilsDistribution.bind(this);
     }
 
     buildRulingCoalition() {
@@ -35,15 +39,34 @@ export default class SenateBoard extends React.Component {
         })
     }
 
-    doSpoilsDistribution() {
-        this.props.moves.doSpoilsDistribution();
+    startSpoilsDistribution() {
+        // this.props.moves.doSpoilsDistribution();
+
         this.setState({
-            spoilsDistributionDone: true
+            spoilsDistributionStarted: true
         })
+
+        // this.setState({
+        //     spoilsDistributionDone: true
+        // })
     }
 
     getAvailableSpoils(game) {
-        return [];
+        return Object.values(Spoils).concat(
+            game.forum.concessions
+        ).map((spoil, i) => {
+
+            switch (spoil.type) {
+                case 'role':
+                    return <div key={i}>ROLE: {spoil.label}</div>;
+                case 'concession':
+                    return <div key={i}>CONCESSION {spoil.name}</div>
+                default:
+                    return ''
+            }
+
+            
+        })
     }
 
     render() {
@@ -69,8 +92,22 @@ export default class SenateBoard extends React.Component {
 
                 {this.state.militaryPlanDone && !this.state.spoilsDistributionDone &&
                     <div>
-                        <p>Available spoils {this.getAvailableSpoils(this.props.G)}</p>   
-                        <button onClick={this.doSpoilsDistribution}>Spoils distribution</button>
+                        <p>Available spoils </p>   
+                        <div>
+                            {this.getAvailableSpoils(this.props.G)}
+                        </div>
+
+                        {this.state.spoilsDistributionStarted &&
+                            <div>
+                                
+                            </div>
+                        }
+
+                        {!this.state.spoilsDistributionStarted &&
+                            <button onClick={this.startSpoilsDistribution}>Spoils distribution</button>
+                        }
+
+
                     </div> 
                     
                 }

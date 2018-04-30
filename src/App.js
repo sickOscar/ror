@@ -196,7 +196,9 @@ const Ror = Game({
 
         legionCost: 10,
         fleetCost: 10,
-        militaryPlan: {},
+        militaryPlan: {
+            attacks: []
+        },
 
         forum: {
             events: [],

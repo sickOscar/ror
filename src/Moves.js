@@ -4,6 +4,7 @@ import _ from 'lodash';
 import Utils from './Util';
 import MilitaryPlan from './MilitaryPlan';
 import { War } from './War';
+import { PlayerModel } from './Player';
 
 const earlyDeck = new DeckModel('early');
 const middleDeck = new DeckModel('middle');
@@ -188,6 +189,28 @@ export default class Moves {
 
     static doSpoilsDistribution(G, ctx) {
         
+        const game = _.cloneDeep(G);
+
+        const rulingPlayers = PlayerModel.getRulingPlayers(game)
+
+        // if (game.republic.rulingCoalition.includes('0')) {
+        //     console.log('start interactive sploils distribution')
+
+        //     game.interactiveSpoilsDistribution = {
+        //         status: 'active',
+        //         currentPlayer: game.republic.rulingCoalition[0] 
+        //     };
+
+        //     return {...game}
+        // }
+
+        
+
+        
+
+
+        return {...game}
+
     }
 
 }

@@ -107,3 +107,44 @@ export class Neutrals extends React.Component {
     }
 
 }
+
+export const NeutralsTable = {
+    "imperials": {
+        spoils: [
+            'FIELD_CONSUL',
+            'ROME_CONSUL',
+            'GOVERNOR',
+            'CENSOR',
+            'CONCESSION',
+            'LAND_BILL'
+        ]
+    },
+    "conservatives": {
+        spoils: [
+            'ROME_CONSUL',
+            'CENSOR',
+            'FIELD_CONSUL',
+            'GOVERNOR',
+            'CONCESSION'
+        ]
+    },
+    "plutocrats": {
+        spoils: [
+            'CENSOR',
+            'CONCESSION',
+            'GOVERNOR',
+            'ROME_CONSUL',
+            'FIELD_CONSUL'
+        ]
+    },
+    "populists": {
+        spoils: [
+            'ROME_CONSUL',
+            'FIELD_CONSUL',
+            'CENSOR',
+            'CONCESSION',
+            'LAND_BILL',
+            'GOVERNOR'
+        ]
+    }
+}

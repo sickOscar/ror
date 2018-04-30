@@ -7,3 +7,7 @@ body {
 .active-war {
   border: 2px dashed red;
 }
+
+.concession {
+  border: 1px dashed #aa4400;
+}

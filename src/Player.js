@@ -1,5 +1,6 @@
 import React from 'react';
 import { Random } from 'boardgame.io/dist/core';
+import _ from 'lodash';
 
 export class Player extends React.Component {
 
@@ -59,6 +60,18 @@ export class PlayerModel {
 
     static getMajority(G) {
         return Math.ceil(PlayerModel.getTotalVotes(G) / 2);
+    }
+
+    static getRulingPlayers(G) {
+        let rulingPlayers = Object.values(G.republic.rulingCoalition)
+            .reduce((players, next) => {
+                players.push(new PlayerModel(G.players[next]))
+                return players;
+            }, []) 
+
+        return _.sortBy(rulingPlayers, player => {
+            return player.countVotes()
+        })
     }
 
 }
