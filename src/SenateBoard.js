@@ -11,14 +11,9 @@ export default class SenateBoard extends React.Component {
 
         this.state = {
             rulingCoalitionDone: false,
-
             militaryPlanDone: false,
-
-
             spoilsDistributionStarted: false,
-
             spoilsDistributionDone: false,
-
         }
 
         this.buildRulingCoalition = this.buildRulingCoalition.bind(this)
@@ -181,11 +176,13 @@ class SpoilsDistributionBoard extends React.Component {
             rulingPlayers: PlayerModel.getRulingPlayers(gameClone),
             currentBidder: 0,
             distributionDone: false,
-            choosenSpoil: null
+            choosenSpoil: null,
+            spoilTarget: null
         }
 
         this.selectSpoil = this.selectSpoil.bind(this);
         this.bidForRole = this.bidForRole.bind(this);
+        this.selectSpoilTarget = this.selectSpoilTarget.bind(this);
     }
 
     componentWillMount() {
@@ -211,23 +208,38 @@ class SpoilsDistributionBoard extends React.Component {
 
         const nextPlayerHasTribune = nextPlayer.tableCards.reduce((hasIt, next) => {
             return hasIt || next.subtype === 'tribune'
-        });
+        }, false);
 
         if (nextPlayer.isHuman && nextPlayerHasTribune) {
-            // Choice: leave or play tribune
+            // Human Choice: leave or play tribune
 
         } else {
 
-            // CPU
             if (nextPlayerHasTribune) {
                 //
+
+
+            } else {
+                // bid success
+                let p = this.state.game.players[this.state.rulingPlayers[0].originalIndex];
+
+                console.log('spoilTarget', this.state.spoilTarget)
+
+                let target = p.tableCards.find(senator => senator.id === this.state.spoilTarget)
+                target.spoils.push(this.state.choosenSpoil);
+
+                console.log(this.state.game)
             }
 
 
         }
 
+    }
 
-
+    selectSpoilTarget(event) {
+        this.setState({
+            spoilTarget: event.target.value
+        })
     }
 
     render() {
@@ -239,9 +251,15 @@ class SpoilsDistributionBoard extends React.Component {
                 {this.state.rulingPlayers[0].isHuman &&
                     <div>
                         <p>Choose Available Spoil</p>
-                        <select name="" id="" onChange={this.selectSpoil}>
+                        <select onChange={this.selectSpoil}>
                             {SenateBoard.getAvailableSpoils(this.state.game).map(spoil => {
-                                return <option key={spoil.id}>{spoil.name}</option>
+                                return <option key={spoil.id} value={spoil.id}>{spoil.name}</option>
+                            })}
+                        </select>
+                         to
+                        <select onChange={this.selectSpoilTarget}>
+                            {this.state.rulingPlayers[0].tableCards.map(senator => {
+                                return <option key={senator.id} value={senator.id}>{senator.name}</option>
                             })}
                         </select>
                         <button onClick={this.bidForRole}>Bid</button>

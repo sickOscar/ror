@@ -65,9 +65,11 @@ export class PlayerModel {
     static getRulingPlayers(G) {
         let rulingPlayers = Object.values(G.republic.rulingCoalition)
             .reduce((players, next) => {
-                players.push(new PlayerModel(G.players[next]))
+                const model = new PlayerModel(G.players[next]);
+                model.originalIndex = next;
+                players.push(model);
                 return players;
-            }, []) 
+            }, []);
 
         return _.sortBy(rulingPlayers, player => {
             return player.countVotes()
