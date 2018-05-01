@@ -35,11 +35,18 @@
       }
     ],
     "imminentWars": [],
-    "stateOfRepublicSpeechExit": null
+    "stateOfRepublicSpeechExit": null,
+    "rulingCoalition": [
+      "0",
+      "2",
+      "3"
+    ]
   },
   "legionCost": 10,
   "fleetCost": 10,
-  "militaryPlan": {},
+  "militaryPlan": {
+    "attacks": []
+  },
   "forum": {
     "events": [],
     "provinces": [],
@@ -548,6 +555,7 @@
   "players": {
     "0": {
       "name": "Player",
+      "isHuman": true,
       "tableCards": [
         {
           "id": "1",
@@ -598,7 +606,8 @@
               "id": "ROME_CONSUL",
               "label": "ROME CONSUL",
               "influence": 5,
-              "rank": 2
+              "rank": 2,
+              "type": "role"
             }
           ]
         }
@@ -637,7 +646,9 @@
           "deck": "early"
         }
       ],
-      "talents": 0
+      "talents": 0,
+      "votes": 9,
+      "dominance": 3
     },
     "1": {
       "name": "Neutral 1",
@@ -744,7 +755,9 @@
           "spoils": []
         }
       ],
-      "talents": 0
+      "talents": 0,
+      "votes": 9,
+      "dominance": 2
     },
     "2": {
       "name": "Neutral 2",
@@ -827,7 +840,9 @@
           "deck": "early"
         }
       ],
-      "talents": 0
+      "talents": 0,
+      "votes": 7,
+      "dominance": 4
     },
     "3": {
       "name": "Neutral 3",
@@ -916,7 +931,9 @@
           "deck": "early"
         }
       ],
-      "talents": 0
+      "talents": 0,
+      "votes": 7,
+      "dominance": 5
     },
     "4": {
       "name": "Neutral 4",
@@ -1035,7 +1052,9 @@
           "spoils": []
         }
       ],
-      "talents": 0
+      "talents": 0,
+      "votes": 10,
+      "dominance": 1
     }
   },
   "interface": {

@@ -2,6 +2,7 @@ import React from 'react';
 import Util from './Util';
 import { PlayerModel } from './Player';
 import { Spoils } from './Spoil';
+import _ from 'lodash';
 
 export default class SenateBoard extends React.Component {
 
@@ -23,6 +24,7 @@ export default class SenateBoard extends React.Component {
         this.buildRulingCoalition = this.buildRulingCoalition.bind(this)
         this.doMilitaryPlan = this.doMilitaryPlan.bind(this);
         this.startSpoilsDistribution = this.startSpoilsDistribution.bind(this);
+        this.onEndSpoilsDistribution = this.onEndSpoilsDistribution.bind(this);
     }
 
     buildRulingCoalition() {
@@ -51,23 +53,16 @@ export default class SenateBoard extends React.Component {
         // })
     }
 
-    getAvailableSpoils(game) {
+    static getAvailableSpoils(game) {
         return Object.values(Spoils).concat(
             game.forum.concessions
-        ).map((spoil, i) => {
-
-            switch (spoil.type) {
-                case 'role':
-                    return <div key={i}>ROLE: {spoil.label}</div>;
-                case 'concession':
-                    return <div key={i}>CONCESSION {spoil.name}</div>
-                default:
-                    return ''
-            }
-
-            
-        })
+        )
     }
+
+    onEndSpoilsDistribution() {
+        console.log("end distribution")
+    }
+
 
     render() {
         return (
@@ -91,24 +86,37 @@ export default class SenateBoard extends React.Component {
                 }
 
                 {this.state.militaryPlanDone && !this.state.spoilsDistributionDone &&
-                    <div>
+                    <div className="row">
                         <p>Available spoils </p>   
-                        <div>
-                            {this.getAvailableSpoils(this.props.G)}
+                        <div className="col-sm-6">
+                            {SenateBoard.getAvailableSpoils(this.props.G).map((spoil, i) => {
+
+                                switch (spoil.type) {
+                                    case 'role':
+                                        return <div key={i}>ROLE: {spoil.name}</div>;
+                                    case 'concession':
+                                        return <div key={i}>CONCESSION {spoil.name}</div>
+                                    default:
+                                        return ''
+                                }
+
+                            })}
                         </div>
 
-                        {this.state.spoilsDistributionStarted &&
-                            <div>
-                                
-                            </div>
-                        }
+                        <div className="col-sm-6">
+                            {!this.state.spoilsDistributionStarted &&
+                                <button onClick={this.startSpoilsDistribution}>Start Spoils distribution</button>
+                            }
+                        </div>
 
-                        {!this.state.spoilsDistributionStarted &&
-                            <button onClick={this.startSpoilsDistribution}>Spoils distribution</button>
-                        }
+                        <div className="col-sm-6">
+                            {this.state.spoilsDistributionStarted &&
+                            <SpoilsDistributionBoard {...this.props} onEnd={this.onEndSpoilsDistribution}></SpoilsDistributionBoard>
+                            }
+                        </div>
 
 
-                    </div> 
+                    </div>
                     
                 }
 
@@ -160,3 +168,95 @@ const MilitaryPlanBoard = (props) => (
         </div>
     </div>
 )
+
+class SpoilsDistributionBoard extends React.Component {
+
+    constructor(props) {
+        super(props)
+
+        const gameClone = _.cloneDeep(this.props.G);
+
+        this.state = {
+            game: gameClone,
+            rulingPlayers: PlayerModel.getRulingPlayers(gameClone),
+            currentBidder: 0,
+            distributionDone: false,
+            choosenSpoil: null
+        }
+
+        this.selectSpoil = this.selectSpoil.bind(this);
+        this.bidForRole = this.bidForRole.bind(this);
+    }
+
+    componentWillMount() {
+        this.sortRulingPlayers();
+    }
+
+    sortRulingPlayers() {
+        this.setState({
+            rulingPlayers: _.sortBy(this.state.rulingPlayers, player => player.countVotes()).reverse(),
+            choosenSpoil: SenateBoard.getAvailableSpoils(this.state.game)[0]
+        })
+    }
+
+    selectSpoil(event) {
+        this.setState({
+            choosenSpoil : event.target.value
+        });
+    }
+
+    bidForRole() {
+
+        const nextPlayer = this.state.rulingPlayers[1];
+
+        const nextPlayerHasTribune = nextPlayer.tableCards.reduce((hasIt, next) => {
+            return hasIt || next.subtype === 'tribune'
+        });
+
+        if (nextPlayer.isHuman && nextPlayerHasTribune) {
+            // Choice: leave or play tribune
+
+        } else {
+
+            // CPU
+            if (nextPlayerHasTribune) {
+                //
+            }
+
+
+        }
+
+
+
+    }
+
+    render() {
+
+        console.log('rulingPlayers', this.state.rulingPlayers)
+
+        return (
+            <div>
+                {this.state.rulingPlayers[0].isHuman &&
+                    <div>
+                        <p>Choose Available Spoil</p>
+                        <select name="" id="" onChange={this.selectSpoil}>
+                            {SenateBoard.getAvailableSpoils(this.state.game).map(spoil => {
+                                return <option key={spoil.id}>{spoil.name}</option>
+                            })}
+                        </select>
+                        <button onClick={this.bidForRole}>Bid</button>
+                    </div>
+                }
+
+                {!this.state.rulingPlayers[0].isHuman &&
+                    <button>Bid Neutral {this.state.rulingPlayers[0].name}</button>
+                }
+
+                {this.state.distributionDone &&
+                    <button onClick={this.props.onEnd}>END</button>
+                }
+            </div>
+        )
+    }
+
+}

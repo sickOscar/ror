@@ -220,6 +220,7 @@ const Ror = Game({
         players: {
             0: {
                 name: "Player",
+                human: true,
                 tableCards: cardsFactionPairs[0].hand,
                 faction: cardsFactionPairs[0].faction,
                 hand: initialHands[0],
